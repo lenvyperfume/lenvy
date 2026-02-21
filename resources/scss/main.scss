@@ -1,0 +1,10 @@
+// ─── Lenvy — SCSS entry ───────────────────────────────────────────────────────
+// Vite compiles this via sass. @apply directives are resolved by
+// @tailwindcss/vite after Sass runs.
+//
+// Add your own partials below and follow the same @use pattern.
+
+@use 'variables';
+@use 'base';
+@use 'components';
+@use 'woocommerce';
