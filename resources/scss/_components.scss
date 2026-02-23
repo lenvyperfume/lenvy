@@ -3,37 +3,29 @@
 // ─── Components ───────────────────────────────────────────────────────────────
 
 @layer components {
-  // ── Navigation ────────────────────────────────────────────────────────────
+  // ── Search overlay form ───────────────────────────────────────────────────
 
-  #primary-menu,
-  #mobile-primary-menu {
-    a {
-      @apply text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors duration-150;
+  .search-overlay {
+    .search-form {
+      @apply block w-full;
+    }
+
+    .search-form label {
+      @apply block;
+    }
+
+    .search-field {
+      @apply w-full bg-transparent border-0 border-b-2 border-brand-700 py-3 pr-10
+             text-xl text-brand-950 placeholder:text-neutral-300
+             focus:outline-none focus:ring-0 focus:border-brand-500 transition-colors;
+    }
+
+    .search-submit {
+      @apply hidden;
     }
   }
 
-  #mobile-primary-menu a {
-    @apply block py-2 border-b border-neutral-100;
-  }
-
-  // ── Search form ───────────────────────────────────────────────────────────
-
-  .search-form {
-    @apply flex gap-2;
-
-    input[type='search'] {
-      @apply flex-1 px-4 py-2 border border-neutral-300 text-sm transition-colors;
-
-      &:focus {
-        @apply outline-none border-neutral-900;
-      }
-    }
-
-    input[type='submit'] {
-      @apply px-5 py-2 bg-neutral-900 text-white text-sm font-semibold uppercase tracking-widest
-			       hover:bg-neutral-700 transition-colors cursor-pointer;
-    }
-  }
+  // ── Pagination ─────────────────────────────────────────────────────────── (kept below)
 
   // ── Pagination ────────────────────────────────────────────────────────────
 
@@ -44,11 +36,11 @@
 
     .page-numbers {
       @apply inline-flex items-center justify-center h-10 min-w-10 px-3 text-sm
-			       border border-neutral-200 text-neutral-700 transition-colors
-			       hover:bg-neutral-900 hover:text-white hover:border-neutral-900;
+			       border border-neutral-200 text-brand-950 transition-colors
+			       hover:bg-brand-700 hover:text-white hover:border-brand-700;
 
       &.current {
-        @apply bg-neutral-900 text-white border-neutral-900;
+        @apply bg-brand-700 text-white border-brand-700;
       }
     }
   }
