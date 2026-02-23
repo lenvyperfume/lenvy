@@ -9,15 +9,13 @@
  * @package Lenvy
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit();
 
 $callback = $args['callback'] ?? null;
-$classes  = isset( $args['classes'] ) ? ' ' . sanitize_text_field( $args['classes'] ) : '';
+$classes = isset($args['classes']) ? ' ' . sanitize_text_field($args['classes']) : '';
 ?>
-<div class="container mx-auto px-4 max-w-screen-xl<?php echo esc_attr( $classes ); ?>">
-	<?php
-	if ( is_callable( $callback ) ) {
-		$callback();
-	}
-	?>
+<div class="container mx-auto px-4 max-w-screen-xl<?php echo esc_attr($classes); ?>">
+	<?php if (is_callable($callback)) {
+ 	$callback();
+ } ?>
 </div>

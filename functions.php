@@ -5,15 +5,9 @@
  * @package Lenvy
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit();
 
 // Load theme includes.
-foreach ( [
-	'/inc/setup.php',
-	'/inc/enqueue.php',
-	'/inc/acf.php',
-	'/inc/helpers.php',
-	'/inc/woocommerce.php',
-] as $file ) {
+foreach (['/inc/setup.php', '/inc/enqueue.php', '/inc/acf.php', '/inc/helpers.php', '/inc/woocommerce.php'] as $file) {
 	require_once get_template_directory() . $file;
 }

@@ -3,62 +3,66 @@
 // ─── WooCommerce overrides ────────────────────────────────────────────────────
 
 @layer components {
+  // ── Buttons ───────────────────────────────────────────────────────────────
 
-	// ── Buttons ───────────────────────────────────────────────────────────────
-
-	.woocommerce {
-		a.button,
-		button.button,
-		input.button,
-		#respond input#submit {
-			@apply inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold
+  .woocommerce {
+    a.button,
+    button.button,
+    input.button,
+    #respond input#submit {
+      @apply inline-flex items-center justify-center px-5 py-2.5 text-xs font-semibold
 			       uppercase tracking-widest bg-neutral-900 text-white rounded-none
 			       border border-transparent transition-colors duration-200
 			       hover:bg-neutral-700 cursor-pointer;
-		}
+    }
 
-		a.button.alt,
-		button.button.alt {
-			@apply bg-neutral-900 text-white hover:bg-neutral-700;
-		}
+    a.button.alt,
+    button.button.alt {
+      @apply bg-neutral-900 text-white hover:bg-neutral-700;
+    }
 
-		// ── Pricing ───────────────────────────────────────────────────────────
+    // ── Pricing ───────────────────────────────────────────────────────────
 
-		.price {
-			@apply font-semibold text-neutral-900;
+    .price {
+      @apply font-semibold text-neutral-900;
 
-			del {
-				@apply text-neutral-400 font-normal;
-			}
-		}
+      del {
+        @apply text-neutral-400 font-normal;
+      }
+    }
 
-		// ── Breadcrumbs ───────────────────────────────────────────────────────
+    // ── Breadcrumbs ───────────────────────────────────────────────────────
 
-		.woocommerce-breadcrumb {
-			@apply text-xs text-neutral-400 mb-6;
-		}
+    .woocommerce-breadcrumb {
+      @apply text-xs text-neutral-400 mb-6;
+    }
 
-		// ── Product loop ──────────────────────────────────────────────────────
+    // ── Product loop ──────────────────────────────────────────────────────
 
-		ul.products {
-			@apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 !important;
+    ul.products {
+      @apply grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 !important;
 
-			li.product {
-				@apply float-none w-auto !important;
-			}
-		}
-	}
+      li.product {
+        @apply float-none w-auto !important;
+      }
+    }
+  }
 
-	// ── Notices ───────────────────────────────────────────────────────────────
+  // ── Notices ───────────────────────────────────────────────────────────────
 
-	.woocommerce-message,
-	.woocommerce-info,
-	.woocommerce-error {
-		@apply flex flex-wrap items-center gap-3 px-5 py-4 mb-6 border-l-4 text-sm;
-	}
+  .woocommerce-message,
+  .woocommerce-info,
+  .woocommerce-error {
+    @apply flex flex-wrap items-center gap-3 px-5 py-4 mb-6 border-l-4 text-sm;
+  }
 
-	.woocommerce-message { @apply bg-green-50  border-green-500 text-green-800; }
-	.woocommerce-info    { @apply bg-blue-50   border-blue-500  text-blue-800;  }
-	.woocommerce-error   { @apply bg-red-50    border-red-500   text-red-800;   }
-
+  .woocommerce-message {
+    @apply bg-green-50  border-green-500 text-green-800;
+  }
+  .woocommerce-info {
+    @apply bg-blue-50   border-blue-500  text-blue-800;
+  }
+  .woocommerce-error {
+    @apply bg-red-50    border-red-500   text-red-800;
+  }
 }

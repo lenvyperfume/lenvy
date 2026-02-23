@@ -3,55 +3,53 @@
 // ─── Components ───────────────────────────────────────────────────────────────
 
 @layer components {
+  // ── Navigation ────────────────────────────────────────────────────────────
 
-	// ── Navigation ────────────────────────────────────────────────────────────
+  #primary-menu,
+  #mobile-primary-menu {
+    a {
+      @apply text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors duration-150;
+    }
+  }
 
-	#primary-menu,
-	#mobile-primary-menu {
-		a {
-			@apply text-sm font-medium text-neutral-700 hover:text-neutral-900 transition-colors duration-150;
-		}
-	}
+  #mobile-primary-menu a {
+    @apply block py-2 border-b border-neutral-100;
+  }
 
-	#mobile-primary-menu a {
-		@apply block py-2 border-b border-neutral-100;
-	}
+  // ── Search form ───────────────────────────────────────────────────────────
 
-	// ── Search form ───────────────────────────────────────────────────────────
+  .search-form {
+    @apply flex gap-2;
 
-	.search-form {
-		@apply flex gap-2;
+    input[type='search'] {
+      @apply flex-1 px-4 py-2 border border-neutral-300 text-sm transition-colors;
 
-		input[type='search'] {
-			@apply flex-1 px-4 py-2 border border-neutral-300 text-sm transition-colors;
+      &:focus {
+        @apply outline-none border-neutral-900;
+      }
+    }
 
-			&:focus {
-				@apply outline-none border-neutral-900;
-			}
-		}
-
-		input[type='submit'] {
-			@apply px-5 py-2 bg-neutral-900 text-white text-sm font-semibold uppercase tracking-widest
+    input[type='submit'] {
+      @apply px-5 py-2 bg-neutral-900 text-white text-sm font-semibold uppercase tracking-widest
 			       hover:bg-neutral-700 transition-colors cursor-pointer;
-		}
-	}
+    }
+  }
 
-	// ── Pagination ────────────────────────────────────────────────────────────
+  // ── Pagination ────────────────────────────────────────────────────────────
 
-	.pagination {
-		.nav-links {
-			@apply flex flex-wrap gap-2 justify-center mt-12;
-		}
+  .pagination {
+    .nav-links {
+      @apply flex flex-wrap gap-2 justify-center mt-12;
+    }
 
-		.page-numbers {
-			@apply inline-flex items-center justify-center h-10 min-w-10 px-3 text-sm
+    .page-numbers {
+      @apply inline-flex items-center justify-center h-10 min-w-10 px-3 text-sm
 			       border border-neutral-200 text-neutral-700 transition-colors
 			       hover:bg-neutral-900 hover:text-white hover:border-neutral-900;
 
-			&.current {
-				@apply bg-neutral-900 text-white border-neutral-900;
-			}
-		}
-	}
-
+      &.current {
+        @apply bg-neutral-900 text-white border-neutral-900;
+      }
+    }
+  }
 }
