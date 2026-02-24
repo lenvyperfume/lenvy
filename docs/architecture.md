@@ -551,16 +551,16 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] `breadcrumb.php`
 - [x] `pagination.php`
 
-### Phase 4 — Header and navigation
-- [ ] `Lenvy_Primary_Nav_Walker` and `Lenvy_Mobile_Nav_Walker` in `inc/nav-walkers.php`
-- [ ] `template-parts/header/nav-primary.php`
-- [ ] `template-parts/header/nav-mobile.php`
-- [ ] `template-parts/header/search-overlay.php`
-- [ ] `template-parts/header/site-header.php` (announcement bar + logo + nav + cart icon)
-- [ ] Refactor `main.js` into `resources/js/modules/` structure
+### Phase 4 — Header and navigation ✅
+- [x] `Lenvy_Primary_Nav_Walker` and `Lenvy_Mobile_Nav_Walker` in `inc/nav-walkers.php`
+- [x] `template-parts/header/nav-primary.php`
+- [x] `template-parts/header/nav-mobile.php`
+- [x] `template-parts/header/search-overlay.php`
+- [x] `template-parts/header/site-header.php` (announcement bar + logo + nav + cart icon)
+- [x] Refactor `main.js` into `resources/js/modules/` structure
 
-### Phase 5 — Footer
-- [ ] `template-parts/footer/site-footer.php`
+### Phase 5 — Footer ✅
+- [x] `template-parts/footer/site-footer.php`
 
 ### Phase 6 — Homepage
 - [ ] `template-parts/homepage/hero.php`

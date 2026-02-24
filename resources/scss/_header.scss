@@ -1,0 +1,20 @@
+@use 'variables' as v;
+
+// ─── Sticky header top offset ─────────────────────────────────────────────────
+// [data-header] uses `sticky` from Tailwind but no `top-*` class.
+// Top is set here so .admin-bar can override without specificity conflicts.
+//
+// The --header-height CSS var (from _base.scss) is the full top clearance
+// including any admin bar — used for sticky filter sidebars, not here.
+
+[data-header] {
+	top: 0;
+}
+
+.admin-bar [data-header] {
+	top: 32px;
+
+	@media screen and (max-width: 782px) {
+		top: 46px;
+	}
+}
