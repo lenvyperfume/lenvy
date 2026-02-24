@@ -569,20 +569,20 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] `template-parts/homepage/promo-sections.php` (text_banner + brand_strip layouts)
 - [x] Wire up `front-page.php`
 
-### Phase 7 — Shop and filters
-- [ ] `product-card.php` component
-- [ ] `product-card-mini.php` component
-- [ ] `sort-bar.php`
-- [ ] `filter-accordion.php`
-- [ ] `filter-taxonomy.php`
-- [ ] `filter-price.php` + `modules/price-slider.js`
-- [ ] `filter-active.php` (chips row)
-- [ ] `filter-sidebar.php` (desktop)
-- [ ] `filter-drawer.php` (mobile)
-- [ ] `inc/shop.php` — `pre_get_posts` filter logic
-- [ ] `woocommerce/archive-product.php` override
-- [ ] `woocommerce/taxonomy-product_cat.php` override
-- [ ] `woocommerce/content-product.php` override
+### Phase 7 — Shop and filters ✅
+- [x] `product-card.php` component
+- [x] `product-card-mini.php` component
+- [x] `sort-bar.php`
+- [x] `filter-accordion.php`
+- [x] `filter-taxonomy.php`
+- [x] `filter-price.php` + `modules/price-slider.js`
+- [x] `filter-active.php` (chips row)
+- [x] `filter-sidebar.php` (desktop)
+- [x] `filter-drawer.php` (mobile)
+- [x] `inc/shop.php` — `pre_get_posts` filter logic
+- [x] `woocommerce/archive-product.php` override
+- [x] `woocommerce/taxonomy-product_cat.php` override
+- [x] `woocommerce/content-product.php` override
 
 ### Phase 8 — Single product page
 - [ ] `woocommerce/single-product.php` override

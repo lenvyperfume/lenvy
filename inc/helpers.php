@@ -171,3 +171,130 @@ function lenvy_archive_title(): string {
 function lenvy_pagination(): void {
 	get_template_part( 'template-parts/components/pagination' );
 }
+
+// ─── Shop / filter helpers ────────────────────────────────────────────────────
+
+/**
+ * Return [min_price, max_price] from all published products.
+ * Result is cached for 6 hours via a transient.
+ *
+ * @return array{float, float}
+ */
+function lenvy_get_min_max_price(): array {
+	$cached = get_transient( 'lenvy_min_max_price' );
+
+	if ( false !== $cached && is_array( $cached ) ) {
+		return $cached;
+	}
+
+	global $wpdb;
+
+	// phpcs:ignore WordPress.DB.DirectDatabaseQuery
+	$row = $wpdb->get_row(
+		"SELECT MIN(CAST(meta_value AS DECIMAL(10,2))), MAX(CAST(meta_value AS DECIMAL(10,2)))
+		 FROM {$wpdb->postmeta}
+		 INNER JOIN {$wpdb->posts} ON {$wpdb->posts}.ID = {$wpdb->postmeta}.post_id
+		 WHERE meta_key = '_price'
+		   AND meta_value != ''
+		   AND {$wpdb->posts}.post_status = 'publish'
+		   AND {$wpdb->posts}.post_type = 'product'",
+		ARRAY_N
+	);
+
+	$result = [
+		(float) ( $row[0] ?? 0 ),
+		(float) ( $row[1] ?? 0 ),
+	];
+
+	set_transient( 'lenvy_min_max_price', $result, 6 * HOUR_IN_SECONDS );
+
+	return $result;
+}
+
+// Invalidate price cache when a product is saved.
+add_action( 'save_post_product', function (): void {
+	delete_transient( 'lenvy_min_max_price' );
+} );
+
+/**
+ * Return a structured array describing all currently active filters.
+ *
+ * Each entry has:
+ *   label        — human-readable chip label
+ *   remove_args  — assoc array to pass to add_query_arg() to remove this filter
+ *
+ * @return array<int, array{label: string, remove_args: array<string, mixed>}>
+ */
+function lenvy_get_active_filters(): array {
+	$active = [];
+
+	$taxonomy_map = [
+		'filter_brand'  => __( 'Brand', 'lenvy' ),
+		'filter_cat'    => __( 'Category', 'lenvy' ),
+		'filter_gender' => __( 'Gender', 'lenvy' ),
+		'filter_family' => __( 'Family', 'lenvy' ),
+		'filter_conc'   => __( 'Concentration', 'lenvy' ),
+		'filter_volume' => __( 'Volume', 'lenvy' ),
+	];
+
+	foreach ( $taxonomy_map as $var => $group_label ) {
+		// phpcs:ignore WordPress.Security.NonceVerification
+		$raw = isset( $_GET[ $var ] ) ? sanitize_text_field( wp_unslash( $_GET[ $var ] ) ) : '';
+
+		if ( empty( $raw ) ) {
+			continue;
+		}
+
+		$slugs = array_filter( array_map( 'sanitize_title', explode( ',', $raw ) ) );
+
+		foreach ( $slugs as $slug ) {
+			// Build comma-separated value with this slug removed.
+			$remaining = implode( ',', array_diff( $slugs, [ $slug ] ) );
+
+			$active[] = [
+				'label'       => $group_label . ': ' . str_replace( '-', ' ', $slug ),
+				'remove_args' => [ $var => $remaining ?: false ],
+			];
+		}
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! empty( $_GET['filter_available'] ) ) {
+		$active[] = [
+			'label'       => __( 'In stock', 'lenvy' ),
+			'remove_args' => [ 'filter_available' => false ],
+		];
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification
+	if ( ! empty( $_GET['filter_onsale'] ) ) {
+		$active[] = [
+			'label'       => __( 'On sale', 'lenvy' ),
+			'remove_args' => [ 'filter_onsale' => false ],
+		];
+	}
+
+	// phpcs:ignore WordPress.Security.NonceVerification
+	$min = isset( $_GET['min_price'] ) ? (float) $_GET['min_price'] : null;
+	// phpcs:ignore WordPress.Security.NonceVerification
+	$max = isset( $_GET['max_price'] ) ? (float) $_GET['max_price'] : null;
+	[ $global_min, $global_max ] = lenvy_get_min_max_price();
+
+	if ( ( null !== $min && $min > $global_min ) || ( null !== $max && $max < $global_max ) ) {
+		$active[] = [
+			'label'       => wp_strip_all_tags( wc_price( $min ?? $global_min ) ) . ' – ' . wp_strip_all_tags( wc_price( $max ?? $global_max ) ),
+			'remove_args' => [ 'min_price' => false, 'max_price' => false ],
+		];
+	}
+
+	return $active;
+}
+
+/**
+ * Return true if any filter query var is currently active.
+ *
+ * @return bool
+ */
+function lenvy_is_filtered(): bool {
+	return ! empty( lenvy_get_active_filters() );
+}
