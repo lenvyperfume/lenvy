@@ -584,11 +584,13 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] `woocommerce/taxonomy-product_cat.php` override
 - [x] `woocommerce/content-product.php` override
 
-### Phase 8 — Single product page
-- [ ] `woocommerce/single-product.php` override
-- [ ] Product gallery (`modules/gallery.js`)
-- [ ] Style WC form elements (qty, variations, add-to-cart)
-- [ ] Related products section
+### Phase 8 — Single product page ✅
+- [x] `woocommerce/single-product.php` override
+- [x] `woocommerce/single-product/product-image.php` — gallery with thumbnail strip
+- [x] `woocommerce/single-product/related.php` — related products grid
+- [x] Product gallery (`modules/gallery.js`) — cross-fade + keyboard nav
+- [x] Style WC form elements (qty, variations, add-to-cart, tabs, reviews)
+- [x] Scent notes, usage tips, badge from ACF fields
 
 ### Phase 9 — AJAX layer
 - [ ] Register AJAX endpoints in `inc/ajax.php`

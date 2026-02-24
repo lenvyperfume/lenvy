@@ -10,7 +10,8 @@ import { initDrawer }      from './modules/drawer.js';
 import { initSearch }      from './modules/search.js';
 import { initAccordion }   from './modules/accordion.js';
 import { initFilterDrawer } from './modules/filter-drawer.js';
-import { initPriceSlider } from './modules/price-slider.js';
+import { initPriceSlider }  from './modules/price-slider.js';
+import { initGallery }      from './modules/gallery.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -22,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const { filterDrawer, closeFilterDrawer } = initFilterDrawer();
   initAccordion();
   initPriceSlider();
+  initGallery();
 
   // Sort select — navigate via URL so price/filter form inputs are never dragged along.
   document.querySelectorAll('[data-sort-select]').forEach((select) => {
