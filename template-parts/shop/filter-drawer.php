@@ -48,7 +48,7 @@ defined('ABSPATH') || exit();
 		<form method="GET" action="" data-filter-form>
 
 			<?php if ( isset( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification ?>
-				<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_key( $_GET['orderby'] ) ); ?>"> // phpcs:ignore WordPress.Security.NonceVerification
+				<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_key( $_GET['orderby'] ) ); // phpcs:ignore WordPress.Security.NonceVerification ?>">
 			<?php endif; ?>
 
 			<?php
@@ -124,7 +124,7 @@ defined('ABSPATH') || exit();
 	<div class="shrink-0 px-6 py-4 border-t border-neutral-100 flex gap-3">
 		<?php if ( lenvy_is_filtered() ) : ?>
 			<a
-				href="<?php echo esc_url( strtok( (string) $_SERVER['REQUEST_URI'], '?' ) ); ?>" // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+				href="<?php echo esc_url( strtok( (string) $_SERVER['REQUEST_URI'], '?' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput ?>"
 				class="flex-1 text-center text-xs font-medium border border-neutral-300 text-neutral-700 py-3 hover:border-black hover:text-black transition-colors duration-150"
 			>
 				<?php esc_html_e( 'Clear all', 'lenvy' ); ?>

@@ -24,7 +24,7 @@ defined('ABSPATH') || exit();
 			</h2>
 			<?php if ( lenvy_is_filtered() ) : ?>
 				<a
-					href="<?php echo esc_url( strtok( (string) $_SERVER['REQUEST_URI'], '?' ) ); ?>" // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+					href="<?php echo esc_url( strtok( (string) $_SERVER['REQUEST_URI'], '?' ) ); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput ?>"
 					class="text-xs text-neutral-500 hover:text-black underline underline-offset-2 transition-colors duration-150"
 				>
 					<?php esc_html_e( 'Clear all', 'lenvy' ); ?>
@@ -34,11 +34,8 @@ defined('ABSPATH') || exit();
 
 		<form method="GET" action="" data-filter-form id="lenvy-filter-form">
 
-			<?php
-			// Preserve sort order.
-			if ( isset( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification
-				?>
-				<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_key( $_GET['orderby'] ) ); ?>"> // phpcs:ignore WordPress.Security.NonceVerification
+			<?php if ( isset( $_GET['orderby'] ) ) : // phpcs:ignore WordPress.Security.NonceVerification ?>
+				<input type="hidden" name="orderby" value="<?php echo esc_attr( sanitize_key( $_GET['orderby'] ) ); // phpcs:ignore WordPress.Security.NonceVerification ?>">
 			<?php endif; ?>
 
 			<?php
