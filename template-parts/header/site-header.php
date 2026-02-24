@@ -94,14 +94,14 @@ $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url()
 					aria-label="<?php echo esc_attr( sprintf( _n( 'Cart, %d item', 'Cart, %d items', $cart_count, 'lenvy' ), $cart_count ) ); ?>"
 				>
 					<?php lenvy_icon( 'cart', '', 'md' ); ?>
-					<?php if ( $cart_count > 0 ) : ?>
 					<span
+						data-cart-count
 						class="absolute -top-0.5 -right-0.5 flex items-center justify-center w-4 h-4 bg-black text-white text-[10px] font-semibold rounded-full leading-none"
 						aria-hidden="true"
+						<?php if ( $cart_count === 0 ) : ?>style="display:none;"<?php endif; ?>
 					>
 						<?php echo esc_html( $cart_count > 99 ? '99+' : $cart_count ); ?>
 					</span>
-					<?php endif; ?>
 				</a>
 
 				<!-- Mobile menu toggle (hidden on desktop) -->

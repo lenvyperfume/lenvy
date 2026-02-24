@@ -592,11 +592,12 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] Style WC form elements (qty, variations, add-to-cart, tabs, reviews)
 - [x] Scent notes, usage tips, badge from ACF fields
 
-### Phase 9 — AJAX layer
-- [ ] Register AJAX endpoints in `inc/ajax.php`
-- [ ] `modules/ajax-filters.js`
-- [ ] `modules/quick-add.js`
-- [ ] `modules/mini-cart.js`
+### Phase 9 — AJAX layer ✅
+- [x] `inc/ajax.php` — lenvy_add_to_cart + lenvy_filter_products handlers
+- [x] `inc/enqueue.php` — window.lenvyAjax config injected in wp_head
+- [x] `modules/ajax-filters.js` — form intercept, pushState, grid swap
+- [x] `modules/quick-add.js` — event-delegated quick-add with ✓ confirmation
+- [x] `modules/mini-cart.js` — updateCartCount(), WC added_to_cart bridge
 
 ### Phase 10 — WPML preparation + polish
 - [ ] Audit all PHP strings for `__()` wrapping

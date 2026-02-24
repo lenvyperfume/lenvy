@@ -47,7 +47,7 @@ $current_orderby = (string) ( isset( $_GET['orderby'] ) ? sanitize_key( $_GET['o
 	</button>
 
 	<!-- Results count -->
-	<p class="text-xs text-neutral-500 hidden sm:block">
+	<p class="text-xs text-neutral-500 hidden sm:block" data-results-count>
 		<?php if ( $total > 0 ) : ?>
 			<?php
 			echo esc_html(
