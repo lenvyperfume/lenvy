@@ -562,11 +562,12 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 ### Phase 5 — Footer ✅
 - [x] `template-parts/footer/site-footer.php`
 
-### Phase 6 — Homepage
-- [ ] `template-parts/homepage/hero.php`
-- [ ] `template-parts/homepage/featured-categories.php`
-- [ ] `template-parts/homepage/featured-products.php`
-- [ ] Wire up `front-page.php`
+### Phase 6 — Homepage ✅
+- [x] `template-parts/homepage/hero.php`
+- [x] `template-parts/homepage/featured-categories.php`
+- [x] `template-parts/homepage/featured-products.php`
+- [x] `template-parts/homepage/promo-sections.php` (text_banner + brand_strip layouts)
+- [x] Wire up `front-page.php`
 
 ### Phase 7 — Shop and filters
 - [ ] `product-card.php` component
