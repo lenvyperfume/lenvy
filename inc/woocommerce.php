@@ -37,6 +37,17 @@ add_filter( 'loop_shop_per_page', function (): int {
 	return 12;
 }, 20 );
 
+// ─── Disable product reviews ─────────────────────────────────────────────────
+
+// Remove the Reviews tab from the single product tabs.
+add_filter( 'woocommerce_product_tabs', function ( array $tabs ): array {
+	unset( $tabs['reviews'] );
+	return $tabs;
+} );
+
+// Disable the WC reviews comment type so the form never appears.
+add_filter( 'woocommerce_product_reviews_enabled', '__return_false' );
+
 // ─── Dequeue WC block styles ─────────────────────────────────────────────────
 
 add_action( 'wp_enqueue_scripts', function (): void {
