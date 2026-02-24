@@ -599,10 +599,10 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] `modules/quick-add.js` — event-delegated quick-add with ✓ confirmation
 - [x] `modules/mini-cart.js` — updateCartCount(), WC added_to_cart bridge
 
-### Phase 10 — WPML preparation + polish
-- [ ] Audit all PHP strings for `__()` wrapping
-- [ ] Configure WPML ACF field translation settings
-- [ ] `inc/admin.php` — product list columns (brand, thumbnail)
-- [ ] Performance pass: transient caching for filter counts and price range
+### Phase 10 — WPML preparation + polish ✅
+- [x] Audit all PHP strings for `__()` wrapping — all clean
+- [x] Configure WPML ACF field translation settings — `wpml-config.xml` at theme root
+- [x] `inc/admin.php` — product list columns (thumbnail, brand) + sortable brand column
+- [x] Performance pass: `lenvy_get_filter_terms()` with WP object cache + 12h transient; `lenvy_flush_filter_term_cache()` invalidation on term create/edit/delete
 - [ ] Cross-browser / mobile QA pass
 - [ ] Build + deploy to staging (`npm run build` → git pull on server)

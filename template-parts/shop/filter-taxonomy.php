@@ -24,14 +24,9 @@ if ( ! $taxonomy || ! $query_var ) {
 	return;
 }
 
-$terms = get_terms( [
-	'taxonomy'   => $taxonomy,
-	'hide_empty' => true,
-	'orderby'    => 'name',
-	'order'      => 'ASC',
-] );
+$terms = lenvy_get_filter_terms( $taxonomy );
 
-if ( is_wp_error( $terms ) || empty( $terms ) ) {
+if ( empty( $terms ) ) {
 	return;
 }
 

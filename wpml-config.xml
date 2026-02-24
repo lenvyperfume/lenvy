@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  WPML theme configuration.
+
+  Tells WPML how to handle Lenvy's custom post types, taxonomies, and ACF
+  custom fields. WPML reads this file on activation / theme switch.
+
+  action values:
+    translate   — create per-language copies (text, wysiwyg, urls)
+    copy        — same value for all languages (images, toggles, selects)
+    copy-once   — copy on first translation, then independently editable
+    ignore      — WPML skips this field entirely
+-->
+<wpml-config>
+
+  <!-- ── Post types ─────────────────────────────────────────────────────────── -->
+  <post-types>
+    <post-type translate="1">product</post-type>
+    <post-type translate="1">page</post-type>
+    <post-type translate="1">post</post-type>
+  </post-types>
+
+  <!-- ── Taxonomies ─────────────────────────────────────────────────────────── -->
+  <taxonomies>
+    <!-- Custom taxonomy registered in inc/taxonomies.php -->
+    <taxonomy translate="1">product_brand</taxonomy>
+    <!-- WC native taxonomies are handled by WooCommerce Multilingual -->
+    <taxonomy translate="1">product_cat</taxonomy>
+  </taxonomies>
+
+  <!-- ── Custom fields (ACF stored as post / term / options meta) ───────────── -->
+  <custom-fields>
+
+    <!-- group_theme_settings — Options page -->
+    <custom-field action="copy">lenvy_site_logo</custom-field>
+    <custom-field action="copy">lenvy_site_logo_light</custom-field>
+    <custom-field action="copy">lenvy_announcement_bar_enabled</custom-field>
+    <custom-field action="translate">lenvy_announcement_bar_text</custom-field>
+    <custom-field action="translate">lenvy_announcement_bar_link</custom-field>
+    <custom-field action="copy">lenvy_header_sticky</custom-field>
+    <custom-field action="translate">lenvy_footer_copyright_text</custom-field>
+    <custom-field action="copy">lenvy_footer_social_links</custom-field>
+    <custom-field action="copy-once">lenvy_contact_email</custom-field>
+    <custom-field action="copy-once">lenvy_contact_phone</custom-field>
+
+    <!-- group_homepage — Front page -->
+    <custom-field action="copy">lenvy_hero_image</custom-field>
+    <custom-field action="translate">lenvy_hero_video_url</custom-field>
+    <custom-field action="translate">lenvy_hero_heading</custom-field>
+    <custom-field action="translate">lenvy_hero_subheading</custom-field>
+    <custom-field action="translate">lenvy_hero_cta_label</custom-field>
+    <custom-field action="translate">lenvy_hero_cta_url</custom-field>
+    <custom-field action="copy">lenvy_hero_text_position</custom-field>
+    <custom-field action="translate">lenvy_featured_categories</custom-field>
+    <custom-field action="translate">lenvy_featured_products</custom-field>
+    <custom-field action="translate">lenvy_promo_section</custom-field>
+
+    <!-- group_product_cat_enhancements — Taxonomy: product_cat -->
+    <custom-field action="copy">lenvy_cat_banner_image</custom-field>
+    <custom-field action="translate">lenvy_cat_banner_heading</custom-field>
+    <custom-field action="copy">lenvy_cat_layout</custom-field>
+    <custom-field action="translate">lenvy_cat_featured_product</custom-field>
+    <custom-field action="translate">lenvy_cat_seo_text</custom-field>
+
+    <!-- group_product_brand_fields — Taxonomy: product_brand -->
+    <custom-field action="copy">lenvy_brand_logo</custom-field>
+    <custom-field action="copy">lenvy_brand_banner_image</custom-field>
+    <custom-field action="translate">lenvy_brand_description</custom-field>
+    <custom-field action="copy-once">lenvy_brand_country_of_origin</custom-field>
+    <custom-field action="copy">lenvy_brand_is_featured</custom-field>
+    <custom-field action="translate">lenvy_brand_website_url</custom-field>
+
+    <!-- group_product_marketing — Post type: product -->
+    <custom-field action="translate">lenvy_product_badge_text</custom-field>
+    <custom-field action="translate">lenvy_product_scent_notes</custom-field>
+    <custom-field action="translate">lenvy_product_inspiration_text</custom-field>
+    <custom-field action="translate">lenvy_product_usage_tips</custom-field>
+
+  </custom-fields>
+
+</wpml-config>

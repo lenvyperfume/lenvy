@@ -241,6 +241,56 @@ add_action( 'save_post_product', function (): void {
 } );
 
 /**
+ * Return terms for a filter taxonomy, cached in the WP object cache.
+ *
+ * Uses the `lenvy` cache group (compatible with Redis / Memcached). Falls back
+ * to a 12-hour transient when a persistent object cache is unavailable.
+ * Cache is invalidated automatically on term create/edit/delete.
+ *
+ * @param  string $taxonomy  Taxonomy slug (e.g. 'product_brand').
+ * @return WP_Term[]
+ */
+function lenvy_get_filter_terms( string $taxonomy ): array {
+	$cache_key = 'filter_terms_' . $taxonomy;
+	$group     = 'lenvy';
+
+	$cached = wp_cache_get( $cache_key, $group );
+
+	if ( false !== $cached ) {
+		return (array) $cached;
+	}
+
+	$terms = get_terms( [
+		'taxonomy'   => $taxonomy,
+		'hide_empty' => true,
+		'orderby'    => 'name',
+		'order'      => 'ASC',
+	] );
+
+	if ( is_wp_error( $terms ) || ! is_array( $terms ) ) {
+		return [];
+	}
+
+	wp_cache_set( $cache_key, $terms, $group, 12 * HOUR_IN_SECONDS );
+
+	return $terms;
+}
+
+// Invalidate filter term cache when any term is created, edited, or deleted.
+add_action( 'created_term', 'lenvy_flush_filter_term_cache', 10, 3 );
+add_action( 'edited_term',  'lenvy_flush_filter_term_cache', 10, 3 );
+add_action( 'delete_term',  'lenvy_flush_filter_term_cache', 10, 3 );
+
+/**
+ * @param int    $term_id   Unused.
+ * @param int    $tt_id     Unused.
+ * @param string $taxonomy  Taxonomy slug.
+ */
+function lenvy_flush_filter_term_cache( int $term_id, int $tt_id, string $taxonomy ): void {
+	wp_cache_delete( 'filter_terms_' . $taxonomy, 'lenvy' );
+}
+
+/**
  * Return a structured array describing all currently active filters.
  *
  * Each entry has:
