@@ -5,7 +5,7 @@
  * Usage:
  *   get_template_part('template-parts/components/icon', null, [
  *     'name'  => 'search',          // required — filename without .svg
- *     'size'  => 'md',              // xs|sm|md|lg|xl — maps to w-*/h-* classes
+ *     'size'  => 'md',              // xs|sm|md|lg|xl — maps to Tailwind w/h classes
  *     'class' => 'text-neutral-700', // additional Tailwind classes
  *     'label' => 'Search',          // for standalone icons needing aria-label
  *   ]);
