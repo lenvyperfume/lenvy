@@ -543,13 +543,13 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] Write base resets and typography rules in `resources/scss/_base.scss`
 - [x] Define any custom Tailwind component utilities needed
 
-### Phase 3 — Core components
-- [ ] `button.php` — all variants
-- [ ] `icon.php` + `assets/icons/` directory
-- [ ] `badge.php`
-- [ ] `notice.php`
-- [ ] `breadcrumb.php`
-- [ ] `pagination.php`
+### Phase 3 — Core components ✅
+- [x] `button.php` — all variants
+- [x] `icon.php` + `assets/icons/` directory
+- [x] `badge.php`
+- [x] `notice.php`
+- [x] `breadcrumb.php`
+- [x] `pagination.php`
 
 ### Phase 4 — Header and navigation
 - [ ] `Lenvy_Primary_Nav_Walker` and `Lenvy_Mobile_Nav_Walker` in `inc/nav-walkers.php`
