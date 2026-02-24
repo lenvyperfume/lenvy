@@ -23,17 +23,12 @@ document.addEventListener('DOMContentLoaded', () => {
   initAccordion();
   initPriceSlider();
 
-  // Sort select — auto-submit the filter form on change.
+  // Sort select — navigate via URL so price/filter form inputs are never dragged along.
   document.querySelectorAll('[data-sort-select]').forEach((select) => {
     select.addEventListener('change', () => {
-      const form = select.closest('form') ?? document.querySelector('[data-filter-form]');
-      if (form) {
-        form.submit();
-      } else {
-        const url = new URL(window.location.href);
-        url.searchParams.set('orderby', select.value);
-        window.location.href = url.toString();
-      }
+      const url = new URL(window.location.href);
+      url.searchParams.set('orderby', select.value);
+      window.location.href = url.toString();
     });
   });
 

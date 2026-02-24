@@ -62,14 +62,7 @@ add_action( 'pre_get_posts', function ( WP_Query $query ): void {
 	];
 
 	foreach ( $taxonomy_map as $var => $taxonomy ) {
-		// phpcs:ignore WordPress.Security.NonceVerification
-		$raw = isset( $_GET[ $var ] ) ? sanitize_text_field( wp_unslash( $_GET[ $var ] ) ) : '';
-
-		if ( empty( $raw ) ) {
-			continue;
-		}
-
-		$slugs = array_filter( array_map( 'sanitize_title', explode( ',', $raw ) ) );
+		$slugs = lenvy_parse_filter_slugs( $var );
 
 		if ( ! empty( $slugs ) ) {
 			$tax_query[] = [

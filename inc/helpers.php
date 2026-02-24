@@ -175,6 +175,30 @@ function lenvy_pagination(): void {
 // ─── Shop / filter helpers ────────────────────────────────────────────────────
 
 /**
+ * Read a filter query var that may arrive as a PHP array (name="var[]") or as
+ * a comma-separated string (hand-crafted URL). Returns sanitized slug array.
+ *
+ * @param  string $var  Query var name, e.g. 'filter_cat'.
+ * @return string[]
+ */
+function lenvy_parse_filter_slugs( string $var ): array {
+	// phpcs:ignore WordPress.Security.NonceVerification
+	$raw = $_GET[ $var ] ?? '';
+
+	if ( is_array( $raw ) ) {
+		return array_values( array_filter( array_map( 'sanitize_title', $raw ) ) );
+	}
+
+	$raw = sanitize_text_field( wp_unslash( (string) $raw ) );
+
+	if ( '' === $raw ) {
+		return [];
+	}
+
+	return array_values( array_filter( array_map( 'sanitize_title', explode( ',', $raw ) ) ) );
+}
+
+/**
  * Return [min_price, max_price] from all published products.
  * Result is cached for 6 hours via a transient.
  *
@@ -238,18 +262,15 @@ function lenvy_get_active_filters(): array {
 	];
 
 	foreach ( $taxonomy_map as $var => $group_label ) {
-		// phpcs:ignore WordPress.Security.NonceVerification
-		$raw = isset( $_GET[ $var ] ) ? sanitize_text_field( wp_unslash( $_GET[ $var ] ) ) : '';
+		$slugs = lenvy_parse_filter_slugs( $var );
 
-		if ( empty( $raw ) ) {
+		if ( empty( $slugs ) ) {
 			continue;
 		}
 
-		$slugs = array_filter( array_map( 'sanitize_title', explode( ',', $raw ) ) );
-
 		foreach ( $slugs as $slug ) {
-			// Build comma-separated value with this slug removed.
-			$remaining = implode( ',', array_diff( $slugs, [ $slug ] ) );
+			// Rebuild the array with this slug removed for the remove link.
+			$remaining = array_values( array_diff( $slugs, [ $slug ] ) );
 
 			$active[] = [
 				'label'       => $group_label . ': ' . str_replace( '-', ' ', $slug ),

@@ -35,10 +35,17 @@ if ( is_wp_error( $terms ) || empty( $terms ) ) {
 	return;
 }
 
-// Active slugs from URL — comma-separated.
-// phpcs:ignore WordPress.Security.NonceVerification
-$raw_active   = isset( $_GET[ $query_var ] ) ? sanitize_text_field( wp_unslash( $_GET[ $query_var ] ) ) : '';
-$active_slugs = array_filter( array_map( 'trim', explode( ',', $raw_active ) ) );
+// Active slugs — handles both array (name="var[]") and comma-separated string.
+$active_slugs = lenvy_parse_filter_slugs( $query_var );
+
+// When browsing a taxonomy archive for this taxonomy (e.g. /product-category/men-perfume/),
+// WP applies the term constraint via URL routing, not via $_GET — mark it as active too.
+if ( is_tax( $taxonomy ) ) {
+	$queried = get_queried_object();
+	if ( $queried instanceof WP_Term && ! in_array( $queried->slug, $active_slugs, true ) ) {
+		$active_slugs[] = $queried->slug;
+	}
+}
 
 ob_start();
 ?>

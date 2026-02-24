@@ -67,7 +67,16 @@ function initSingle(root) {
 		labelMax.textContent = fmt(currentMax);
 	}
 
+	// Disable hidden inputs when at global defaults — excluded from form submission
+	// so sort/filter changes don't accidentally inject a price range.
+	// Re-enabled the moment the user actually drags a thumb.
+	function syncInputDisabled() {
+		if (inputMin) inputMin.disabled = (currentMin <= globalMin);
+		if (inputMax) inputMax.disabled = (currentMax >= globalMax);
+	}
+
 	render();
+	syncInputDisabled();
 
 	function dragThumb(thumb, isMin) {
 		let isDragging = false;
@@ -98,6 +107,7 @@ function initSingle(root) {
 
 			render();
 			updateLabels();
+			syncInputDisabled();
 		};
 
 		const stop = () => {
@@ -119,12 +129,12 @@ function initSingle(root) {
 				e.preventDefault();
 				if (isMin) currentMin = Math.max(globalMin, currentMin - currentRange);
 				else       currentMax = Math.max(currentMin + currentRange, currentMax - currentRange);
-				render(); updateLabels();
+				render(); updateLabels(); syncInputDisabled();
 			} else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
 				e.preventDefault();
 				if (isMin) currentMin = Math.min(currentMax - currentRange, currentMin + currentRange);
 				else       currentMax = Math.min(globalMax, currentMax + currentRange);
-				render(); updateLabels();
+				render(); updateLabels(); syncInputDisabled();
 			}
 		});
 	}
