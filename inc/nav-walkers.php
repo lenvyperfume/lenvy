@@ -19,7 +19,7 @@ class Lenvy_Footer_Nav_Walker extends Walker_Nav_Menu {
 		$output .= '<li>';
 		$output .=
 			'<a href="' . $url . '"' . $target .
-			' class="text-sm font-light text-brand-800 hover:text-brand-950 transition-colors duration-200">' .
+			' class="text-sm font-light text-neutral-600 hover:text-neutral-950 transition-colors duration-200">' .
 			esc_html($title) .
 			'</a>';
 	}

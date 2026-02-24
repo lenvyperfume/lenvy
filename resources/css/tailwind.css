@@ -1,31 +1,40 @@
 @import 'tailwindcss';
 
 /*
- * ─── Design tokens ───────────────────────────────────────────────────────────
+ * ─── Design tokens ────────────────────────────────────────────────────────────
  * Tailwind v4 @theme — must stay in a plain CSS file so the
  * @tailwindcss/vite plugin can intercept it before Sass runs.
+ *
+ * BRAND RULE: --color-primary is the ONLY brand color token.
+ * No shades, no opacity variants, no computed variations.
+ * Never use primary-500, primary/80, or any modification of the brand color.
  */
 
 @theme {
-  /* Typeface */
-  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  /* ── Typography ──────────────────────────────────────────────────────────── */
+  --font-sans:  'Inter', ui-sans-serif, system-ui, sans-serif;
   --font-serif: 'Playfair Display', ui-serif, Georgia, serif;
 
-  /* Brand palette  (primary = brand-300 = #e1c4ff) */
-  --color-brand-50: #faf7ff;
-  --color-brand-100: #f3ecff;
-  --color-brand-200: #e9d8ff;
-  --color-brand-300: #e1c4ff;
-  --color-brand-400: #ce9fff;
-  --color-brand-500: #b87aff;
-  --color-brand-600: #9d52f0;
-  --color-brand-700: #7e35cc;
-  --color-brand-800: #5e22a0;
-  --color-brand-900: #3d1570;
-  --color-brand-950: #200a3f;
-
+  /* ── Brand — single primary, no shades ──────────────────────────────────── */
   --color-primary: #e1c4ff;
 
-  /* Fluid display size */
+  /* ── Base ───────────────────────────────────────────────────────────────── */
+  --color-black: #0a0a0a;
+  --color-white: #ffffff;
+
+  /* ── Neutral scale — explicit values only, no auto-generation ───────────── */
+  --color-neutral-50:  #fafafa;
+  --color-neutral-100: #f5f5f5;
+  --color-neutral-200: #e5e5e5;
+  --color-neutral-300: #d4d4d4;
+  --color-neutral-400: #a3a3a3;
+  --color-neutral-500: #737373;
+  --color-neutral-600: #525252;
+  --color-neutral-700: #404040;
+  --color-neutral-800: #262626;
+  --color-neutral-900: #171717;
+  --color-neutral-950: #0a0a0a;
+
+  /* ── Text sizes ──────────────────────────────────────────────────────────── */
   --text-display: clamp(2.5rem, 6vw, 4.5rem);
 }

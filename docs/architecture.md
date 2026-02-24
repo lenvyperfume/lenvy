@@ -538,10 +538,10 @@ Phase 1 filters are server-rendered — no extra JS weight, no hydration, full S
 - [x] Create all 5 ACF field groups and commit JSON to `acf-json/`
 - [x] Document WC attributes in `docs/attributes.md`
 
-### Phase 2 — Design tokens + base styles
-- [ ] Define all Tailwind CSS v4 `@theme` tokens in `resources/css/tailwind.css`
-- [ ] Write base resets and typography rules in `resources/scss/_base.scss`
-- [ ] Define any custom Tailwind component utilities needed
+### Phase 2 — Design tokens + base styles ✅
+- [x] Define all Tailwind CSS v4 `@theme` tokens in `resources/css/tailwind.css`
+- [x] Write base resets and typography rules in `resources/scss/_base.scss`
+- [x] Define any custom Tailwind component utilities needed
 
 ### Phase 3 — Core components
 - [ ] `button.php` — all variants

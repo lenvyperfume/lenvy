@@ -1,35 +1,37 @@
-// ─── SCSS variables ───────────────────────────────────────────────────────────
+// ─── SCSS variables ────────────────────────────────────────────────────────────
 // Mirror the CSS custom properties from tailwind.css so they are available
 // inside SCSS expressions (interpolation, math, conditionals etc.).
-// For Tailwind utilities inside templates, always use the CSS var / Tailwind
-// class instead of these SCSS variables directly.
+//
+// For Tailwind utilities in PHP templates, always use the Tailwind class
+// (e.g. text-primary, bg-neutral-100) instead of these SCSS variables.
 
-// Brand
-$brand-primary: #e1c4ff;
-$brand-50: #faf7ff;
-$brand-100: #f3ecff;
-$brand-200: #e9d8ff;
-$brand-300: #e1c4ff;
-$brand-400: #ce9fff;
-$brand-500: #b87aff;
-$brand-600: #9d52f0;
-$brand-700: #7e35cc;
-$brand-800: #5e22a0;
-$brand-900: #3d1570;
-$brand-950: #200a3f;
+// ── Brand — single primary, no shades ─────────────────────────────────────────
+$color-primary: #e1c4ff;
+$color-black:   #0a0a0a;
+$color-white:   #ffffff;
 
-// Neutral
-$white: #ffffff;
-$black: #0a0a0a;
+// ── Neutral scale ─────────────────────────────────────────────────────────────
+$neutral-50:  #fafafa;
+$neutral-100: #f5f5f5;
+$neutral-200: #e5e5e5;
+$neutral-300: #d4d4d4;
+$neutral-400: #a3a3a3;
+$neutral-500: #737373;
+$neutral-600: #525252;
+$neutral-700: #404040;
+$neutral-800: #262626;
+$neutral-900: #171717;
+$neutral-950: #0a0a0a;
 
-// Typography
-$font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+// ── Typography ────────────────────────────────────────────────────────────────
+$font-sans:  'Inter', ui-sans-serif, system-ui, sans-serif;
 $font-serif: 'Playfair Display', ui-serif, Georgia, serif;
 
-// Layout
+// ── Layout ────────────────────────────────────────────────────────────────────
 $container-max: 1280px;
-$container-px: 1rem;
+$container-px:  1rem;
+$header-height: 60px;
 
-// Transitions
+// ── Transitions ───────────────────────────────────────────────────────────────
 $transition-base: 150ms ease;
-$transition-slow: 300ms ease;
+$transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
