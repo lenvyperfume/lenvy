@@ -8,6 +8,20 @@
 defined('ABSPATH') || exit();
 
 // Load theme includes.
-foreach (['/inc/setup.php', '/inc/enqueue.php', '/inc/acf.php', '/inc/helpers.php', '/inc/woocommerce.php', '/inc/nav-walkers.php'] as $file) {
+foreach (
+	[
+		'/inc/setup.php',
+		'/inc/enqueue.php',
+		'/inc/acf.php',
+		'/inc/helpers.php',
+		'/inc/woocommerce.php',
+		'/inc/nav-walkers.php',
+		'/inc/taxonomies.php',
+		'/inc/shop.php',
+		'/inc/ajax.php',
+		'/inc/admin.php',
+	]
+	as $file
+) {
 	require_once get_template_directory() . $file;
 }

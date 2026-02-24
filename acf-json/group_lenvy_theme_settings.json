@@ -1,0 +1,249 @@
+{
+	"key": "group_lenvy_theme_settings",
+	"title": "Theme Settings",
+	"fields": [
+		{
+			"key": "field_lenvy_ts_logo",
+			"label": "Site Logo",
+			"name": "lenvy_site_logo",
+			"aria-label": "",
+			"type": "image",
+			"instructions": "Upload the primary site logo. Recommended: SVG or PNG with transparent background.",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"return_format": "array",
+			"preview_size": "thumbnail",
+			"library": "all",
+			"min_width": "",
+			"min_height": "",
+			"min_size": "",
+			"max_width": "",
+			"max_height": "",
+			"max_size": "",
+			"mime_types": ""
+		},
+		{
+			"key": "field_lenvy_ts_logo_light",
+			"label": "Site Logo — Light",
+			"name": "lenvy_site_logo_light",
+			"aria-label": "",
+			"type": "image",
+			"instructions": "Logo version for use on dark backgrounds (e.g. transparent header over hero images).",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"return_format": "array",
+			"preview_size": "thumbnail",
+			"library": "all",
+			"min_width": "",
+			"min_height": "",
+			"min_size": "",
+			"max_width": "",
+			"max_height": "",
+			"max_size": "",
+			"mime_types": ""
+		},
+		{
+			"key": "field_lenvy_ts_ann_enabled",
+			"label": "Announcement Bar — Enabled",
+			"name": "lenvy_announcement_bar_enabled",
+			"aria-label": "",
+			"type": "true_false",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"message": "Show announcement bar at the top of every page",
+			"default_value": 0,
+			"ui": 1,
+			"ui_on_text": "Visible",
+			"ui_off_text": "Hidden"
+		},
+		{
+			"key": "field_lenvy_ts_ann_text",
+			"label": "Announcement Bar — Text",
+			"name": "lenvy_announcement_bar_text",
+			"aria-label": "",
+			"type": "text",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_lenvy_ts_ann_enabled",
+						"operator": "==",
+						"value": "1"
+					}
+				]
+			],
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"default_value": "",
+			"maxlength": 160,
+			"placeholder": "Free shipping on orders over €50",
+			"prepend": "",
+			"append": ""
+		},
+		{
+			"key": "field_lenvy_ts_ann_link",
+			"label": "Announcement Bar — Link",
+			"name": "lenvy_announcement_bar_link",
+			"aria-label": "",
+			"type": "link",
+			"instructions": "Optional. Makes the announcement bar a clickable link.",
+			"required": 0,
+			"conditional_logic": [
+				[
+					{
+						"field": "field_lenvy_ts_ann_enabled",
+						"operator": "==",
+						"value": "1"
+					}
+				]
+			],
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"return_format": "array"
+		},
+		{
+			"key": "field_lenvy_ts_header_sticky",
+			"label": "Sticky Header",
+			"name": "lenvy_header_sticky",
+			"aria-label": "",
+			"type": "true_false",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"message": "Keep the header visible when scrolling",
+			"default_value": 1,
+			"ui": 1,
+			"ui_on_text": "Sticky",
+			"ui_off_text": "Static"
+		},
+		{
+			"key": "field_lenvy_ts_footer_copyright",
+			"label": "Footer — Copyright Text",
+			"name": "lenvy_footer_copyright_text",
+			"aria-label": "",
+			"type": "text",
+			"instructions": "Use {year} as a placeholder for the current year.",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"default_value": "© {year} Lenvy. All rights reserved.",
+			"maxlength": "",
+			"placeholder": "",
+			"prepend": "",
+			"append": ""
+		},
+		{
+			"key": "field_lenvy_ts_social_links",
+			"label": "Footer — Social Links",
+			"name": "lenvy_footer_social_links",
+			"aria-label": "",
+			"type": "repeater",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "", "class": "", "id": "" },
+			"layout": "table",
+			"pagination": 0,
+			"min": 0,
+			"max": 8,
+			"collapsed": "",
+			"button_label": "Add Social Link",
+			"rows_per_page": 20,
+			"sub_fields": [
+				{
+					"key": "field_lenvy_ts_social_platform",
+					"label": "Platform",
+					"name": "platform",
+					"aria-label": "",
+					"type": "select",
+					"instructions": "",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": { "width": "30", "class": "", "id": "" },
+					"choices": {
+						"instagram": "Instagram",
+						"facebook": "Facebook",
+						"tiktok": "TikTok",
+						"pinterest": "Pinterest",
+						"youtube": "YouTube",
+						"x": "X (Twitter)"
+					},
+					"default_value": "",
+					"return_format": "value",
+					"allow_null": 0,
+					"allow_custom": 0,
+					"search_placeholder": "",
+					"multiple": 0,
+					"ui": 0
+				},
+				{
+					"key": "field_lenvy_ts_social_url",
+					"label": "URL",
+					"name": "url",
+					"aria-label": "",
+					"type": "url",
+					"instructions": "",
+					"required": 1,
+					"conditional_logic": 0,
+					"wrapper": { "width": "70", "class": "", "id": "" },
+					"default_value": "",
+					"placeholder": "https://"
+				}
+			]
+		},
+		{
+			"key": "field_lenvy_ts_contact_email",
+			"label": "Contact — Email",
+			"name": "lenvy_contact_email",
+			"aria-label": "",
+			"type": "email",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "50", "class": "", "id": "" },
+			"default_value": "",
+			"placeholder": "",
+			"prepend": "",
+			"append": ""
+		},
+		{
+			"key": "field_lenvy_ts_contact_phone",
+			"label": "Contact — Phone",
+			"name": "lenvy_contact_phone",
+			"aria-label": "",
+			"type": "text",
+			"instructions": "",
+			"required": 0,
+			"conditional_logic": 0,
+			"wrapper": { "width": "50", "class": "", "id": "" },
+			"default_value": "",
+			"maxlength": "",
+			"placeholder": "+31 20 123 4567",
+			"prepend": "",
+			"append": ""
+		}
+	],
+	"location": [
+		[
+			{
+				"param": "options_page",
+				"operator": "==",
+				"value": "lenvy-theme-settings"
+			}
+		]
+	],
+	"menu_order": 0,
+	"position": "normal",
+	"style": "default",
+	"label_placement": "top",
+	"instruction_placement": "label",
+	"hide_on_screen": "",
+	"active": true,
+	"description": "Global theme settings — logo, announcement bar, header, footer, contact.",
+	"show_in_rest": 0,
+	"modified": 1771891200
+}

@@ -11,9 +11,9 @@ document.documentElement.style.opacity = '1';
 document.addEventListener('DOMContentLoaded', () => {
   // ── Mobile drawer ────────────────────────────────────────────────────────
 
-  const drawerToggle   = document.querySelector('[data-drawer-toggle]');
-  const drawerClose    = document.querySelector('[data-drawer-close]');
-  const drawer         = document.querySelector('[data-drawer]');
+  const drawerToggle = document.querySelector('[data-drawer-toggle]');
+  const drawerClose = document.querySelector('[data-drawer-close]');
+  const drawer = document.querySelector('[data-drawer]');
   const drawerBackdrop = document.querySelector('[data-drawer-backdrop]');
 
   function openDrawer() {
@@ -44,7 +44,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Mobile sub-menu accordion ────────────────────────────────────────────
 
   document.querySelectorAll('[data-mobile-submenu-toggle]').forEach((btn) => {
-    const li      = btn.closest('li');
+    const li = btn.closest('li');
     const submenu = li?.querySelector('.mobile-submenu');
     if (!submenu) return;
 
@@ -53,13 +53,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (isOpen) {
         submenu.style.maxHeight = '0';
-        submenu.style.opacity   = '0';
+        submenu.style.opacity = '0';
         submenu.setAttribute('aria-hidden', 'true');
         btn.setAttribute('aria-expanded', 'false');
         btn.querySelector('svg')?.classList.remove('rotate-180');
       } else {
         submenu.style.maxHeight = submenu.scrollHeight + 'px';
-        submenu.style.opacity   = '1';
+        submenu.style.opacity = '1';
         submenu.setAttribute('aria-hidden', 'false');
         btn.setAttribute('aria-expanded', 'true');
         btn.querySelector('svg')?.classList.add('rotate-180');
@@ -69,10 +69,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ── Search overlay ───────────────────────────────────────────────────────
 
-  const searchToggle  = document.querySelector('[data-search-toggle]');
-  const searchClose   = document.querySelector('[data-search-close]');
+  const searchToggle = document.querySelector('[data-search-toggle]');
+  const searchClose = document.querySelector('[data-search-close]');
   const searchOverlay = document.querySelector('[data-search-overlay]');
-  const searchInput   = searchOverlay?.querySelector('input[type="search"]');
+  const searchInput = searchOverlay?.querySelector('input[type="search"]');
 
   function openSearch() {
     if (!searchOverlay) return;
@@ -122,7 +122,7 @@ document.addEventListener('DOMContentLoaded', () => {
 document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('input.qty').forEach((input) => {
     input.addEventListener('change', () => {
-      const form      = input.closest('form.woocommerce-cart-form');
+      const form = input.closest('form.woocommerce-cart-form');
       const updateBtn = form?.querySelector('[name="update_cart"]');
       if (updateBtn) updateBtn.disabled = false;
     });

@@ -107,6 +107,30 @@ function lenvy_enqueue_assets(): void {
 add_action('wp_enqueue_scripts', 'lenvy_enqueue_assets');
 
 /**
+ * Enqueue Google Fonts — Inter (sans) + Playfair Display (serif).
+ * Preconnect hints are added for performance.
+ */
+function lenvy_enqueue_fonts(): void {
+	// Preconnect to Google's font origins
+	add_action(
+		'wp_head',
+		static function (): void {
+			echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
+			echo '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>' . "\n";
+		},
+		1,
+	);
+
+	wp_enqueue_style(
+		'lenvy-fonts',
+		'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap',
+		[],
+		null,
+	);
+}
+add_action('wp_enqueue_scripts', 'lenvy_enqueue_fonts');
+
+/**
  * Dequeue WooCommerce block styles that conflict with Tailwind.
  */
 function lenvy_dequeue_wc_block_styles(): void {
