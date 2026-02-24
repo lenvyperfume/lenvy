@@ -19,7 +19,7 @@ $announcement_enabled = lenvy_field( 'lenvy_announcement_bar_enabled', 'options'
 $announcement_text    = lenvy_field( 'lenvy_announcement_bar_text', 'options' );
 $announcement_link    = lenvy_field( 'lenvy_announcement_bar_link', 'options' );
 $logo_id              = lenvy_field( 'lenvy_site_logo', 'options' );
-$cart_count           = function_exists( 'WC' ) ? WC()->cart->get_cart_contents_count() : 0;
+$cart_count           = ( function_exists( 'WC' ) && WC()->cart ) ? WC()->cart->get_cart_contents_count() : 0;
 $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url() : home_url( '/cart/' );
 ?>
 

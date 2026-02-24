@@ -16,11 +16,11 @@
 	<noscript><style>html{opacity:1}</style></noscript>
 </head>
 
-<body <?php body_class('antialiased bg-white text-brand-950'); ?>>
+<body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
-<a class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 z-50 bg-brand-900 text-white px-4 py-2 text-sm" href="#primary">
-	<?php esc_html_e('Skip to content', 'lenvy'); ?>
+<a class="skip-link" href="#primary">
+	<?php esc_html_e( 'Skip to content', 'lenvy' ); ?>
 </a>
 
 <?php get_template_part('template-parts/header/site-header'); ?>
