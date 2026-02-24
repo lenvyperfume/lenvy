@@ -47,12 +47,18 @@ function lenvy_the_field( string $key, int|string|null $post_id = null ): void {
  * Return a wp_get_attachment_image() string, or an empty string if the
  * attachment ID is falsy.
  *
- * @param  int|false $attachment_id WordPress attachment ID.
- * @param  string    $size          Image size name or [width, height] array.
- * @param  string    $class         Additional class attribute value.
+ * Accepts an ACF image array (return format "Array") or a plain integer ID.
+ *
+ * @param  int|array|false $attachment_id WordPress attachment ID or ACF image array.
+ * @param  string          $size          Image size name or [width, height] array.
+ * @param  string          $class         Additional class attribute value.
  * @return string
  */
-function lenvy_get_image( int|false $attachment_id, string $size = 'thumbnail', string $class = '' ): string {
+function lenvy_get_image( int|array|false $attachment_id, string $size = 'thumbnail', string $class = '' ): string {
+	if ( is_array( $attachment_id ) ) {
+		$attachment_id = (int) ( $attachment_id['ID'] ?? 0 );
+	}
+
 	if ( ! $attachment_id ) {
 		return '';
 	}
