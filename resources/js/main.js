@@ -15,6 +15,7 @@ import { initGallery } from './modules/gallery.js';
 import { initMiniCart } from './modules/mini-cart.js';
 import { initQuickAdd } from './modules/quick-add.js';
 import { initAjaxFilters } from './modules/ajax-filters.js';
+import { initBrandScroller } from './modules/brand-scroller.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -30,6 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initMiniCart();
   initQuickAdd();
   initAjaxFilters();
+  initBrandScroller();
 
   // Sort select — navigate via URL so price/filter form inputs are never dragged along.
   document.querySelectorAll('[data-sort-select]').forEach((select) => {
