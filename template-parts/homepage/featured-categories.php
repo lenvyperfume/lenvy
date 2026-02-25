@@ -10,39 +10,39 @@
 
 defined('ABSPATH') || exit();
 
-$cat_ids = lenvy_field( 'lenvy_featured_categories' );
+$cat_ids = lenvy_field('lenvy_featured_categories');
 
-if ( empty( $cat_ids ) ) {
+if (empty($cat_ids)) {
 	return;
 }
 
 // Build valid term objects from the ID array
 $cats = [];
-foreach ( (array) $cat_ids as $id ) {
-	$term = get_term( (int) $id, 'product_cat' );
-	if ( $term && ! is_wp_error( $term ) ) {
+foreach ((array) $cat_ids as $id) {
+	$term = get_term((int) $id, 'product_cat');
+	if ($term && !is_wp_error($term)) {
 		$cats[] = $term;
 	}
 }
 
-if ( empty( $cats ) ) {
+if (empty($cats)) {
 	return;
 }
 
-$count = count( $cats );
+$count = count($cats);
 
 // Responsive grid class adapts to how many categories are shown
-$grid_cols = match ( true ) {
+$grid_cols = match (true) {
 	$count <= 2 => 'grid-cols-2',
 	$count === 3 => 'grid-cols-3',
 	$count === 4 => 'grid-cols-2 md:grid-cols-4',
 	$count === 5 => 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
-	default      => 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6',
+	default => 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6',
 };
 
-$shop_url = function_exists( 'wc_get_page_permalink' )
-	? wc_get_page_permalink( 'shop' )
-	: get_post_type_archive_link( 'product' );
+$shop_url = function_exists('wc_get_page_permalink')
+	? wc_get_page_permalink('shop')
+	: get_post_type_archive_link('product');
 ?>
 
 <section class="py-16 lg:py-24">
@@ -51,51 +51,50 @@ $shop_url = function_exists( 'wc_get_page_permalink' )
 		<!-- Section header -->
 		<div class="flex items-center justify-between mb-8 lg:mb-12">
 			<h2 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
-				<?php esc_html_e( 'Shop by Category', 'lenvy' ); ?>
+				<?php esc_html_e('Shop by Category', 'lenvy'); ?>
 			</h2>
 			<a
-				href="<?php echo esc_url( $shop_url ?: home_url( '/shop/' ) ); ?>"
+				href="<?php echo esc_url($shop_url ?: home_url('/shop/')); ?>"
 				class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-150"
 			>
-				<?php esc_html_e( 'View all', 'lenvy' ); ?>
-				<?php lenvy_icon( 'arrow-right', '', 'xs' ); ?>
+				<?php esc_html_e('View all', 'lenvy'); ?>
+				<?php lenvy_icon('arrow-right', '', 'xs'); ?>
 			</a>
 		</div>
 
 		<!-- Category grid -->
-		<div class="grid <?php echo esc_attr( $grid_cols ); ?> gap-3 md:gap-4">
-			<?php foreach ( $cats as $term ) :
+		<div class="grid <?php echo esc_attr($grid_cols); ?> gap-3 md:gap-4">
+			<?php foreach ($cats as $term):
 
-				// Image priority: ACF banner → WC thumbnail meta
-				$acf_img  = lenvy_field( 'lenvy_cat_banner_image', "term_{$term->term_id}" );
-				$image_id = is_array( $acf_img ) ? ( $acf_img['ID'] ?? 0 ) : 0;
+   	// Image priority: ACF banner → WC thumbnail meta
+   	$acf_img = lenvy_field('lenvy_cat_banner_image', "term_{$term->term_id}");
+   	$image_id = is_array($acf_img) ? $acf_img['ID'] ?? 0 : 0;
 
-				if ( ! $image_id ) {
-					$image_id = (int) get_term_meta( $term->term_id, 'thumbnail_id', true );
-				}
+   	if (!$image_id) {
+   		$image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
+   	}
 
-				$term_url = get_term_link( $term, 'product_cat' );
-				$term_url = is_wp_error( $term_url ) ? ( $shop_url ?: home_url( '/shop/' ) ) : $term_url;
-			?>
+   	$term_url = get_term_link($term, 'product_cat');
+   	$term_url = is_wp_error($term_url) ? ($shop_url ?: home_url('/shop/')) : $term_url;
+   	?>
 			<a
-				href="<?php echo esc_url( $term_url ); ?>"
+				href="<?php echo esc_url($term_url); ?>"
 				class="group relative block overflow-hidden bg-neutral-100 aspect-[3/4]"
-				aria-label="<?php echo esc_attr( $term->name ); ?>"
+				aria-label="<?php echo esc_attr($term->name); ?>"
 			>
 
 				<!-- Category image -->
-				<?php if ( $image_id ) : ?>
-					<?php
-					echo wp_get_attachment_image( $image_id, 'medium_large', false, [
-						'class'   => 'absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105',
-						'loading' => 'lazy',
-						'alt'     => esc_attr( $term->name ),
-					] );
-					?>
-				<?php else : ?>
+				<?php if ($image_id): ?>
+					<?php echo wp_get_attachment_image($image_id, 'medium_large', false, [
+     	'class' =>
+     		'absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105',
+     	'loading' => 'lazy',
+     	'alt' => esc_attr($term->name),
+     ]); ?>
+				<?php else: ?>
 					<div class="absolute inset-0 flex items-center justify-center">
 						<span class="text-xs uppercase tracking-widest text-neutral-300">
-							<?php echo esc_html( $term->name ); ?>
+							<?php echo esc_html($term->name); ?>
 						</span>
 					</div>
 				<?php endif; ?>
@@ -104,21 +103,24 @@ $shop_url = function_exists( 'wc_get_page_permalink' )
 				<div class="absolute inset-0 bg-gradient-to-t from-neutral-950/65 via-transparent to-transparent"></div>
 				<div class="absolute bottom-0 left-0 right-0 p-4">
 					<p class="text-sm font-medium text-white leading-snug">
-						<?php echo esc_html( $term->name ); ?>
+						<?php echo esc_html($term->name); ?>
 					</p>
-					<?php if ( $term->count > 0 ) : ?>
+					<?php if ($term->count > 0): ?>
 						<p class="text-[11px] text-white/55 mt-0.5">
-							<?php echo esc_html( sprintf(
-								/* translators: %d: product count */
-								_n( '%d product', '%d products', $term->count, 'lenvy' ),
-								$term->count
-							) ); ?>
+							<?php echo esc_html(
+       	sprintf(
+       		/* translators: %d: product count */
+       		_n('%d product', '%d products', $term->count, 'lenvy'),
+       		$term->count,
+       	),
+       ); ?>
 						</p>
 					<?php endif; ?>
 				</div>
 
 			</a>
-			<?php endforeach; ?>
+			<?php
+   endforeach; ?>
 		</div>
 
 	</div>

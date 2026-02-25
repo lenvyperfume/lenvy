@@ -23,17 +23,18 @@
 
 defined('ABSPATH') || exit();
 
-$content      = $args['content'] ?? '';
-$class        = $args['class']   ?? '';
-$id           = $args['id']      ?? '';
-$allowed_tags = [ 'div', 'section', 'main', 'article', 'header', 'footer', 'aside' ];
-$tag          = in_array( $args['tag'] ?? 'div', $allowed_tags, true ) ? ( $args['tag'] ?? 'div' ) : 'div';
+$content = $args['content'] ?? '';
+$class = $args['class'] ?? '';
+$id = $args['id'] ?? '';
+$allowed_tags = ['div', 'section', 'main', 'article', 'header', 'footer', 'aside'];
+$tag = in_array($args['tag'] ?? 'div', $allowed_tags, true) ? $args['tag'] ?? 'div' : 'div';
 
-$classes = trim( 'lenvy-container ' . $class );
+$classes = trim('lenvy-container ' . $class);
 ?>
-<<?php echo $tag; ?><?php if ( $id ) : ?> id="<?php echo esc_attr( $id ); ?>"<?php endif; ?> class="<?php echo esc_attr( $classes ); ?>">
-	<?php
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — content is HTML assembled by trusted template code.
-	echo $content;
-	?>
+<<?php
+echo $tag;
+if ($id): ?> id="<?php echo esc_attr($id); ?>"<?php endif;
+?> class="<?php echo esc_attr($classes); ?>">
+	<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — content is HTML assembled by trusted template code.
+ echo $content; ?>
 </<?php echo $tag; ?>>

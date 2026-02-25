@@ -19,22 +19,24 @@
 
 defined('ABSPATH') || exit();
 
-$text    = $args['text']    ?? '';
+$text = $args['text'] ?? '';
 $variant = $args['variant'] ?? 'custom';
 
-if ( empty( $text ) ) {
+if (empty($text)) {
 	return;
 }
 
 $variants = [
-	'sale'   => 'bg-primary text-black',
-	'new'    => 'bg-black text-white',
-	'oos'    => 'bg-neutral-200 text-neutral-500',
+	'sale' => 'bg-primary text-black',
+	'new' => 'bg-black text-white',
+	'oos' => 'bg-neutral-200 text-neutral-500',
 	'custom' => 'bg-neutral-100 text-neutral-700',
 ];
 
-$variant_class = $variants[ $variant ] ?? $variants['custom'];
+$variant_class = $variants[$variant] ?? $variants['custom'];
 ?>
-<span class="inline-block px-2 py-0.5 text-xs font-medium uppercase tracking-widest <?php echo esc_attr( $variant_class ); ?>">
-	<?php echo esc_html( $text ); ?>
+<span class="inline-block px-2 py-0.5 text-xs font-medium uppercase tracking-widest <?php echo esc_attr(
+	$variant_class,
+); ?>">
+	<?php echo esc_html($text); ?>
 </span>

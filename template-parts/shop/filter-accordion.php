@@ -15,17 +15,17 @@
 
 defined('ABSPATH') || exit();
 
-$label   = $args['label']   ?? '';
-$name    = $args['name']    ?? 'filter';
-$open    = $args['open']    ?? true;
+$label = $args['label'] ?? '';
+$name = $args['name'] ?? 'filter';
+$open = $args['open'] ?? true;
 $content = $args['content'] ?? '';
 
-if ( empty( $label ) || empty( $content ) ) {
+if (empty($label) || empty($content)) {
 	return;
 }
 
-$panel_id  = 'filter-panel-' . esc_attr( $name );
-$toggle_id = 'filter-toggle-' . esc_attr( $name );
+$panel_id = 'filter-panel-' . esc_attr($name);
+$toggle_id = 'filter-toggle-' . esc_attr($name);
 ?>
 
 <div class="border-b border-neutral-100 py-4" data-filter-accordion>
@@ -38,9 +38,9 @@ $toggle_id = 'filter-toggle-' . esc_attr( $name );
 		aria-controls="<?php echo $panel_id; ?>"
 	>
 		<span class="text-xs font-semibold uppercase tracking-widest text-neutral-800">
-			<?php echo esc_html( $label ); ?>
+			<?php echo esc_html($label); ?>
 		</span>
-		<?php lenvy_icon( 'chevron-down', 'transition-transform duration-200', 'xs' ); ?>
+		<?php lenvy_icon('chevron-down', 'transition-transform duration-200', 'xs'); ?>
 	</button>
 
 	<div
@@ -48,13 +48,11 @@ $toggle_id = 'filter-toggle-' . esc_attr( $name );
 		role="region"
 		aria-labelledby="<?php echo $toggle_id; ?>"
 		data-filter-accordion-panel
-		<?php if ( ! $open ) : ?>style="display:none;"<?php endif; ?>
+		<?php if (!$open): ?>style="display:none;"<?php endif; ?>
 	>
 		<div class="pt-3">
-			<?php
-			// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — caller is responsible for safe HTML
-			echo $content;
-			?>
+			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — caller is responsible for safe HTML
+   echo $content; ?>
 		</div>
 	</div>
 </div>

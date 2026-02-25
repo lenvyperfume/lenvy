@@ -15,46 +15,65 @@
 
 defined('ABSPATH') || exit();
 
-$name  = $args['name']  ?? '';
-$size  = $args['size']  ?? 'md';
+$name = $args['name'] ?? '';
+$size = $args['size'] ?? 'md';
 $class = $args['class'] ?? '';
 $label = $args['label'] ?? '';
 
-if ( empty( $name ) ) {
+if (empty($name)) {
 	return;
 }
 
 // Whitelist — only serve files from our own icons directory.
 $allowed = [
-	'search', 'cart', 'menu', 'close',
-	'chevron-down', 'chevron-right', 'chevron-left', 'arrow-right',
-	'filter', 'sort', 'grid',
-	'check', 'plus', 'minus',
-	'heart', 'star', 'star-filled', 'trash', 'user',
-	'instagram', 'facebook', 'tiktok', 'pinterest', 'youtube', 'x',
+	'search',
+	'cart',
+	'menu',
+	'close',
+	'chevron-down',
+	'chevron-right',
+	'chevron-left',
+	'arrow-right',
+	'filter',
+	'sort',
+	'grid',
+	'check',
+	'plus',
+	'minus',
+	'heart',
+	'star',
+	'star-filled',
+	'trash',
+	'user',
+	'instagram',
+	'facebook',
+	'tiktok',
+	'pinterest',
+	'youtube',
+	'x',
 ];
 
-if ( ! in_array( $name, $allowed, true ) ) {
+if (!in_array($name, $allowed, true)) {
 	return;
 }
 
 $file = get_template_directory() . '/assets/icons/' . $name . '.svg';
 
-if ( ! file_exists( $file ) ) {
+if (!file_exists($file)) {
 	return;
 }
 
 // Per-request cache — avoids repeated disk reads for the same icon.
 static $cache = [];
 
-if ( ! isset( $cache[ $name ] ) ) {
+if (!isset($cache[$name])) {
 	// phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
-	$cache[ $name ] = (string) file_get_contents( $file );
+	$cache[$name] = (string) file_get_contents($file);
 }
 
-$svg = trim( $cache[ $name ] );
+$svg = trim($cache[$name]);
 
-if ( empty( $svg ) ) {
+if (empty($svg)) {
 	return;
 }
 
@@ -67,22 +86,15 @@ $sizes = [
 	'xl' => 'w-8 h-8',
 ];
 
-$size_class  = $sizes[ $size ] ?? $sizes['md'];
-$all_classes = trim( $size_class . ( $class ? ' ' . $class : '' ) );
+$size_class = $sizes[$size] ?? $sizes['md'];
+$all_classes = trim($size_class . ($class ? ' ' . $class : ''));
 
 // ARIA — decorative icons are hidden; standalone icons get a label.
-$aria = $label
-	? 'role="img" aria-label="' . esc_attr( $label ) . '"'
-	: 'aria-hidden="true" focusable="false"';
+$aria = $label ? 'role="img" aria-label="' . esc_attr($label) . '"' : 'aria-hidden="true" focusable="false"';
 
 // Inject class and aria into the root <svg> element.
 // SVG files in assets/icons/ intentionally have no class or aria attributes.
-$svg = (string) preg_replace(
-	'/<svg\b/',
-	'<svg class="' . esc_attr( $all_classes ) . '" ' . $aria,
-	$svg,
-	1
-);
+$svg = (string) preg_replace('/<svg\b/', '<svg class="' . esc_attr($all_classes) . '" ' . $aria, $svg, 1);
 
 // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — SVG read from trusted theme directory.
 echo $svg;

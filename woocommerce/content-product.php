@@ -10,6 +10,6 @@
 
 defined('ABSPATH') || exit();
 
-get_template_part( 'template-parts/components/product-card', null, [
+get_template_part('template-parts/components/product-card', null, [
 	'product_id' => get_the_ID(),
-] );
+]);
