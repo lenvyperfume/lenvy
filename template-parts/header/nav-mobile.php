@@ -40,7 +40,7 @@ defined('ABSPATH') || exit();
 			<?php
 			$logo_id = lenvy_field( 'lenvy_site_logo', 'options' );
 			if ( $logo_id ) {
-				echo lenvy_get_image( $logo_id, 'medium', 'h-8 w-auto object-contain' );
+				echo lenvy_get_image( $logo_id, 'medium', 'block max-h-8 w-auto object-contain' );
 			} else {
 				echo '<span class="text-sm font-semibold tracking-widest text-neutral-900 uppercase">'
 					. esc_html( get_bloginfo( 'name' ) )

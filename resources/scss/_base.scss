@@ -72,12 +72,15 @@ a {
 }
 
 // ─── Media ───────────────────────────────────────────────────────────────────
-// Tailwind v4 preflight sets display: block on img.
-// height: auto prevents squishing when width is constrained.
+// Wrapped in @layer base so Tailwind utility classes (h-*, max-h-*) can
+// override these defaults — styles outside layers beat those inside layers
+// in the CSS cascade, which would prevent utility height constraints.
 
-img {
-  height: auto;
-  max-width: 100%;
+@layer base {
+  img {
+    height: auto;
+    max-width: 100%;
+  }
 }
 
 // ─── Focus ───────────────────────────────────────────────────────────────────

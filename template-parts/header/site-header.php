@@ -67,7 +67,7 @@ $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url()
 				aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
 			>
 				<?php if ( $logo_id ) : ?>
-					<?php echo lenvy_get_image( $logo_id, 'medium', 'h-9 w-auto object-contain' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo lenvy_get_image( $logo_id, 'medium', 'block max-h-10 w-auto object-contain' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php else : ?>
 					<span class="font-serif italic text-xl tracking-tight text-neutral-900">
 						<?php bloginfo( 'name' ); ?>
