@@ -46,7 +46,7 @@ function lenvy_register_taxonomies(): void {
 			'show_in_rest'      => true,
 			'has_archive'       => true,
 			'rewrite'           => [
-				'slug'       => 'brand',
+				'slug'       => 'merk',
 				'with_front' => false,
 			],
 			'query_var'         => true,
