@@ -96,6 +96,15 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 					<?php lenvy_icon('search', '', 'md'); ?>
 				</button>
 
+				<!-- Account -->
+				<a
+					href="<?php echo is_user_logged_in() ? esc_url( wc_get_account_endpoint_url( 'dashboard' ) ) : esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
+					aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'My account', 'lenvy' ) : esc_attr__( 'Log in', 'lenvy' ); ?>"
+				>
+					<?php lenvy_icon( 'user', '', 'md' ); ?>
+				</a>
+
 				<!-- Cart -->
 				<a
 					href="<?php echo esc_url($cart_url); ?>"

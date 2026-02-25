@@ -365,3 +365,16 @@ function lenvy_get_active_filters(): array {
 function lenvy_is_filtered(): bool {
 	return !empty(lenvy_get_active_filters());
 }
+
+// ─── Account helpers ──────────────────────────────────────────────────────────
+
+/**
+ * Return the URL of the Account Choice page.
+ *
+ * Uses home_url() so WPML can filter it correctly for the active language.
+ *
+ * @return string
+ */
+function lenvy_get_account_choice_url(): string {
+	return esc_url( home_url( '/account-choice/' ) );
+}

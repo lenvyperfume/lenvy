@@ -280,50 +280,6 @@
               "placeholder": "https://"
             }
           ]
-        },
-        {
-          "key": "layout_lenvy_hp_brand_strip",
-          "name": "brand_strip",
-          "label": "Brand Strip",
-          "display": "block",
-          "min": "",
-          "max": "",
-          "sub_fields": [
-            {
-              "key": "field_lenvy_hp_bs_heading",
-              "label": "Heading",
-              "name": "heading",
-              "aria-label": "",
-              "type": "text",
-              "instructions": "",
-              "required": 0,
-              "conditional_logic": 0,
-              "wrapper": { "width": "", "class": "", "id": "" },
-              "default_value": "Our Brands",
-              "maxlength": 60,
-              "placeholder": "Our Brands",
-              "prepend": "",
-              "append": ""
-            },
-            {
-              "key": "field_lenvy_hp_bs_brands",
-              "label": "Brands",
-              "name": "brands",
-              "aria-label": "",
-              "type": "taxonomy",
-              "instructions": "Select brands to display as logos in this strip.",
-              "required": 0,
-              "conditional_logic": 0,
-              "wrapper": { "width": "", "class": "", "id": "" },
-              "taxonomy": "product_brand",
-              "field_type": "multi_select",
-              "allow_null": 0,
-              "save_terms": 0,
-              "load_terms": 0,
-              "return_format": "id",
-              "multiple": 0
-            }
-          ]
         }
       ]
     }

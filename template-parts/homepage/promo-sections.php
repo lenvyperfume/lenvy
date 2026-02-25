@@ -6,7 +6,6 @@
  *
  *   text_banner  — full-width editorial section: background image (or dark fallback),
  *                  Playfair heading, subheading, optional CTA
- *   brand_strip  — dark horizontal scrolling row of brand logos with hover reveal
  *
  * @package Lenvy
  */
@@ -92,71 +91,7 @@ foreach ($sections as $section):
 	<?php
 	endif; // text_banner
 
-	// ── Brand strip ──────────────────────────────────────────────────────────
-
-	if ('brand_strip' === $layout):
-
-		$strip_heading = $section['heading'] ?? __('Our Brands', 'lenvy');
-		$brand_ids = (array) ($section['brands'] ?? []);
-
-		if (empty($brand_ids)) {
-			continue;
-		}
-		?>
-
-		<section class="py-14 lg:py-20 bg-neutral-950 border-t border-neutral-900">
-			<div class="lenvy-container">
-
-				<?php if ($strip_heading): ?>
-					<p class="text-xs font-medium uppercase tracking-widest text-neutral-600 text-center mb-10">
-						<?php echo esc_html($strip_heading); ?>
-					</p>
-				<?php endif; ?>
-
-				<!-- Horizontally scrollable brand logo row -->
-				<div class="flex items-center gap-10 lg:gap-16 overflow-x-auto scrollbar-hide justify-start lg:justify-center pb-2">
-					<?php foreach ($brand_ids as $brand_id):
-
-     	$brand = get_term((int) $brand_id, 'product_brand');
-     	if (!$brand || is_wp_error($brand)) {
-     		continue;
-     	}
-
-     	$brand_url = get_term_link($brand, 'product_brand');
-     	$brand_url = is_wp_error($brand_url) ? home_url('/') : $brand_url;
-
-     	$logo_raw = lenvy_field('lenvy_brand_logo', "term_{$brand_id}");
-     	$logo_id = is_array($logo_raw) ? $logo_raw['ID'] ?? 0 : 0;
-     	?>
-					<a
-						href="<?php echo esc_url($brand_url); ?>"
-						class="group shrink-0 flex items-center justify-center opacity-30 hover:opacity-80 transition-opacity duration-300"
-						aria-label="<?php echo esc_attr($brand->name); ?>"
-					>
-						<?php if ($logo_id): ?>
-							<?php echo wp_get_attachment_image($logo_id, 'medium', false, [
-       	'class' => 'h-8 w-auto object-contain brightness-0 invert',
-       	'loading' => 'lazy',
-       	'alt' => esc_attr($brand->name),
-       ]); ?>
-						<?php else: ?>
-							<span class="font-serif italic text-lg text-white whitespace-nowrap">
-								<?php echo esc_html($brand->name); ?>
-							</span>
-						<?php endif; ?>
-					</a>
-					<?php
-     endforeach; ?>
-				</div>
-
-			</div>
-		</section>
-
-	<?php
-	endif;
-
-	// brand_strip
-	?>
+?>
 
 <?php
 endforeach; ?>
