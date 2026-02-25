@@ -24,9 +24,9 @@ get_header(); ?>
 
 	<?php get_template_part('template-parts/homepage/featured-categories'); ?>
 
-	<?php get_template_part('template-parts/homepage/featured-products'); ?>
-
 	<?php get_template_part('template-parts/homepage/promo-sections'); ?>
+
+	<?php get_template_part('template-parts/homepage/featured-products'); ?>
 
 </main>
 
