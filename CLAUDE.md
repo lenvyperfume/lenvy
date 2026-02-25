@@ -41,10 +41,15 @@ npm run build    # Production build → assets/build/
 
 ### Color tokens — CRITICAL RULE
 
-`--color-primary: #e1c4ff` (soft lavender) is the **only** brand color token.
+Two brand color tokens exist:
 
-- **NEVER** use `primary-500`, `primary/80`, `bg-primary/50`, or any shade/variant.
-- Use `bg-primary`, `text-primary`, `border-primary` — nothing else.
+- `--color-primary: #e1c4ff` — soft lavender, main CTA background
+- `--color-primary-hover: #cfb3f0` — slightly deeper lavender, hover state for primary buttons
+
+- **NEVER** use `primary-500`, `primary/80`, `bg-primary/50`, or any alpha/opacity variant.
+- Use `bg-primary`, `text-primary`, `border-primary` and `bg-primary-hover` — nothing else.
+- `bg-primary` is the **main CTA color** — Add to Cart, Apply Filters, Shop Now, quick-add buttons all use `bg-primary text-black hover:bg-primary-hover`.
+- Black (`bg-black`) is reserved for secondary actions, overlays, and functional indicators (cart badge, pagination current page).
 - All other colors use the neutral scale (`neutral-50` through `neutral-950`).
 
 ### Typography
@@ -57,8 +62,7 @@ npm run build    # Production build → assets/build/
 ### Layout tokens (CSS vars, not Tailwind)
 
 ```css
---header-height: 68px   /* defined via $header-height in _variables.scss */
---container-width: 1280px
+--header-height: 68px /* defined via $header-height in _variables.scss */ --container-width: 1280px;
 ```
 
 Header uses `grid grid-cols-[1fr_auto_1fr] items-center h-[68px]` — logo (left) · nav (center, auto-width) · actions (right).
@@ -92,19 +96,19 @@ Use `max-h-*` instead of `h-*` on `<img>` elements. The base rule `img { height:
 
 ### Helper functions (`inc/helpers.php`)
 
-| Function | Purpose |
-|---|---|
-| `lenvy_field($key, $post_id)` | ACF get_field with null fallback |
-| `lenvy_the_field($key, $post_id)` | echo escaped ACF text field |
-| `lenvy_get_image($id, $size, $class)` | wp_get_attachment_image, accepts ACF array or int |
-| `lenvy_icon($name, $class, $size, $label)` | inline SVG icon |
-| `lenvy_pagination()` | renders pagination template part |
-| `lenvy_get_breadcrumb_items()` | WC-aware breadcrumb array |
-| `lenvy_parse_filter_slugs($var)` | sanitised slug array from $_GET var (array or CSV) |
-| `lenvy_get_filter_terms($taxonomy)` | get_terms with 12h object-cache (use instead of bare get_terms) |
-| `lenvy_get_min_max_price()` | [min, max] from published products, 6h transient |
-| `lenvy_get_active_filters()` | structured array of active filter chips |
-| `lenvy_is_filtered()` | bool — any filter active |
+| Function                                   | Purpose                                                         |
+| ------------------------------------------ | --------------------------------------------------------------- |
+| `lenvy_field($key, $post_id)`              | ACF get_field with null fallback                                |
+| `lenvy_the_field($key, $post_id)`          | echo escaped ACF text field                                     |
+| `lenvy_get_image($id, $size, $class)`      | wp_get_attachment_image, accepts ACF array or int               |
+| `lenvy_icon($name, $class, $size, $label)` | inline SVG icon                                                 |
+| `lenvy_pagination()`                       | renders pagination template part                                |
+| `lenvy_get_breadcrumb_items()`             | WC-aware breadcrumb array                                       |
+| `lenvy_parse_filter_slugs($var)`           | sanitised slug array from $\_GET var (array or CSV)             |
+| `lenvy_get_filter_terms($taxonomy)`        | get_terms with 12h object-cache (use instead of bare get_terms) |
+| `lenvy_get_min_max_price()`                | [min, max] from published products, 6h transient                |
+| `lenvy_get_active_filters()`               | structured array of active filter chips                         |
+| `lenvy_is_filtered()`                      | bool — any filter active                                        |
 
 Add new utility functions to `inc/helpers.php`. Do not create new `inc/` files unless they have a clearly distinct responsibility.
 
@@ -211,6 +215,7 @@ docs/
 ## Completed Phases
 
 All 10 planned phases are complete. Additional work done:
+
 - Brand archive (`taxonomy-product_brand.php`) — banner, logo, metadata bar, description, filtered grid
 - Header refinement — 3-column grid layout, Playfair logo fallback, dropdown lavender accent
 - Search redesign — inline header band (Douglas/Deloox pattern) with slide-down animation

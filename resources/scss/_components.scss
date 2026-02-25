@@ -9,15 +9,22 @@
   margin-inline: auto;
   padding-inline: 1rem;
 
-  @media (min-width: 640px)  { padding-inline: 1.5rem; }
-  @media (min-width: 1024px) { padding-inline: 2rem; }
+  @media (min-width: 640px) {
+    padding-inline: 1.5rem;
+  }
+  @media (min-width: 1024px) {
+    padding-inline: 2rem;
+  }
 }
 
 // ─── Breadcrumb ───────────────────────────────────────────────────────────────
 
 .lenvy-breadcrumb {
   // Ensure the inline-flex chevron icon aligns with text
-  svg { display: inline-block; vertical-align: middle; }
+  svg {
+    display: inline-block;
+    vertical-align: middle;
+  }
 }
 
 // ─── Pagination ───────────────────────────────────────────────────────────────
@@ -52,8 +59,12 @@
 }
 
 // Aspect ratio helpers
-.aspect-product { aspect-ratio: 3 / 4; } // portrait — standard perfume bottle
-.aspect-banner  { aspect-ratio: 16 / 5; } // wide banner
+.aspect-product {
+  aspect-ratio: 3 / 4;
+} // portrait — standard perfume bottle
+.aspect-banner {
+  aspect-ratio: 16 / 5;
+} // wide banner
 
 // Line clamp
 .line-clamp-1 {

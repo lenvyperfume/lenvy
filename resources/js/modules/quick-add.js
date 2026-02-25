@@ -22,20 +22,20 @@ function handleClick(e) {
   const originalText = btn.textContent.trim();
 
   // Loading state.
-  btn.disabled    = true;
+  btn.disabled = true;
   btn.textContent = '\u2026'; // …
 
   const body = new URLSearchParams({
-    action:     'lenvy_add_to_cart',
-    nonce:      window.lenvyAjax?.nonce ?? '',
+    action: 'lenvy_add_to_cart',
+    nonce: window.lenvyAjax?.nonce ?? '',
     product_id: productId,
-    quantity:   '1',
+    quantity: '1',
   });
 
   fetch(window.lenvyAjax?.url ?? '', {
-    method:  'POST',
+    method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body:    body.toString(),
+    body: body.toString(),
   })
     .then((r) => r.json())
     .then((data) => {
@@ -46,15 +46,15 @@ function handleClick(e) {
         btn.textContent = '\u2713'; // ✓
         setTimeout(() => {
           btn.textContent = originalText;
-          btn.disabled    = false;
+          btn.disabled = false;
         }, 1400);
       } else {
         btn.textContent = originalText;
-        btn.disabled    = false;
+        btn.disabled = false;
       }
     })
     .catch(() => {
       btn.textContent = originalText;
-      btn.disabled    = false;
+      btn.disabled = false;
     });
 }

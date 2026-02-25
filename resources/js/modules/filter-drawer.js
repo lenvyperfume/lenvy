@@ -4,7 +4,7 @@
  * Mirrors the pattern in drawer.js but uses [data-filter-drawer-*] attributes.
  */
 export function initFilterDrawer() {
-  const drawer   = document.querySelector('[data-filter-drawer]');
+  const drawer = document.querySelector('[data-filter-drawer]');
   const backdrop = document.querySelector('[data-filter-drawer-backdrop]');
 
   if (!drawer) return { filterDrawer: null, closeFilterDrawer: () => {} };

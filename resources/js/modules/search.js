@@ -6,10 +6,10 @@
  *        Triggered by [data-search-close] (close btn OR backdrop click) and ESC.
  */
 export function initSearch() {
-  const toggle  = document.querySelector('[data-search-toggle]');
+  const toggle = document.querySelector('[data-search-toggle]');
   const overlay = document.querySelector('[data-search-overlay]');
-  const band    = document.querySelector('[data-search-band]');
-  const input   = overlay?.querySelector('input[type="search"]');
+  const band = document.querySelector('[data-search-band]');
+  const input = overlay?.querySelector('input[type="search"]');
 
   function openSearch() {
     if (!overlay) return;

@@ -20,7 +20,7 @@
 <?php wp_body_open(); ?>
 
 <a class="skip-link" href="#primary">
-	<?php esc_html_e( 'Skip to content', 'lenvy' ); ?>
+	<?php esc_html_e('Skip to content', 'lenvy'); ?>
 </a>
 
 <?php get_template_part('template-parts/header/site-header'); ?>

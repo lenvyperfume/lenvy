@@ -44,10 +44,7 @@ export function updateCartCount(count) {
 
   // Update cart link aria-label.
   document.querySelectorAll('[data-cart-link]').forEach((el) => {
-    el.setAttribute(
-      'aria-label',
-      count === 1 ? 'Cart, 1 item' : `Cart, ${count} items`,
-    );
+    el.setAttribute('aria-label', count === 1 ? 'Cart, 1 item' : `Cart, ${count} items`);
   });
 }
 
@@ -60,7 +57,7 @@ export function refreshCartCount() {
 
   const body = new URLSearchParams({
     action: 'lenvy_add_to_cart',
-    nonce:  window.lenvyAjax.nonce,
+    nonce: window.lenvyAjax.nonce,
     product_id: '0', // count-only ping — handler guards against 0
   });
 

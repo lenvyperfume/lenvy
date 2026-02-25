@@ -1,127 +1,127 @@
 {
-	"key": "group_lenvy_product_cat",
-	"title": "Category Enhancements",
-	"fields": [
-		{
-			"key": "field_lenvy_cat_banner_image",
-			"label": "Banner Image",
-			"name": "lenvy_cat_banner_image",
-			"aria-label": "",
-			"type": "image",
-			"instructions": "Full-width banner shown at the top of this category archive. Recommended: 1920×400px.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"return_format": "array",
-			"preview_size": "medium",
-			"library": "all",
-			"min_width": "",
-			"min_height": "",
-			"min_size": "",
-			"max_width": "",
-			"max_height": "",
-			"max_size": "",
-			"mime_types": ""
-		},
-		{
-			"key": "field_lenvy_cat_banner_heading",
-			"label": "Banner Heading Override",
-			"name": "lenvy_cat_banner_heading",
-			"aria-label": "",
-			"type": "text",
-			"instructions": "Optional. Overrides the category name displayed in the banner.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"default_value": "",
-			"maxlength": 80,
-			"placeholder": "",
-			"prepend": "",
-			"append": ""
-		},
-		{
-			"key": "field_lenvy_cat_layout",
-			"label": "Grid Layout",
-			"name": "lenvy_cat_layout",
-			"aria-label": "",
-			"type": "select",
-			"instructions": "\"Featured First\" shows a selected product in a large tile at the start of the grid.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"choices": {
-				"grid": "Standard Grid",
-				"featured-first": "Featured Product First"
-			},
-			"default_value": "grid",
-			"return_format": "value",
-			"allow_null": 0,
-			"allow_custom": 0,
-			"search_placeholder": "",
-			"multiple": 0,
-			"ui": 0
-		},
-		{
-			"key": "field_lenvy_cat_featured_product",
-			"label": "Featured Product",
-			"name": "lenvy_cat_featured_product",
-			"aria-label": "",
-			"type": "post_object",
-			"instructions": "Only shown when Grid Layout is set to \"Featured Product First\".",
-			"required": 0,
-			"conditional_logic": [
-				[
-					{
-						"field": "field_lenvy_cat_layout",
-						"operator": "==",
-						"value": "featured-first"
-					}
-				]
-			],
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"post_type": ["product"],
-			"taxonomy": "",
-			"return_format": "id",
-			"multiple": 0,
-			"allow_null": 1,
-			"ui": 1,
-			"allow_custom": 0,
-			"search_placeholder": "Search products..."
-		},
-		{
-			"key": "field_lenvy_cat_seo_text",
-			"label": "SEO Text",
-			"name": "lenvy_cat_seo_text",
-			"aria-label": "",
-			"type": "wysiwyg",
-			"instructions": "Optional text block displayed below the product grid for SEO purposes.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"tabs": "all",
-			"toolbar": "basic",
-			"media_upload": 0,
-			"default_value": "",
-			"delay": 0
-		}
-	],
-	"location": [
-		[
-			{
-				"param": "taxonomy",
-				"operator": "==",
-				"value": "product_cat"
-			}
-		]
-	],
-	"menu_order": 0,
-	"position": "normal",
-	"style": "default",
-	"label_placement": "top",
-	"instruction_placement": "label",
-	"hide_on_screen": "",
-	"active": true,
-	"description": "Optional content enhancements for product category archive pages.",
-	"show_in_rest": 0,
-	"modified": 1771891200
+  "key": "group_lenvy_product_cat",
+  "title": "Category Enhancements",
+  "fields": [
+    {
+      "key": "field_lenvy_cat_banner_image",
+      "label": "Banner Image",
+      "name": "lenvy_cat_banner_image",
+      "aria-label": "",
+      "type": "image",
+      "instructions": "Full-width banner shown at the top of this category archive. Recommended: 1920×400px.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "return_format": "array",
+      "preview_size": "medium",
+      "library": "all",
+      "min_width": "",
+      "min_height": "",
+      "min_size": "",
+      "max_width": "",
+      "max_height": "",
+      "max_size": "",
+      "mime_types": ""
+    },
+    {
+      "key": "field_lenvy_cat_banner_heading",
+      "label": "Banner Heading Override",
+      "name": "lenvy_cat_banner_heading",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "Optional. Overrides the category name displayed in the banner.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "maxlength": 80,
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_lenvy_cat_layout",
+      "label": "Grid Layout",
+      "name": "lenvy_cat_layout",
+      "aria-label": "",
+      "type": "select",
+      "instructions": "\"Featured First\" shows a selected product in a large tile at the start of the grid.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "choices": {
+        "grid": "Standard Grid",
+        "featured-first": "Featured Product First"
+      },
+      "default_value": "grid",
+      "return_format": "value",
+      "allow_null": 0,
+      "allow_custom": 0,
+      "search_placeholder": "",
+      "multiple": 0,
+      "ui": 0
+    },
+    {
+      "key": "field_lenvy_cat_featured_product",
+      "label": "Featured Product",
+      "name": "lenvy_cat_featured_product",
+      "aria-label": "",
+      "type": "post_object",
+      "instructions": "Only shown when Grid Layout is set to \"Featured Product First\".",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_lenvy_cat_layout",
+            "operator": "==",
+            "value": "featured-first"
+          }
+        ]
+      ],
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "post_type": ["product"],
+      "taxonomy": "",
+      "return_format": "id",
+      "multiple": 0,
+      "allow_null": 1,
+      "ui": 1,
+      "allow_custom": 0,
+      "search_placeholder": "Search products..."
+    },
+    {
+      "key": "field_lenvy_cat_seo_text",
+      "label": "SEO Text",
+      "name": "lenvy_cat_seo_text",
+      "aria-label": "",
+      "type": "wysiwyg",
+      "instructions": "Optional text block displayed below the product grid for SEO purposes.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "tabs": "all",
+      "toolbar": "basic",
+      "media_upload": 0,
+      "default_value": "",
+      "delay": 0
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "taxonomy",
+        "operator": "==",
+        "value": "product_cat"
+      }
+    ]
+  ],
+  "menu_order": 0,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Optional content enhancements for product category archive pages.",
+  "show_in_rest": 0,
+  "modified": 1771891200
 }

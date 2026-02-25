@@ -9,14 +9,16 @@ correctly (including term ordering and variation support).
 ## Attributes to Register
 
 ### 1. Volume (ml)
-| Setting | Value |
-|---|---|
-| Name | Volume (ml) |
-| Slug | `volume_ml` ← WC will prefix to `pa_volume_ml` |
-| Enable archives | Yes |
-| Default sort order | Custom ordering |
+
+| Setting            | Value                                          |
+| ------------------ | ---------------------------------------------- |
+| Name               | Volume (ml)                                    |
+| Slug               | `volume_ml` ← WC will prefix to `pa_volume_ml` |
+| Enable archives    | Yes                                            |
+| Default sort order | Custom ordering                                |
 
 **Terms to add:**
+
 - 30ml
 - 50ml
 - 75ml
@@ -27,14 +29,16 @@ correctly (including term ordering and variation support).
 ---
 
 ### 2. Gender
-| Setting | Value |
-|---|---|
-| Name | Gender |
-| Slug | `gender` → `pa_gender` |
-| Enable archives | Yes |
-| Default sort order | Custom ordering |
+
+| Setting            | Value                  |
+| ------------------ | ---------------------- |
+| Name               | Gender                 |
+| Slug               | `gender` → `pa_gender` |
+| Enable archives    | Yes                    |
+| Default sort order | Custom ordering        |
 
 **Terms to add:**
+
 - For Her
 - For Him
 - Unisex
@@ -42,14 +46,16 @@ correctly (including term ordering and variation support).
 ---
 
 ### 3. Fragrance Family
-| Setting | Value |
-|---|---|
-| Name | Fragrance Family |
-| Slug | `fragrance_family` → `pa_fragrance_family` |
-| Enable archives | Yes |
-| Default sort order | Name |
+
+| Setting            | Value                                      |
+| ------------------ | ------------------------------------------ |
+| Name               | Fragrance Family                           |
+| Slug               | `fragrance_family` → `pa_fragrance_family` |
+| Enable archives    | Yes                                        |
+| Default sort order | Name                                       |
 
 **Terms to add:**
+
 - Floral
 - Woody
 - Oriental
@@ -63,14 +69,16 @@ correctly (including term ordering and variation support).
 ---
 
 ### 4. Concentration
-| Setting | Value |
-|---|---|
-| Name | Concentration |
-| Slug | `concentration` → `pa_concentration` |
-| Enable archives | Yes |
-| Default sort order | Custom ordering |
+
+| Setting            | Value                                |
+| ------------------ | ------------------------------------ |
+| Name               | Concentration                        |
+| Slug               | `concentration` → `pa_concentration` |
+| Enable archives    | Yes                                  |
+| Default sort order | Custom ordering                      |
 
 **Terms to add:**
+
 - Eau de Cologne (EDC)
 - Eau de Toilette (EDT)
 - Eau de Parfum (EDP)
@@ -80,14 +88,16 @@ correctly (including term ordering and variation support).
 ---
 
 ### 5. Occasion
-| Setting | Value |
-|---|---|
-| Name | Occasion |
-| Slug | `occasion` → `pa_occasion` |
-| Enable archives | No |
-| Default sort order | Name |
+
+| Setting            | Value                      |
+| ------------------ | -------------------------- |
+| Name               | Occasion                   |
+| Slug               | `occasion` → `pa_occasion` |
+| Enable archives    | No                         |
+| Default sort order | Name                       |
 
 **Terms to add:**
+
 - Casual
 - Formal
 - Evening

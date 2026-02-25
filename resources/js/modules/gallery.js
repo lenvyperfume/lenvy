@@ -10,7 +10,7 @@ export function initGallery() {
 
 function initSingle(gallery) {
   const mainImg = gallery.querySelector('[data-gallery-main]');
-  const thumbs  = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
+  const thumbs = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
 
   if (!mainImg || !thumbs.length) return;
 
@@ -19,13 +19,13 @@ function initSingle(gallery) {
     if (!src || mainImg.src === src) return;
 
     // Cross-fade.
-    mainImg.style.opacity    = '0';
+    mainImg.style.opacity = '0';
     mainImg.style.transition = 'opacity 200ms ease';
 
-    const preload  = new Image();
+    const preload = new Image();
     preload.onload = () => {
-      mainImg.src            = src;
-      mainImg.style.opacity  = '1';
+      mainImg.src = src;
+      mainImg.style.opacity = '1';
     };
     preload.src = src;
 
@@ -45,7 +45,7 @@ function initSingle(gallery) {
   // Keyboard: left/right arrows navigate thumbnails when a thumb is focused.
   gallery.addEventListener('keydown', (e) => {
     const focused = document.activeElement;
-    const idx     = thumbs.indexOf(focused);
+    const idx = thumbs.indexOf(focused);
     if (idx === -1) return;
 
     if (e.key === 'ArrowRight' && idx < thumbs.length - 1) {

@@ -1,135 +1,135 @@
 {
-	"key": "group_lenvy_product_marketing",
-	"title": "Product Marketing",
-	"fields": [
-		{
-			"key": "field_lenvy_prod_badge_text",
-			"label": "Badge Text",
-			"name": "lenvy_product_badge_text",
-			"aria-label": "",
-			"type": "text",
-			"instructions": "Short label shown on the product card (e.g. \"New\", \"Bestseller\", \"Exclusive\"). Leave blank for no badge.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"default_value": "",
-			"maxlength": 20,
-			"placeholder": "New",
-			"prepend": "",
-			"append": ""
-		},
-		{
-			"key": "field_lenvy_prod_scent_notes",
-			"label": "Scent Notes",
-			"name": "lenvy_product_scent_notes",
-			"aria-label": "",
-			"type": "group",
-			"instructions": "Fragrance pyramid notes shown on the product detail page.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"layout": "block",
-			"sub_fields": [
-				{
-					"key": "field_lenvy_prod_top_notes",
-					"label": "Top Notes",
-					"name": "top_notes",
-					"aria-label": "",
-					"type": "text",
-					"instructions": "Comma-separated. e.g. Bergamot, Lemon, Pink Pepper",
-					"required": 0,
-					"conditional_logic": 0,
-					"wrapper": { "width": "", "class": "", "id": "" },
-					"default_value": "",
-					"maxlength": "",
-					"placeholder": "Bergamot, Lemon, Pink Pepper",
-					"prepend": "",
-					"append": ""
-				},
-				{
-					"key": "field_lenvy_prod_heart_notes",
-					"label": "Heart Notes",
-					"name": "heart_notes",
-					"aria-label": "",
-					"type": "text",
-					"instructions": "Comma-separated. e.g. Rose, Jasmine, Iris",
-					"required": 0,
-					"conditional_logic": 0,
-					"wrapper": { "width": "", "class": "", "id": "" },
-					"default_value": "",
-					"maxlength": "",
-					"placeholder": "Rose, Jasmine, Iris",
-					"prepend": "",
-					"append": ""
-				},
-				{
-					"key": "field_lenvy_prod_base_notes",
-					"label": "Base Notes",
-					"name": "base_notes",
-					"aria-label": "",
-					"type": "text",
-					"instructions": "Comma-separated. e.g. Sandalwood, Musk, Amber",
-					"required": 0,
-					"conditional_logic": 0,
-					"wrapper": { "width": "", "class": "", "id": "" },
-					"default_value": "",
-					"maxlength": "",
-					"placeholder": "Sandalwood, Musk, Amber",
-					"prepend": "",
-					"append": ""
-				}
-			]
-		},
-		{
-			"key": "field_lenvy_prod_inspiration",
-			"label": "Inspiration Text",
-			"name": "lenvy_product_inspiration_text",
-			"aria-label": "",
-			"type": "text",
-			"instructions": "One-line evocative description shown near the product name (e.g. \"Inspired by the forests of Kyoto at dusk\").",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"default_value": "",
-			"maxlength": 120,
-			"placeholder": "",
-			"prepend": "",
-			"append": ""
-		},
-		{
-			"key": "field_lenvy_prod_usage_tips",
-			"label": "Usage Tips",
-			"name": "lenvy_product_usage_tips",
-			"aria-label": "",
-			"type": "textarea",
-			"instructions": "Application tips shown in an accordion on the product page.",
-			"required": 0,
-			"conditional_logic": 0,
-			"wrapper": { "width": "", "class": "", "id": "" },
-			"default_value": "",
-			"rows": 3,
-			"maxlength": "",
-			"placeholder": "",
-			"new_lines": "wpautop"
-		}
-	],
-	"location": [
-		[
-			{
-				"param": "post_type",
-				"operator": "==",
-				"value": "product"
-			}
-		]
-	],
-	"menu_order": 100,
-	"position": "normal",
-	"style": "default",
-	"label_placement": "top",
-	"instruction_placement": "label",
-	"hide_on_screen": "",
-	"active": true,
-	"description": "Marketing content for individual products — badge, scent notes, inspiration, usage tips.",
-	"show_in_rest": 0,
-	"modified": 1771891200
+  "key": "group_lenvy_product_marketing",
+  "title": "Product Marketing",
+  "fields": [
+    {
+      "key": "field_lenvy_prod_badge_text",
+      "label": "Badge Text",
+      "name": "lenvy_product_badge_text",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "Short label shown on the product card (e.g. \"New\", \"Bestseller\", \"Exclusive\"). Leave blank for no badge.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "maxlength": 20,
+      "placeholder": "New",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_lenvy_prod_scent_notes",
+      "label": "Scent Notes",
+      "name": "lenvy_product_scent_notes",
+      "aria-label": "",
+      "type": "group",
+      "instructions": "Fragrance pyramid notes shown on the product detail page.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "layout": "block",
+      "sub_fields": [
+        {
+          "key": "field_lenvy_prod_top_notes",
+          "label": "Top Notes",
+          "name": "top_notes",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "Comma-separated. e.g. Bergamot, Lemon, Pink Pepper",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "", "class": "", "id": "" },
+          "default_value": "",
+          "maxlength": "",
+          "placeholder": "Bergamot, Lemon, Pink Pepper",
+          "prepend": "",
+          "append": ""
+        },
+        {
+          "key": "field_lenvy_prod_heart_notes",
+          "label": "Heart Notes",
+          "name": "heart_notes",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "Comma-separated. e.g. Rose, Jasmine, Iris",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "", "class": "", "id": "" },
+          "default_value": "",
+          "maxlength": "",
+          "placeholder": "Rose, Jasmine, Iris",
+          "prepend": "",
+          "append": ""
+        },
+        {
+          "key": "field_lenvy_prod_base_notes",
+          "label": "Base Notes",
+          "name": "base_notes",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "Comma-separated. e.g. Sandalwood, Musk, Amber",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "", "class": "", "id": "" },
+          "default_value": "",
+          "maxlength": "",
+          "placeholder": "Sandalwood, Musk, Amber",
+          "prepend": "",
+          "append": ""
+        }
+      ]
+    },
+    {
+      "key": "field_lenvy_prod_inspiration",
+      "label": "Inspiration Text",
+      "name": "lenvy_product_inspiration_text",
+      "aria-label": "",
+      "type": "text",
+      "instructions": "One-line evocative description shown near the product name (e.g. \"Inspired by the forests of Kyoto at dusk\").",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "maxlength": 120,
+      "placeholder": "",
+      "prepend": "",
+      "append": ""
+    },
+    {
+      "key": "field_lenvy_prod_usage_tips",
+      "label": "Usage Tips",
+      "name": "lenvy_product_usage_tips",
+      "aria-label": "",
+      "type": "textarea",
+      "instructions": "Application tips shown in an accordion on the product page.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": "",
+      "rows": 3,
+      "maxlength": "",
+      "placeholder": "",
+      "new_lines": "wpautop"
+    }
+  ],
+  "location": [
+    [
+      {
+        "param": "post_type",
+        "operator": "==",
+        "value": "product"
+      }
+    ]
+  ],
+  "menu_order": 100,
+  "position": "normal",
+  "style": "default",
+  "label_placement": "top",
+  "instruction_placement": "label",
+  "hide_on_screen": "",
+  "active": true,
+  "description": "Marketing content for individual products — badge, scent notes, inspiration, usage tips.",
+  "show_in_rest": 0,
+  "modified": 1771891200
 }

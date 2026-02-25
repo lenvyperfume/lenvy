@@ -47,10 +47,10 @@ if (function_exists('acf_add_options_page')) {
 	acf_add_options_page([
 		'page_title' => __('Theme Settings', 'lenvy'),
 		'menu_title' => __('Theme Settings', 'lenvy'),
-		'menu_slug'  => 'lenvy-theme-settings',
+		'menu_slug' => 'lenvy-theme-settings',
 		'capability' => 'manage_options',
-		'icon_url'   => 'dashicons-admin-appearance',
-		'position'   => 61,
-		'autoload'   => true,
+		'icon_url' => 'dashicons-admin-appearance',
+		'position' => 61,
+		'autoload' => true,
 	]);
 }

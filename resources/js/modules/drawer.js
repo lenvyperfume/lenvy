@@ -8,9 +8,9 @@
  *   [data-drawer-backdrop] — semi-transparent overlay behind the drawer
  */
 export function initDrawer() {
-  const toggle   = document.querySelector('[data-drawer-toggle]');
-  const close    = document.querySelector('[data-drawer-close]');
-  const drawer   = document.querySelector('[data-drawer]');
+  const toggle = document.querySelector('[data-drawer-toggle]');
+  const close = document.querySelector('[data-drawer-close]');
+  const drawer = document.querySelector('[data-drawer]');
   const backdrop = document.querySelector('[data-drawer-backdrop]');
 
   function openDrawer() {

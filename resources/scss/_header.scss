@@ -8,13 +8,13 @@
 // including any admin bar — used for sticky filter sidebars, not here.
 
 [data-header] {
-	top: 0;
+  top: 0;
 }
 
 .admin-bar [data-header] {
-	top: 32px;
+  top: 32px;
 
-	@media screen and (max-width: 782px) {
-		top: 46px;
-	}
+  @media screen and (max-width: 782px) {
+    top: 46px;
+  }
 }

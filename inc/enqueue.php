@@ -110,15 +110,19 @@ add_action('wp_enqueue_scripts', 'lenvy_enqueue_assets');
  * Output window.lenvyAjax config as an early inline script.
  * Works in both Vite dev mode (no wp_enqueue_script) and production.
  */
-add_action('wp_head', static function (): void {
-	printf(
-		'<script>window.lenvyAjax=%s;</script>' . "\n",
-		wp_json_encode( [
-			'url'   => admin_url( 'admin-ajax.php' ),
-			'nonce' => wp_create_nonce( 'lenvy_ajax' ),
-		] )
-	);
-}, 5 );
+add_action(
+	'wp_head',
+	static function (): void {
+		printf(
+			'<script>window.lenvyAjax=%s;</script>' . "\n",
+			wp_json_encode([
+				'url' => admin_url('admin-ajax.php'),
+				'nonce' => wp_create_nonce('lenvy_ajax'),
+			]),
+		);
+	},
+	5,
+);
 
 /**
  * Enqueue Google Fonts — Inter (sans) + Playfair Display (serif).

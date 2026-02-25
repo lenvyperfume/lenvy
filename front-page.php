@@ -13,18 +13,17 @@
  * @package Lenvy
  */
 
-get_header();
-?>
+get_header(); ?>
 
 <main id="primary" class="site-main">
 
-	<?php get_template_part( 'template-parts/homepage/hero' ); ?>
+	<?php get_template_part('template-parts/homepage/hero'); ?>
 
-	<?php get_template_part( 'template-parts/homepage/featured-categories' ); ?>
+	<?php get_template_part('template-parts/homepage/featured-categories'); ?>
 
-	<?php get_template_part( 'template-parts/homepage/featured-products' ); ?>
+	<?php get_template_part('template-parts/homepage/featured-products'); ?>
 
-	<?php get_template_part( 'template-parts/homepage/promo-sections' ); ?>
+	<?php get_template_part('template-parts/homepage/promo-sections'); ?>
 
 </main>
 

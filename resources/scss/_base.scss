@@ -5,14 +5,14 @@
 // These are intentionally NOT in @theme; they are not Tailwind utilities.
 
 :root {
-  --header-height:   #{v.$header-height};
+  --header-height: #{v.$header-height};
   --container-width: #{v.$container-max};
 
   // Z-index scale — used for stacking contexts across templates
-  --z-header:  40;
+  --z-header: 40;
   --z-overlay: 45;
-  --z-drawer:  50;
-  --z-notice:  60;
+  --z-drawer: 50;
+  --z-notice: 60;
 }
 
 // WordPress admin bar adjusts the effective top offset for sticky header

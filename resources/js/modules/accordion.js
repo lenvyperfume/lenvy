@@ -10,7 +10,7 @@
 export function initAccordion() {
   // ── Mobile nav submenus (max-height animation) ─────────────────────────────
   document.querySelectorAll('[data-mobile-submenu-toggle]').forEach((btn) => {
-    const li      = btn.closest('li');
+    const li = btn.closest('li');
     const submenu = li?.querySelector('.mobile-submenu');
     if (!submenu) return;
 
@@ -19,13 +19,13 @@ export function initAccordion() {
 
       if (isOpen) {
         submenu.style.maxHeight = '0';
-        submenu.style.opacity   = '0';
+        submenu.style.opacity = '0';
         submenu.setAttribute('aria-hidden', 'true');
         btn.setAttribute('aria-expanded', 'false');
         btn.querySelector('svg')?.classList.remove('rotate-180');
       } else {
         submenu.style.maxHeight = submenu.scrollHeight + 'px';
-        submenu.style.opacity   = '1';
+        submenu.style.opacity = '1';
         submenu.setAttribute('aria-hidden', 'false');
         btn.setAttribute('aria-expanded', 'true');
         btn.querySelector('svg')?.classList.add('rotate-180');
@@ -36,7 +36,7 @@ export function initAccordion() {
   // ── Filter accordions (display:none toggle) ────────────────────────────────
   document.querySelectorAll('[data-filter-accordion-toggle]').forEach((btn) => {
     const panelId = btn.getAttribute('aria-controls');
-    const panel   = panelId ? document.getElementById(panelId) : null;
+    const panel = panelId ? document.getElementById(panelId) : null;
     if (!panel) return;
 
     btn.addEventListener('click', () => {

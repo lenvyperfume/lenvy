@@ -26,49 +26,69 @@ defined('ABSPATH') || exit();
 
 // ─── Register custom query vars ───────────────────────────────────────────────
 
-add_filter( 'query_vars', function ( array $vars ): array {
+add_filter('query_vars', function (array $vars): array {
 	$custom = [
-		'filter_brand', 'filter_cat', 'filter_gender', 'filter_family',
-		'filter_conc', 'filter_volume', 'filter_available', 'filter_onsale',
-		'min_price', 'max_price',
+		'filter_brand',
+		'filter_cat',
+		'filter_gender',
+		'filter_family',
+		'filter_conc',
+		'filter_volume',
+		'filter_available',
+		'filter_onsale',
+		'min_price',
+		'max_price',
 	];
 
-	return array_merge( $vars, $custom );
-} );
+	return array_merge($vars, $custom);
+});
 
 // ─── Modify main query on shop / archive pages ────────────────────────────────
 
-add_action( 'pre_get_posts', function ( WP_Query $query ): void {
-	if ( is_admin() || ! $query->is_main_query() ) {
+add_action('pre_get_posts', function (WP_Query $query): void {
+	if (is_admin() || !$query->is_main_query()) {
 		return;
 	}
 
-	if ( ! ( $query->is_post_type_archive( 'product' ) || $query->is_tax( [ 'product_cat', 'product_brand', 'product_tag', 'pa_gender', 'pa_fragrance_family', 'pa_concentration', 'pa_volume_ml' ] ) ) ) {
+	if (
+		!(
+			$query->is_post_type_archive('product') ||
+			$query->is_tax([
+				'product_cat',
+				'product_brand',
+				'product_tag',
+				'pa_gender',
+				'pa_fragrance_family',
+				'pa_concentration',
+				'pa_volume_ml',
+			])
+		)
+	) {
 		return;
 	}
 
-	$tax_query  = (array) ( $query->get( 'tax_query' ) ?: [] );
-	$meta_query = (array) ( $query->get( 'meta_query' ) ?: [] );
+	$tax_query = (array) ($query->get('tax_query') ?: []);
+	$meta_query = (array) ($query->get('meta_query') ?: []);
 
 	// ── Taxonomy filters ──────────────────────────────────────────────────────
 
 	$taxonomy_map = [
-		'filter_brand'  => 'product_brand',
-		'filter_cat'    => 'product_cat',
+		'filter_brand' => 'product_brand',
+		'filter_cat' => 'product_cat',
 		'filter_gender' => 'pa_gender',
 		'filter_family' => 'pa_fragrance_family',
-		'filter_conc'   => 'pa_concentration',
+		'filter_conc' => 'pa_concentration',
 		'filter_volume' => 'pa_volume_ml',
 	];
 
-	foreach ( $taxonomy_map as $var => $taxonomy ) {
-		$slugs = lenvy_parse_filter_slugs( $var );
+	foreach ($taxonomy_map as $var => $taxonomy) {
+		$slugs = lenvy_parse_filter_slugs($var);
 
-		if ( ! empty( $slugs ) ) {
+		if (!empty($slugs)) {
 			$tax_query[] = [
 				'taxonomy' => $taxonomy,
-				'field'    => 'slug',
-				'terms'    => $slugs,
+				'field' => 'slug',
+				'terms' => $slugs,
 				'operator' => 'IN',
 			];
 		}
@@ -77,24 +97,24 @@ add_action( 'pre_get_posts', function ( WP_Query $query ): void {
 	// ── Price range ───────────────────────────────────────────────────────────
 
 	// phpcs:ignore WordPress.Security.NonceVerification
-	$min_price = isset( $_GET['min_price'] ) ? (float) $_GET['min_price'] : null;
+	$min_price = isset($_GET['min_price']) ? (float) $_GET['min_price'] : null;
 	// phpcs:ignore WordPress.Security.NonceVerification
-	$max_price = isset( $_GET['max_price'] ) ? (float) $_GET['max_price'] : null;
+	$max_price = isset($_GET['max_price']) ? (float) $_GET['max_price'] : null;
 
-	if ( null !== $min_price || null !== $max_price ) {
+	if (null !== $min_price || null !== $max_price) {
 		$price_clause = [
-			'key'     => '_price',
-			'type'    => 'NUMERIC',
+			'key' => '_price',
+			'type' => 'NUMERIC',
 		];
 
-		if ( null !== $min_price && null !== $max_price ) {
-			$price_clause['value']   = [ $min_price, $max_price ];
+		if (null !== $min_price && null !== $max_price) {
+			$price_clause['value'] = [$min_price, $max_price];
 			$price_clause['compare'] = 'BETWEEN';
-		} elseif ( null !== $min_price ) {
-			$price_clause['value']   = $min_price;
+		} elseif (null !== $min_price) {
+			$price_clause['value'] = $min_price;
 			$price_clause['compare'] = '>=';
 		} else {
-			$price_clause['value']   = $max_price;
+			$price_clause['value'] = $max_price;
 			$price_clause['compare'] = '<=';
 		}
 
@@ -104,9 +124,9 @@ add_action( 'pre_get_posts', function ( WP_Query $query ): void {
 	// ── In stock ──────────────────────────────────────────────────────────────
 
 	// phpcs:ignore WordPress.Security.NonceVerification
-	if ( ! empty( $_GET['filter_available'] ) ) {
+	if (!empty($_GET['filter_available'])) {
 		$meta_query[] = [
-			'key'   => '_stock_status',
+			'key' => '_stock_status',
 			'value' => 'instock',
 		];
 	}
@@ -114,73 +134,75 @@ add_action( 'pre_get_posts', function ( WP_Query $query ): void {
 	// ── On sale ───────────────────────────────────────────────────────────────
 
 	// phpcs:ignore WordPress.Security.NonceVerification
-	if ( ! empty( $_GET['filter_onsale'] ) ) {
-		$sale_ids = array_map( 'absint', wc_get_product_ids_on_sale() );
+	if (!empty($_GET['filter_onsale'])) {
+		$sale_ids = array_map('absint', wc_get_product_ids_on_sale());
 
-		if ( ! empty( $sale_ids ) ) {
-			$query->set( 'post__in', $sale_ids );
+		if (!empty($sale_ids)) {
+			$query->set('post__in', $sale_ids);
 		} else {
 			// No products on sale → force empty result.
-			$query->set( 'post__in', [ 0 ] );
+			$query->set('post__in', [0]);
 		}
 	}
 
 	// ── Apply compound queries ────────────────────────────────────────────────
 
-	if ( count( $tax_query ) > 1 ) {
+	if (count($tax_query) > 1) {
 		$tax_query['relation'] = 'AND';
 	}
 
-	if ( count( $meta_query ) > 1 ) {
+	if (count($meta_query) > 1) {
 		$meta_query['relation'] = 'AND';
 	}
 
-	if ( ! empty( $tax_query ) ) {
-		$query->set( 'tax_query', $tax_query );
+	if (!empty($tax_query)) {
+		$query->set('tax_query', $tax_query);
 	}
 
-	if ( ! empty( $meta_query ) ) {
-		$query->set( 'meta_query', $meta_query );
+	if (!empty($meta_query)) {
+		$query->set('meta_query', $meta_query);
 	}
 
 	// ── Sorting ───────────────────────────────────────────────────────────────
 
 	// phpcs:ignore WordPress.Security.NonceVerification
-	$orderby = isset( $_GET['orderby'] ) ? sanitize_key( $_GET['orderby'] ) : get_option( 'woocommerce_default_catalog_orderby', 'menu_order' );
+	$orderby = isset($_GET['orderby'])
+		? sanitize_key($_GET['orderby'])
+		: get_option('woocommerce_default_catalog_orderby', 'menu_order');
 
-	switch ( $orderby ) {
+	switch ($orderby) {
 		case 'popularity':
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', 'total_sales' );
-			$query->set( 'order', 'DESC' );
+			$query->set('orderby', 'meta_value_num');
+			$query->set('meta_key', 'total_sales');
+			$query->set('order', 'DESC');
 			break;
 
 		case 'rating':
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', '_wc_average_rating' );
-			$query->set( 'order', 'DESC' );
+			$query->set('orderby', 'meta_value_num');
+			$query->set('meta_key', '_wc_average_rating');
+			$query->set('order', 'DESC');
 			break;
 
 		case 'date':
-			$query->set( 'orderby', 'date' );
-			$query->set( 'order', 'DESC' );
+			$query->set('orderby', 'date');
+			$query->set('order', 'DESC');
 			break;
 
 		case 'price':
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', '_price' );
-			$query->set( 'order', 'ASC' );
+			$query->set('orderby', 'meta_value_num');
+			$query->set('meta_key', '_price');
+			$query->set('order', 'ASC');
 			break;
 
 		case 'price-desc':
-			$query->set( 'orderby', 'meta_value_num' );
-			$query->set( 'meta_key', '_price' );
-			$query->set( 'order', 'DESC' );
+			$query->set('orderby', 'meta_value_num');
+			$query->set('meta_key', '_price');
+			$query->set('order', 'DESC');
 			break;
 
 		default:
-			$query->set( 'orderby', 'menu_order title' );
-			$query->set( 'order', 'ASC' );
+			$query->set('orderby', 'menu_order title');
+			$query->set('order', 'ASC');
 			break;
 	}
-} );
+});

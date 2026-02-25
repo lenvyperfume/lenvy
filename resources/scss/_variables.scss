@@ -5,13 +5,14 @@
 // For Tailwind utilities in PHP templates, always use the Tailwind class
 // (e.g. text-primary, bg-neutral-100) instead of these SCSS variables.
 
-// ── Brand — single primary, no shades ─────────────────────────────────────────
+// ── Brand — primary + hover shade ─────────────────────────────────────────────
 $color-primary: #e1c4ff;
-$color-black:   #0a0a0a;
-$color-white:   #ffffff;
+$color-primary-hover: #cfb3f0;
+$color-black: #0a0a0a;
+$color-white: #ffffff;
 
 // ── Neutral scale ─────────────────────────────────────────────────────────────
-$neutral-50:  #fafafa;
+$neutral-50: #fafafa;
 $neutral-100: #f5f5f5;
 $neutral-200: #e5e5e5;
 $neutral-300: #d4d4d4;
@@ -24,12 +25,12 @@ $neutral-900: #171717;
 $neutral-950: #0a0a0a;
 
 // ── Typography ────────────────────────────────────────────────────────────────
-$font-sans:  'Inter', ui-sans-serif, system-ui, sans-serif;
+$font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
 $font-serif: 'Playfair Display', ui-serif, Georgia, serif;
 
 // ── Layout ────────────────────────────────────────────────────────────────────
 $container-max: 1280px;
-$container-px:  1rem;
+$container-px: 1rem;
 $header-height: 68px;
 
 // ── Transitions ───────────────────────────────────────────────────────────────

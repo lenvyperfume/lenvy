@@ -33,7 +33,7 @@ function handleSubmit(e) {
   e.preventDefault();
 
   const formData = new FormData(e.currentTarget);
-  const params   = new URLSearchParams();
+  const params = new URLSearchParams();
 
   // FormData → URLSearchParams (handles multiple values for the same key).
   for (const [key, value] of formData.entries()) {
@@ -56,24 +56,24 @@ function fetchFiltered(params) {
   // Pass taxonomy/term context from the grid element so the PHP handler
   // knows which archive we're on.
   const taxonomy = grid.dataset.taxonomy ?? '';
-  const term     = grid.dataset.term     ?? '';
+  const term = grid.dataset.term ?? '';
 
   // Loading state.
-  grid.style.opacity        = '0.4';
-  grid.style.pointerEvents  = 'none';
-  grid.style.transition     = 'opacity 200ms ease';
+  grid.style.opacity = '0.4';
+  grid.style.pointerEvents = 'none';
+  grid.style.transition = 'opacity 200ms ease';
 
   const body = new URLSearchParams(params);
-  body.set('action',   'lenvy_filter_products');
-  body.set('nonce',    window.lenvyAjax.nonce);
+  body.set('action', 'lenvy_filter_products');
+  body.set('nonce', window.lenvyAjax.nonce);
   body.set('taxonomy', taxonomy);
-  body.set('term',     term);
-  body.set('paged',    getPagedFromParams(params));
+  body.set('term', term);
+  body.set('paged', getPagedFromParams(params));
 
   fetch(window.lenvyAjax.url, {
-    method:  'POST',
+    method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body:    body.toString(),
+    body: body.toString(),
   })
     .then((r) => r.json())
     .then((data) => {
@@ -85,8 +85,8 @@ function fetchFiltered(params) {
       const { html, count, pagination, active } = data.data;
 
       // Swap grid content.
-      grid.innerHTML         = html;
-      grid.style.opacity     = '';
+      grid.innerHTML = html;
+      grid.style.opacity = '';
       grid.style.pointerEvents = '';
 
       // Swap pagination.
@@ -107,8 +107,9 @@ function fetchFiltered(params) {
         if (activeEl) {
           activeEl.outerHTML = active;
         } else {
-          const sortBar = document.querySelector('[data-filter-sidebar]')?.nextElementSibling
-            ?? grid.closest('.flex-1')?.querySelector('[data-active-filters]');
+          const sortBar =
+            document.querySelector('[data-filter-sidebar]')?.nextElementSibling ??
+            grid.closest('.flex-1')?.querySelector('[data-active-filters]');
           if (sortBar) sortBar.insertAdjacentHTML('afterend', active);
         }
       } else if (activeEl) {
@@ -133,7 +134,7 @@ function fetchFiltered(params) {
 // ── Helpers ──────────────────────────────────────────────────────────────────
 
 function resetGrid(grid) {
-  grid.style.opacity       = '';
+  grid.style.opacity = '';
   grid.style.pointerEvents = '';
 }
 
@@ -146,11 +147,9 @@ function updateResultsCount(count, params) {
   if (!el) return;
 
   const perPage = 12;
-  const paged   = parseInt(params.get('paged') ?? '1', 10);
-  const from    = (paged - 1) * perPage + 1;
-  const to      = Math.min(paged * perPage, count);
+  const paged = parseInt(params.get('paged') ?? '1', 10);
+  const from = (paged - 1) * perPage + 1;
+  const to = Math.min(paged * perPage, count);
 
-  el.textContent = count > 0
-    ? `Showing ${from}–${to} of ${count} products`
-    : 'No products found';
+  el.textContent = count > 0 ? `Showing ${from}–${to} of ${count} products` : 'No products found';
 }
