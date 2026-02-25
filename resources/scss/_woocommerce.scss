@@ -425,6 +425,151 @@
   }
 }
 
+// ─── Cart & checkout buttons ──────────────────────────────────────────────────
+// Use `body` prefix to beat WooCommerce's own woocommerce.css specificity.
+// WC marks primary actions with .alt (Place Order, Proceed to Checkout).
+// Secondary actions (Update Cart, Apply Coupon) get an outlined style.
+
+// Shared base reset — applied to every WC button.
+body .woocommerce a.button,
+body .woocommerce button.button,
+body .woocommerce input.button,
+body .woocommerce-page a.button,
+body .woocommerce-page button.button,
+body .woocommerce-page input.button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  font-family: v.$font-sans;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  text-decoration: none;
+  border-radius: 0;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+
+  // Secondary default: outlined black.
+  background-color: transparent;
+  color: v.$color-black;
+  border: 1px solid v.$color-black;
+
+  &:hover {
+    background-color: v.$color-black;
+    color: v.$color-white;
+    border-color: v.$color-black;
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+// Primary: .alt class — Place Order, Proceed to Checkout, and other WC primaries.
+body .woocommerce a.button.alt,
+body .woocommerce button.button.alt,
+body .woocommerce input.button.alt,
+body .woocommerce-page a.button.alt,
+body .woocommerce-page button.button.alt,
+body .woocommerce-page input.button.alt,
+body .woocommerce .wc-proceed-to-checkout a.checkout-button,
+body .woocommerce-page .wc-proceed-to-checkout a.checkout-button {
+  background-color: v.$color-primary;
+  color: v.$color-black;
+  border-color: transparent;
+  padding: 1rem 1.5rem;
+
+  &:hover {
+    background-color: v.$color-primary-hover;
+    color: v.$color-black;
+    border-color: transparent;
+  }
+}
+
+// Proceed to checkout — full width.
+body .woocommerce .wc-proceed-to-checkout a.checkout-button,
+body .woocommerce-page .wc-proceed-to-checkout a.checkout-button {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+// Place order — full width.
+body .woocommerce #place_order,
+body .woocommerce-page #place_order {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+// ─── WooCommerce Blocks buttons ───────────────────────────────────────────────
+// Block cart/checkout uses wc-block-components-button + wp-element-button
+// instead of the classic .button class.
+
+// Base reset for all block buttons.
+body .wc-block-components-button,
+body .wp-element-button {
+  border-radius: 0;
+  font-family: v.$font-sans;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1;
+  padding: 0.875rem 1.5rem;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    border-color 150ms ease;
+
+  // Default: outlined secondary style.
+  background-color: transparent;
+  color: v.$color-black;
+  border: 1px solid v.$color-black;
+
+  &:hover {
+    background-color: v.$color-black;
+    color: v.$color-white;
+  }
+
+  .wc-block-components-button__text {
+    color: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    text-transform: inherit;
+    letter-spacing: inherit;
+  }
+}
+
+// Primary: "Proceed to Checkout" and "Place Order" — .contained variant.
+body .wc-block-components-button.contained,
+body .wc-block-cart__submit-button,
+body .wc-block-checkout__form-submit {
+  background-color: v.$color-primary;
+  color: v.$color-black;
+  border: none;
+  width: 100%;
+  text-align: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: v.$color-primary-hover;
+    color: v.$color-black;
+  }
+
+  .wc-block-components-button__text {
+    color: v.$color-black;
+  }
+}
+
 // ─── Sale badge (WC native output) ────────────────────────────────────────────
 // WC renders <span class="onsale"> — override default styles.
 
