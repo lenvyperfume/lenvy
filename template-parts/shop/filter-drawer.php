@@ -10,6 +10,9 @@
  */
 
 defined('ABSPATH') || exit();
+
+// When on a brand archive, suppress the Brand filter (it's redundant).
+$hide_brand_filter = (bool) ( $args['hide_brand_filter'] ?? false );
 ?>
 
 <!-- Backdrop -->
@@ -52,12 +55,14 @@ defined('ABSPATH') || exit();
 			<?php endif; ?>
 
 			<?php
-			get_template_part( 'template-parts/shop/filter-taxonomy', null, [
-				'taxonomy'  => 'product_brand',
-				'query_var' => 'filter_brand',
-				'label'     => __( 'Brand', 'lenvy' ),
-				'open'      => true,
-			] );
+			if ( ! $hide_brand_filter ) :
+				get_template_part( 'template-parts/shop/filter-taxonomy', null, [
+					'taxonomy'  => 'product_brand',
+					'query_var' => 'filter_brand',
+					'label'     => __( 'Brand', 'lenvy' ),
+					'open'      => true,
+				] );
+			endif;
 
 			get_template_part( 'template-parts/shop/filter-taxonomy', null, [
 				'taxonomy'  => 'product_cat',
