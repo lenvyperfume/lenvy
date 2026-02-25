@@ -31,7 +31,7 @@ defined('ABSPATH') || exit();
 >
 
 	<!-- Drawer header: logo + close button -->
-	<div class="flex items-center justify-between px-6 h-15 border-b border-neutral-100 shrink-0">
+	<div class="flex items-center justify-between px-6 h-[68px] border-b border-neutral-100 shrink-0">
 		<a
 			href="<?php echo esc_url( home_url( '/' ) ); ?>"
 			class="block"

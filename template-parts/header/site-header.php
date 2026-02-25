@@ -50,37 +50,44 @@ $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url()
 
 <header
 	data-header
-	class="sticky z-[40] bg-white border-b border-neutral-100 transition-shadow duration-200"
+	class="sticky z-[40] bg-white border-b border-neutral-100 transition-shadow duration-300"
 >
 	<div class="lenvy-container">
-		<div class="flex items-center justify-between h-15 gap-4">
+		<!--
+			Three-column CSS grid: logo (left) | nav (center, auto-width) | actions (right).
+			The 1fr / auto / 1fr split guarantees the nav is always truly centred
+			regardless of logo or action widths — same pattern as Douglas / Dior.
+		-->
+		<div class="grid grid-cols-[1fr_auto_1fr] items-center h-[68px]">
 
-			<!-- Logo -->
+			<!-- Col 1 — Logo -->
 			<a
 				href="<?php echo esc_url( home_url( '/' ) ); ?>"
-				class="shrink-0 flex items-center"
+				class="flex items-center"
 				aria-label="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>"
 			>
 				<?php if ( $logo_id ) : ?>
-					<?php echo lenvy_get_image( $logo_id, 'medium', 'h-8 w-auto object-contain' ); ?>
+					<?php echo lenvy_get_image( $logo_id, 'medium', 'h-9 w-auto object-contain' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				<?php else : ?>
-					<span class="text-base font-semibold tracking-widest text-neutral-900 uppercase">
+					<span class="font-serif italic text-xl tracking-tight text-neutral-900">
 						<?php bloginfo( 'name' ); ?>
 					</span>
 				<?php endif; ?>
 			</a>
 
-			<!-- Primary navigation (desktop only) -->
-			<?php get_template_part( 'template-parts/header/nav-primary' ); ?>
+			<!-- Col 2 — Primary navigation (desktop only, always a grid cell) -->
+			<div class="flex items-center">
+				<?php get_template_part( 'template-parts/header/nav-primary' ); ?>
+			</div>
 
-			<!-- Right-side actions -->
-			<div class="flex items-center gap-1 sm:gap-2 shrink-0">
+			<!-- Col 3 — Right-side actions -->
+			<div class="flex items-center justify-end gap-0.5 sm:gap-1">
 
 				<!-- Search -->
 				<button
 					type="button"
 					data-search-toggle
-					class="p-2 text-neutral-600 hover:text-black transition-colors duration-150"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
 					aria-label="<?php esc_attr_e( 'Open search', 'lenvy' ); ?>"
 					aria-expanded="false"
 				>
@@ -90,7 +97,7 @@ $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url()
 				<!-- Cart -->
 				<a
 					href="<?php echo esc_url( $cart_url ); ?>"
-					class="relative p-2 text-neutral-600 hover:text-black transition-colors duration-150"
+					class="relative p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
 					aria-label="<?php echo esc_attr( sprintf( _n( 'Cart, %d item', 'Cart, %d items', $cart_count, 'lenvy' ), $cart_count ) ); ?>"
 				>
 					<?php lenvy_icon( 'cart', '', 'md' ); ?>
@@ -108,7 +115,7 @@ $cart_url             = function_exists( 'wc_get_cart_url' ) ? wc_get_cart_url()
 				<button
 					type="button"
 					data-drawer-toggle
-					class="p-2 text-neutral-600 hover:text-black transition-colors duration-150 lg:hidden"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded lg:hidden"
 					aria-label="<?php esc_attr_e( 'Open navigation menu', 'lenvy' ); ?>"
 					aria-expanded="false"
 					aria-controls="lenvy-mobile-drawer"
