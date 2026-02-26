@@ -53,8 +53,8 @@ $social_labels = [
 <footer class="bg-neutral-50 border-t border-neutral-200 text-neutral-700 overflow-hidden">
 
 	<!-- ── Main grid ─────────────────────────────────────────────────────── -->
-	<div class="lenvy-container py-14">
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-6">
+	<div class="lenvy-container py-16 lg:py-20">
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
 
 			<!-- Col 1: Brand + contact info ───────────────────────────── -->
 			<div class="space-y-5">
@@ -82,7 +82,7 @@ $social_labels = [
 					<?php if ($contact_email): ?>
 					<a
 						href="mailto:<?php echo esc_attr($contact_email); ?>"
-						class="block hover:text-black transition-colors duration-150 break-all"
+						class="block hover:text-black transition-colors duration-200 break-all"
 					>
 						<?php echo esc_html($contact_email); ?>
 					</a>
@@ -90,7 +90,7 @@ $social_labels = [
 					<?php if ($contact_phone): ?>
 					<a
 						href="tel:<?php echo esc_attr(preg_replace('/[^\d+]/', '', $contact_phone)); ?>"
-						class="block hover:text-black transition-colors duration-150"
+						class="block hover:text-black transition-colors duration-200"
 					>
 						<?php echo esc_html($contact_phone); ?>
 					</a>
@@ -101,7 +101,7 @@ $social_labels = [
 
 			<!-- Col 2: Shop nav ───────────────────────────────────────── -->
 			<div class="space-y-5">
-				<h3 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
+				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
 					<?php esc_html_e('Shop', 'lenvy'); ?>
 				</h3>
 				<?php if (has_nav_menu('footer')): ?>
@@ -120,7 +120,7 @@ $social_labels = [
 
 			<!-- Col 3: Info nav ───────────────────────────────────────── -->
 			<div class="space-y-5">
-				<h3 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
+				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
 					<?php esc_html_e('Information', 'lenvy'); ?>
 				</h3>
 				<?php if (has_nav_menu('footer-secondary')): ?>
@@ -162,7 +162,7 @@ $social_labels = [
 
 			<!-- Col 4: Social media ───────────────────────────────────── -->
 			<div class="space-y-5">
-				<h3 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
+				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
 					<?php esc_html_e('Follow Us', 'lenvy'); ?>
 				</h3>
 				<?php if (!empty($social_links)): ?>
@@ -198,7 +198,7 @@ $social_labels = [
 	</div>
 
 	<!-- ── Bottom bar ────────────────────────────────────────────────────── -->
-	<div class="lenvy-container border-t border-neutral-200 py-6">
+	<div class="lenvy-container border-t border-neutral-200 py-8">
 		<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
 			<p class="text-xs text-neutral-600">

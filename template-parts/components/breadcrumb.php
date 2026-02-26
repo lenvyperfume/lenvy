@@ -46,7 +46,7 @@ if (count($crumbs) <= 1) {
 					</span>
 				<?php else: ?>
 					<a href="<?php echo esc_url($crumb_url); ?>"
-					   class="hover:text-neutral-800 transition-colors duration-150">
+					   class="hover:text-neutral-800 transition-colors duration-200">
 						<?php echo esc_html($crumb_name); ?>
 					</a>
 				<?php endif; ?>

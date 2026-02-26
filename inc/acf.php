@@ -54,3 +54,60 @@ if (function_exists('acf_add_options_page')) {
 		'autoload' => true,
 	]);
 }
+
+// ─── Editorial moment fields (homepage brand statement) ───────────────────────
+
+add_action('acf/include_fields', function (): void {
+	if (!function_exists('acf_add_local_field_group')) {
+		return;
+	}
+
+	acf_add_local_field_group([
+		'key'      => 'group_lenvy_editorial_moment',
+		'title'    => 'Homepage — Editorial Moment',
+		'fields'   => [
+			[
+				'key'          => 'field_lenvy_editorial_heading',
+				'label'        => 'Heading',
+				'name'         => 'lenvy_editorial_heading',
+				'type'         => 'text',
+				'placeholder'  => 'De Kunst van Geur',
+				'instructions' => 'Large display heading shown on the homepage.',
+			],
+			[
+				'key'          => 'field_lenvy_editorial_subheading',
+				'label'        => 'Subheading',
+				'name'         => 'lenvy_editorial_subheading',
+				'type'         => 'textarea',
+				'rows'         => 3,
+				'placeholder'  => 'Zorgvuldig samengestelde parfums…',
+				'instructions' => 'Body text below the heading.',
+			],
+			[
+				'key'          => 'field_lenvy_editorial_cta_label',
+				'label'        => 'CTA Label',
+				'name'         => 'lenvy_editorial_cta_label',
+				'type'         => 'text',
+				'placeholder'  => 'Ontdek de Collectie',
+				'instructions' => 'Optional link text. Leave empty to hide the CTA.',
+			],
+			[
+				'key'          => 'field_lenvy_editorial_cta_url',
+				'label'        => 'CTA URL',
+				'name'         => 'lenvy_editorial_cta_url',
+				'type'         => 'url',
+				'instructions' => 'Destination for the CTA link.',
+			],
+		],
+		'location' => [
+			[
+				[
+					'param'    => 'options_page',
+					'operator' => '==',
+					'value'    => 'lenvy-theme-settings',
+				],
+			],
+		],
+		'menu_order' => 5,
+	]);
+});

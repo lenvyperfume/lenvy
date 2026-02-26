@@ -24,7 +24,7 @@ get_header(); ?>
 					<div class="flex items-center gap-3 text-xs uppercase tracking-widest text-neutral-400 mb-6">
 						<?php if ( $categories ) : ?>
 							<a href="<?php echo esc_url( get_category_link( $categories[0]->term_id ) ); ?>"
-							   class="text-neutral-800 hover:text-neutral-500 transition-colors duration-150">
+							   class="text-neutral-800 hover:text-neutral-500 transition-colors duration-200">
 								<?php echo esc_html( $categories[0]->name ); ?>
 							</a>
 							<span class="text-neutral-200" aria-hidden="true">/</span>
@@ -60,10 +60,10 @@ get_header(); ?>
 								<?php if ( $prev_post ) : ?>
 									<a href="<?php echo esc_url( get_permalink( $prev_post ) ); ?>"
 									   class="group flex flex-col gap-1">
-										<span class="text-xs text-neutral-400 uppercase tracking-widest group-hover:text-neutral-600 transition-colors duration-150">
+										<span class="text-xs text-neutral-400 uppercase tracking-widest group-hover:text-neutral-600 transition-colors duration-200">
 											<?php esc_html_e( 'Previous', 'lenvy' ); ?>
 										</span>
-										<span class="text-neutral-900 group-hover:text-neutral-600 transition-colors duration-150">
+										<span class="text-neutral-900 group-hover:text-neutral-600 transition-colors duration-200">
 											<?php echo esc_html( $prev_post->post_title ); ?>
 										</span>
 									</a>
@@ -75,10 +75,10 @@ get_header(); ?>
 								<?php if ( $next_post ) : ?>
 									<a href="<?php echo esc_url( get_permalink( $next_post ) ); ?>"
 									   class="group flex flex-col gap-1 items-end">
-										<span class="text-xs text-neutral-400 uppercase tracking-widest group-hover:text-neutral-600 transition-colors duration-150">
+										<span class="text-xs text-neutral-400 uppercase tracking-widest group-hover:text-neutral-600 transition-colors duration-200">
 											<?php esc_html_e( 'Next', 'lenvy' ); ?>
 										</span>
-										<span class="text-neutral-900 group-hover:text-neutral-600 transition-colors duration-150">
+										<span class="text-neutral-900 group-hover:text-neutral-600 transition-colors duration-200">
 											<?php echo esc_html( $next_post->post_title ); ?>
 										</span>
 									</a>

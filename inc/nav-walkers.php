@@ -72,7 +72,7 @@ class Lenvy_Primary_Nav_Walker extends Walker_Nav_Menu {
 			$li_class = $has_children ? 'relative group' : 'relative';
 			$output .= '<li class="' . esc_attr($li_class) . '">';
 
-			$link_class = 'flex items-center gap-1.5 py-2 text-sm tracking-[0.02em] transition-colors duration-150';
+			$link_class = 'flex items-center gap-1.5 py-2 text-sm tracking-[0.02em] transition-colors duration-200';
 			$link_class .= $is_current
 				? ' text-black underline underline-offset-[5px] decoration-neutral-300'
 				: ' text-neutral-600 hover:text-black';
@@ -88,7 +88,7 @@ class Lenvy_Primary_Nav_Walker extends Walker_Nav_Menu {
 			// Dropdown item
 			$output .= '<li>';
 
-			$link_class = 'block px-4 py-2.5 text-sm tracking-[0.01em] transition-colors duration-150';
+			$link_class = 'block px-4 py-2.5 text-sm tracking-[0.01em] transition-colors duration-200';
 			$link_class .= $is_current
 				? ' text-black font-medium bg-neutral-50'
 				: ' text-neutral-600 hover:bg-neutral-50 hover:text-black';
@@ -138,7 +138,7 @@ class Lenvy_Mobile_Nav_Walker extends Walker_Nav_Menu {
 			$output .= '<li class="border-b border-neutral-100">';
 			$output .= '<div class="flex items-stretch">';
 
-			$link_class = 'flex-1 py-4 text-sm font-medium transition-colors duration-150';
+			$link_class = 'flex-1 py-4 text-sm font-medium transition-colors duration-200';
 			$link_class .= $is_current ? ' text-black' : ' text-neutral-800 hover:text-black';
 			$output .=
 				'<a href="' .
@@ -159,7 +159,7 @@ class Lenvy_Mobile_Nav_Walker extends Walker_Nav_Menu {
 				$output .=
 					'<button type="button" data-mobile-submenu-toggle aria-expanded="false" aria-label="' .
 					$btn_label .
-					'" class="px-3 text-neutral-500 hover:text-black transition-colors duration-150">';
+					'" class="px-3 text-neutral-500 hover:text-black transition-colors duration-200">';
 				$output .=
 					'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 transition-transform duration-200" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>';
 				$output .= '</button>';
@@ -168,7 +168,7 @@ class Lenvy_Mobile_Nav_Walker extends Walker_Nav_Menu {
 		} else {
 			$output .= '<li>';
 
-			$link_class = 'block py-3 pl-4 text-sm transition-colors duration-150';
+			$link_class = 'block py-3 pl-4 text-sm transition-colors duration-200';
 			$link_class .= $is_current ? ' text-black font-medium' : ' text-neutral-600 hover:text-black';
 			$output .=
 				'<a href="' .

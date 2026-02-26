@@ -106,7 +106,7 @@ global $wp_query;
 					<?php esc_html_e( 'Try a different search term or browse the shop below.', 'lenvy' ); ?>
 				</p>
 				<a href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ); ?>"
-				   class="inline-block text-xs font-medium uppercase tracking-widest border border-neutral-900 text-neutral-900 px-7 py-3 hover:bg-neutral-900 hover:text-white transition-colors duration-150">
+				   class="inline-block text-xs font-medium uppercase tracking-widest border border-neutral-900 text-neutral-900 px-7 py-3 hover:bg-neutral-900 hover:text-white transition-colors duration-200">
 					<?php esc_html_e( 'Browse shop', 'lenvy' ); ?>
 				</a>
 			</div>

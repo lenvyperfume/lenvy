@@ -2,7 +2,7 @@
 /**
  * Homepage — featured categories grid.
  *
- * Renders up to 4 ACF-selected product_cat terms as portrait image cards.
+ * Renders up to 6 ACF-selected product_cat terms as portrait image cards.
  * Image priority: ACF banner (lenvy_cat_banner_image) → WC thumbnail_id meta.
  *
  * @package Lenvy
@@ -45,39 +45,43 @@ $shop_url = function_exists('wc_get_page_permalink')
 	: get_post_type_archive_link('product');
 ?>
 
-<section class="py-10 lg:py-14">
-	<div class="lenvy-container">
+<section class="py-16 lg:py-24">
+	<div class="lenvy-section">
 
-		<!-- Section header -->
-		<div class="flex items-center justify-between mb-8 lg:mb-12">
-			<h2 class="flex items-center gap-3 text-xs font-medium uppercase tracking-widest text-neutral-500">
-				<span class="inline-block w-6 h-0.5 bg-primary" aria-hidden="true"></span>
-				<?php esc_html_e('Shop by Category', 'lenvy'); ?>
-			</h2>
+		<!-- Section header — two-tier -->
+		<div class="flex items-end justify-between mb-10 lg:mb-14">
+			<div>
+				<p class="text-[11px] uppercase tracking-widest text-neutral-400 mb-3">
+					<?php esc_html_e('Categorieën', 'lenvy'); ?>
+				</p>
+				<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight">
+					<?php esc_html_e('Shop by Category', 'lenvy'); ?>
+				</h2>
+			</div>
 			<a
 				href="<?php echo esc_url($shop_url ?: home_url('/shop/')); ?>"
-				class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-150"
+				class="hidden sm:flex items-center gap-1.5 text-[13px] font-medium text-neutral-400 hover:text-black transition-colors duration-200"
 			>
-				<?php esc_html_e('View all', 'lenvy'); ?>
+				<?php esc_html_e('Alles bekijken', 'lenvy'); ?>
 				<?php lenvy_icon('arrow-right', '', 'xs'); ?>
 			</a>
 		</div>
 
 		<!-- Category grid -->
-		<div class="grid <?php echo esc_attr($grid_cols); ?> gap-3 md:gap-4">
+		<div class="grid <?php echo esc_attr($grid_cols); ?> gap-4 md:gap-5">
 			<?php foreach ($cats as $term):
 
-   	// Image priority: ACF banner → WC thumbnail meta
-   	$acf_img = lenvy_field('lenvy_cat_banner_image', "term_{$term->term_id}");
-   	$image_id = is_array($acf_img) ? $acf_img['ID'] ?? 0 : 0;
+			// Image priority: ACF banner → WC thumbnail meta
+			$acf_img = lenvy_field('lenvy_cat_banner_image', "term_{$term->term_id}");
+			$image_id = is_array($acf_img) ? $acf_img['ID'] ?? 0 : 0;
 
-   	if (!$image_id) {
-   		$image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
-   	}
+			if (!$image_id) {
+				$image_id = (int) get_term_meta($term->term_id, 'thumbnail_id', true);
+			}
 
-   	$term_url = get_term_link($term, 'product_cat');
-   	$term_url = is_wp_error($term_url) ? ($shop_url ?: home_url('/shop/')) : $term_url;
-   	?>
+			$term_url = get_term_link($term, 'product_cat');
+			$term_url = is_wp_error($term_url) ? ($shop_url ?: home_url('/shop/')) : $term_url;
+			?>
 			<a
 				href="<?php echo esc_url($term_url); ?>"
 				class="group relative block overflow-hidden bg-neutral-100 aspect-[3/4]"
@@ -87,11 +91,11 @@ $shop_url = function_exists('wc_get_page_permalink')
 				<!-- Category image -->
 				<?php if ($image_id): ?>
 					<?php echo wp_get_attachment_image($image_id, 'medium_large', false, [
-     	'class' =>
-     		'absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105',
-     	'loading' => 'lazy',
-     	'alt' => esc_attr($term->name),
-     ]); ?>
+					'class' =>
+						'absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]',
+					'loading' => 'lazy',
+					'alt' => esc_attr($term->name),
+				]); ?>
 				<?php else: ?>
 					<div class="absolute inset-0 flex items-center justify-center">
 						<span class="text-xs uppercase tracking-widest text-neutral-300">
@@ -107,21 +111,20 @@ $shop_url = function_exists('wc_get_page_permalink')
 						<?php echo esc_html($term->name); ?>
 					</p>
 					<?php if ($term->count > 0): ?>
-						<p class="text-[11px] text-white/55 mt-0.5">
+						<p class="text-[11px] text-white/50 mt-0.5">
 							<?php echo esc_html(
-       	sprintf(
-       		/* translators: %d: product count */
-       		_n('%d product', '%d products', $term->count, 'lenvy'),
-       		$term->count,
-       	),
-       ); ?>
+							sprintf(
+								/* translators: %d: product count */
+								_n('%d product', '%d products', $term->count, 'lenvy'),
+								$term->count,
+							),
+						); ?>
 						</p>
 					<?php endif; ?>
 				</div>
 
 			</a>
-			<?php
-   endforeach; ?>
+			<?php endforeach; ?>
 		</div>
 
 	</div>

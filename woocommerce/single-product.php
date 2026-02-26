@@ -31,13 +31,13 @@ while (have_posts()):
 	$long_desc   = $product->get_description();
 	?>
 
-	<main id="primary" class="py-10 lg:py-16">
+	<main id="primary" class="py-12 lg:py-20">
 		<div class="lenvy-container">
 
 			<?php get_template_part('template-parts/components/breadcrumb'); ?>
 
 			<!-- Two-column: gallery | details -->
-			<div class="mt-6 grid grid-cols-1 lg:grid-cols-[58fr_42fr] gap-8 lg:gap-16">
+			<div class="mt-6 grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-10 lg:gap-20">
 
 				<!-- ── Gallery ───────────────────────────────────────── -->
 				<div data-product-gallery class="lg:sticky lg:top-[calc(var(--header-height,68px)+2rem)] lg:self-start">
@@ -51,14 +51,14 @@ while (have_posts()):
 					<?php if ($brand): ?>
 					<a
 						href="<?php echo esc_url(get_term_link($brand)); ?>"
-						class="text-[11px] font-medium uppercase tracking-[0.1em] text-neutral-400 hover:text-neutral-900 transition-colors duration-150 mb-3 self-start"
+						class="text-[11px] font-medium uppercase tracking-[0.14em] text-neutral-400 hover:text-neutral-900 transition-colors duration-200 mb-4 self-start"
 					>
 						<?php echo esc_html($brand->name); ?>
 					</a>
 					<?php endif; ?>
 
 					<!-- Title -->
-					<h1 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight tracking-[-0.01em]">
+					<h1 class="text-3xl lg:text-4xl font-serif italic text-neutral-900 leading-tight tracking-[-0.01em]">
 						<?php the_title(); ?>
 					</h1>
 
@@ -70,7 +70,7 @@ while (have_posts()):
 					<?php endif; ?>
 
 					<!-- Price -->
-					<div class="mt-5 text-xl font-medium text-neutral-900 lenvy-product-price">
+					<div class="mt-6 text-2xl font-medium text-neutral-900 lenvy-product-price">
 						<?php woocommerce_template_single_price(); ?>
 					</div>
 
@@ -116,12 +116,12 @@ while (have_posts()):
 							<button
 								id="toggle-scent-notes"
 								type="button"
-								class="flex items-center justify-between w-full py-4 text-left"
+								class="flex items-center justify-between w-full py-5 text-left"
 								data-filter-accordion-toggle
 								aria-expanded="false"
 								aria-controls="panel-scent-notes"
 							>
-								<span class="text-sm font-medium text-neutral-800"><?php esc_html_e('Geurprofiel', 'lenvy'); ?></span>
+								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Geurprofiel', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
 							<div id="panel-scent-notes" role="region" aria-labelledby="toggle-scent-notes" data-filter-accordion-panel style="display:none;">
@@ -156,12 +156,12 @@ while (have_posts()):
 							<button
 								id="toggle-usage-tips"
 								type="button"
-								class="flex items-center justify-between w-full py-4 text-left"
+								class="flex items-center justify-between w-full py-5 text-left"
 								data-filter-accordion-toggle
 								aria-expanded="false"
 								aria-controls="panel-usage-tips"
 							>
-								<span class="text-sm font-medium text-neutral-800"><?php esc_html_e('Gebruikstips', 'lenvy'); ?></span>
+								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Gebruikstips', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
 							<div id="panel-usage-tips" role="region" aria-labelledby="toggle-usage-tips" data-filter-accordion-panel style="display:none;">
@@ -180,12 +180,12 @@ while (have_posts()):
 							<button
 								id="toggle-description"
 								type="button"
-								class="flex items-center justify-between w-full py-4 text-left"
+								class="flex items-center justify-between w-full py-5 text-left"
 								data-filter-accordion-toggle
 								aria-expanded="false"
 								aria-controls="panel-description"
 							>
-								<span class="text-sm font-medium text-neutral-800"><?php esc_html_e('Beschrijving', 'lenvy'); ?></span>
+								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Beschrijving', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
 							<div id="panel-description" role="region" aria-labelledby="toggle-description" data-filter-accordion-panel style="display:none;">
@@ -207,12 +207,12 @@ while (have_posts()):
 							<button
 								id="toggle-product-details"
 								type="button"
-								class="flex items-center justify-between w-full py-4 text-left"
+								class="flex items-center justify-between w-full py-5 text-left"
 								data-filter-accordion-toggle
 								aria-expanded="false"
 								aria-controls="panel-product-details"
 							>
-								<span class="text-sm font-medium text-neutral-800"><?php esc_html_e('Productdetails', 'lenvy'); ?></span>
+								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Productdetails', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
 							<div id="panel-product-details" role="region" aria-labelledby="toggle-product-details" data-filter-accordion-panel style="display:none;">
@@ -264,10 +264,13 @@ while (have_posts()):
 
 			</div><!-- two-column grid -->
 
-			<!-- Related products -->
-			<?php woocommerce_output_related_products(); ?>
+			</div>
 
+		<!-- Related products — breaks out to full-width -->
+		<div class="lenvy-section">
+			<?php woocommerce_output_related_products(); ?>
 		</div>
+
 	</main>
 
 <?php

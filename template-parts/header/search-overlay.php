@@ -45,7 +45,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 				<button
 					type="button"
 					data-search-close
-					class="shrink-0 flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-black transition-colors duration-150 pr-3 border-r border-neutral-200"
+					class="shrink-0 flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-black transition-colors duration-200 pr-3 border-r border-neutral-200"
 					aria-label="<?php esc_attr_e('Close search', 'lenvy'); ?>"
 				>
 					<?php lenvy_icon('close', '', 'sm'); ?>
@@ -79,7 +79,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 
 					<button
 						type="submit"
-						class="shrink-0 px-4 py-1.5 bg-primary text-black text-xs font-medium tracking-wide hover:bg-primary-hover transition-colors duration-150 hidden sm:block"
+						class="shrink-0 px-4 py-1.5 bg-primary text-black text-xs font-medium tracking-wide hover:bg-primary-hover transition-colors duration-200 hidden sm:block"
 						aria-label="<?php esc_attr_e('Zoeken', 'lenvy'); ?>"
 					>
 						<?php esc_html_e('Zoeken', 'lenvy'); ?>
@@ -111,7 +111,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 								<?php foreach (array_slice($popular_cats, 0, 8) as $cat): ?>
 								<a
 									href="<?php echo esc_url(get_term_link($cat)); ?>"
-									class="inline-block px-3 py-1.5 text-sm text-neutral-700 bg-neutral-50 hover:bg-neutral-100 transition-colors duration-150"
+									class="inline-block px-3 py-1.5 text-sm text-neutral-700 bg-neutral-50 hover:bg-neutral-100 transition-colors duration-200"
 								>
 									<?php echo esc_html($cat->name); ?>
 								</a>
@@ -204,7 +204,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 						<a
 							data-search-all-results
 							href="#"
-							class="inline-flex items-center gap-2 text-sm font-medium text-neutral-800 hover:text-black transition-colors duration-150"
+							class="inline-flex items-center gap-2 text-sm font-medium text-neutral-800 hover:text-black transition-colors duration-200"
 						>
 							<span data-search-all-results-text></span>
 							<?php lenvy_icon('arrow-right', '', 'sm'); ?>

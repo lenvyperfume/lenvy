@@ -40,7 +40,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 	<button
 		type="button"
 		data-dismiss-announcement
-		class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-150"
+		class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-200"
 		aria-label="<?php esc_attr_e('Dismiss announcement', 'lenvy'); ?>"
 	>
 		<?php lenvy_icon('close', '', 'xs'); ?>
@@ -50,7 +50,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 
 <header
 	data-header
-	class="sticky z-[40] bg-white border-b border-neutral-100 transition-shadow duration-300"
+	class="sticky z-[40] bg-white border-b border-neutral-200 transition-shadow duration-200"
 >
 	<div class="lenvy-container">
 		<!--
@@ -58,7 +58,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 			The 1fr / auto / 1fr split guarantees the nav is always truly centred
 			regardless of logo or action widths — same pattern as Douglas / Dior.
 		-->
-		<div class="grid grid-cols-[1fr_auto_1fr] items-center h-[68px]">
+		<div class="grid grid-cols-[1fr_auto_1fr] items-center h-[72px]">
 
 			<!-- Col 1 — Logo -->
 			<a
@@ -71,7 +71,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
     	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     	?>
 				<?php else: ?>
-					<span class="font-serif italic text-xl tracking-tight text-neutral-900">
+					<span class="font-serif italic text-2xl tracking-tight text-neutral-900">
 						<?php bloginfo('name'); ?>
 					</span>
 				<?php endif; ?>
@@ -83,13 +83,13 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 			</div>
 
 			<!-- Col 3 — Right-side actions -->
-			<div class="flex items-center justify-end gap-0.5 sm:gap-1">
+			<div class="flex items-center justify-end gap-1 sm:gap-2">
 
 				<!-- Search -->
 				<button
 					type="button"
 					data-search-toggle
-					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
 					aria-label="<?php esc_attr_e('Open search', 'lenvy'); ?>"
 					aria-expanded="false"
 				>
@@ -99,7 +99,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 				<!-- Account -->
 				<a
 					href="<?php echo is_user_logged_in() ? esc_url( wc_get_account_endpoint_url( 'dashboard' ) ) : esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"
-					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
 					aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'My account', 'lenvy' ) : esc_attr__( 'Log in', 'lenvy' ); ?>"
 				>
 					<?php lenvy_icon( 'user', '', 'md' ); ?>
@@ -109,7 +109,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 				<a
 					href="<?php echo esc_url($cart_url); ?>"
 					data-cart-link
-					class="relative p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
+					class="relative p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
 					aria-label="<?php echo esc_attr(sprintf(_n('Cart, %d item', 'Cart, %d items', $cart_count, 'lenvy'), $cart_count)); ?>"
 				>
 					<?php lenvy_icon('cart', '', 'md'); ?>
@@ -127,7 +127,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 				<button
 					type="button"
 					data-drawer-toggle
-					class="p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded lg:hidden"
+					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded lg:hidden"
 					aria-label="<?php esc_attr_e('Open navigation menu', 'lenvy'); ?>"
 					aria-expanded="false"
 					aria-controls="lenvy-mobile-drawer"

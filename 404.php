@@ -26,13 +26,13 @@ get_header(); ?>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ); ?>"
-					class="inline-block bg-primary text-black text-xs font-medium uppercase tracking-widest px-8 py-4 hover:bg-primary-hover transition-colors duration-150"
+					class="inline-block bg-primary text-black text-xs font-medium uppercase tracking-widest px-8 py-4 hover:bg-primary-hover transition-colors duration-200"
 				>
 					<?php esc_html_e( 'Naar de winkel', 'lenvy' ); ?>
 				</a>
 				<a
 					href="<?php echo esc_url( home_url( '/' ) ); ?>"
-					class="inline-block border border-neutral-300 text-neutral-700 text-xs font-medium uppercase tracking-widest px-8 py-4 hover:border-neutral-900 hover:text-neutral-900 transition-colors duration-150"
+					class="inline-block border border-neutral-300 text-neutral-700 text-xs font-medium uppercase tracking-widest px-8 py-4 hover:border-neutral-900 hover:text-neutral-900 transition-colors duration-200"
 				>
 					<?php esc_html_e( 'Terug naar home', 'lenvy' ); ?>
 				</a>

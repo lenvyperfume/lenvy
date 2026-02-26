@@ -39,7 +39,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 		<button
 			type="button"
 			data-filter-drawer-close
-			class="p-2 -mr-2 text-neutral-400 hover:text-black transition-colors duration-150"
+			class="p-2 -mr-2 text-neutral-400 hover:text-black transition-colors duration-200"
 			aria-label="<?php esc_attr_e('Close filters', 'lenvy'); ?>"
 		>
 			<?php lenvy_icon('close', '', 'sm'); ?>

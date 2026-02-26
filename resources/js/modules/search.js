@@ -108,7 +108,7 @@ export function initSearch() {
           brandsContainer.innerHTML = brands
             .map(
               (b) =>
-                `<li><a href="${escAttr(b.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-150"><span>${escHtml(b.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${b.count}</span>${chevronSvg}</span></a></li>`,
+                `<li><a href="${escAttr(b.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-200"><span>${escHtml(b.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${b.count}</span>${chevronSvg}</span></a></li>`,
             )
             .join('');
         } else {
@@ -123,7 +123,7 @@ export function initSearch() {
           categoriesContainer.innerHTML = categories
             .map(
               (c) =>
-                `<li><a href="${escAttr(c.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-150"><span>${escHtml(c.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${c.count}</span>${chevronSvg}</span></a></li>`,
+                `<li><a href="${escAttr(c.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-200"><span>${escHtml(c.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${c.count}</span>${chevronSvg}</span></a></li>`,
             )
             .join('');
         } else {

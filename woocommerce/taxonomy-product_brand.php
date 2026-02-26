@@ -142,7 +142,7 @@ if ($website_url || ($country && !$banner_id)):
 				href="<?php echo esc_url($website_url); ?>"
 				target="_blank"
 				rel="noopener noreferrer"
-				class="inline-flex items-center gap-1 hover:text-black transition-colors duration-150"
+				class="inline-flex items-center gap-1 hover:text-black transition-colors duration-200"
 			>
 				<?php esc_html_e('Website', 'lenvy'); ?>
 				<svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">

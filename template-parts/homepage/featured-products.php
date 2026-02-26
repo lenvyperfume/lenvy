@@ -36,7 +36,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 			</h2>
 			<a
 				href="<?php echo esc_url($shop_url ?: home_url('/shop/')); ?>"
-				class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-150"
+				class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-200"
 			>
 				<?php esc_html_e('View all', 'lenvy'); ?>
 				<?php lenvy_icon('arrow-right', '', 'xs'); ?>
@@ -100,7 +100,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 							</p>
 						<?php endif; ?>
 
-						<h3 class="text-sm text-neutral-800 leading-snug line-clamp-2 mb-1.5 group-hover:text-black transition-colors duration-150">
+						<h3 class="text-sm text-neutral-800 leading-snug line-clamp-2 mb-1.5 group-hover:text-black transition-colors duration-200">
 							<?php echo esc_html($product->get_name()); ?>
 						</h3>
 

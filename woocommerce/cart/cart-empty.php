@@ -39,7 +39,7 @@ ob_end_clean();
 		<?php if (wc_get_page_id('shop') > 0): ?>
 			<a
 				href="<?php echo esc_url(apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop'))); ?>"
-				class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-150"
+				class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200"
 			>
 				<?php esc_html_e('Bekijk onze collectie', 'lenvy'); ?>
 			</a>

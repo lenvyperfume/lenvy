@@ -35,7 +35,7 @@ $col_classes = match ($columns) {
 };
 
 $grid_classes = trim(
-	"grid {$col_classes} gap-x-4 gap-y-8 md:gap-x-6 md:gap-y-10 lg:gap-x-8 lg:gap-y-14 {$extra_class}"
+	"grid {$col_classes} gap-x-5 gap-y-10 md:gap-x-8 md:gap-y-14 lg:gap-x-10 lg:gap-y-16 {$extra_class}"
 );
 
 $card_args = [

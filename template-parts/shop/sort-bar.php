@@ -40,7 +40,7 @@ $filter_count = count(lenvy_get_active_filters());
 	<button
 		type="button"
 		data-filter-drawer-toggle
-		class="inline-flex items-center gap-2 text-sm font-medium text-neutral-700 hover:text-black transition-colors duration-150"
+		class="inline-flex items-center gap-2 text-sm font-medium text-neutral-700 hover:text-black transition-colors duration-200"
 		aria-expanded="false"
 		aria-controls="lenvy-filter-drawer"
 	>

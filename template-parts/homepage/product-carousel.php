@@ -3,41 +3,53 @@
  * Homepage — reusable product carousel.
  *
  * Args:
- *   title      (string)       Section heading.
+ *   eyebrow    (string)       Small uppercase label above the heading.
+ *   title      (string)       Section heading (serif italic).
  *   products   (WC_Product[]) Array of WC_Product objects.
  *   link_url   (string)       "View all" destination URL.
  *   link_label (string)       "View all" link text.
+ *   bg_class   (string)       Optional background class for alternating sections.
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
+$eyebrow    = $args['eyebrow'] ?? '';
 $title      = $args['title'] ?? '';
 $products   = $args['products'] ?? [];
 $link_url   = $args['link_url'] ?? '';
 $link_label = $args['link_label'] ?? __('Alles bekijken', 'lenvy');
+$bg_class   = $args['bg_class'] ?? '';
 
 if (empty($products)) {
 	return;
 }
 ?>
 
-<section class="py-10 lg:py-14" data-product-carousel>
-	<div class="lenvy-container">
+<section class="py-16 lg:py-24 <?php echo esc_attr($bg_class); ?>" data-product-carousel>
+	<div class="lenvy-section">
 
-		<!-- Section header -->
-		<div class="flex items-center justify-between mb-6 lg:mb-8">
-			<h2 class="flex items-center gap-3 text-xs font-medium uppercase tracking-widest text-neutral-500">
-				<span class="inline-block w-6 h-0.5 bg-primary" aria-hidden="true"></span>
-				<?php echo esc_html($title); ?>
-			</h2>
+		<!-- Section header — two-tier: eyebrow + serif heading -->
+		<div class="flex items-end justify-between mb-10 lg:mb-14">
+			<div>
+				<?php if ($eyebrow): ?>
+				<p class="text-[11px] uppercase tracking-widest text-neutral-400 mb-3">
+					<?php echo esc_html($eyebrow); ?>
+				</p>
+				<?php endif; ?>
+				<?php if ($title): ?>
+				<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight">
+					<?php echo esc_html($title); ?>
+				</h2>
+				<?php endif; ?>
+			</div>
 
 			<div class="flex items-center gap-4">
 				<?php if ($link_url): ?>
 				<a
 					href="<?php echo esc_url($link_url); ?>"
-					class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-150"
+					class="hidden sm:flex items-center gap-1.5 text-[13px] font-medium text-neutral-400 hover:text-black transition-colors duration-200"
 				>
 					<?php echo esc_html($link_label); ?>
 					<?php lenvy_icon('arrow-right', '', 'xs'); ?>

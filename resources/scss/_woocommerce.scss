@@ -37,8 +37,8 @@
     padding: 0.5rem 1rem;
     border: 1px solid currentColor;
     transition:
-      background-color 150ms ease,
-      color 150ms ease;
+      background-color 200ms ease,
+      color 200ms ease;
   }
 }
 
@@ -100,7 +100,7 @@
     line-height: 1.5;
     border-radius: 0;
     appearance: none;
-    transition: border-color 150ms ease;
+    transition: border-color 200ms ease;
 
     &:focus {
       outline: none;
@@ -239,8 +239,8 @@
     border: none;
     cursor: pointer;
     transition:
-      background-color 150ms ease,
-      color 150ms ease;
+      background-color 200ms ease,
+      color 200ms ease;
 
     &:hover {
       background-color: v.$color-primary-hover;
@@ -413,9 +413,9 @@ body .woocommerce-page input.button {
   border-radius: 0;
   cursor: pointer;
   transition:
-    background-color 150ms ease,
-    color 150ms ease,
-    border-color 150ms ease;
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
 
   // Secondary default: outlined black.
   background-color: transparent;
@@ -490,9 +490,9 @@ body .wp-element-button {
   cursor: pointer;
   text-decoration: none;
   transition:
-    background-color 150ms ease,
-    color 150ms ease,
-    border-color 150ms ease;
+    background-color 200ms ease,
+    color 200ms ease,
+    border-color 200ms ease;
 
   // Default: outlined secondary style.
   background-color: transparent;
@@ -599,8 +599,8 @@ body .wc-block-checkout__form-submit {
     text-decoration: none;
     opacity: 0;
     transition:
-      opacity 150ms ease,
-      color 150ms ease;
+      opacity 200ms ease,
+      color 200ms ease;
 
     // Override WC default .remove red circle styles.
     &:hover {
@@ -692,7 +692,7 @@ body .wc-block-checkout__form-submit {
   color: v.$neutral-400;
   cursor: pointer;
   user-select: none;
-  transition: color 150ms ease;
+  transition: color 200ms ease;
   padding: 0;
   line-height: 1;
 
@@ -729,7 +729,7 @@ body .wc-block-checkout__form-submit {
   border-radius: 0;
   appearance: none;
   background-color: v.$color-white;
-  transition: border-color 150ms ease;
+  transition: border-color 200ms ease;
 
   &:focus {
     outline: none;
@@ -754,7 +754,7 @@ body .wc-block-checkout__form-submit {
   letter-spacing: 0.08em;
   cursor: pointer;
   white-space: nowrap;
-  transition: opacity 150ms ease;
+  transition: opacity 200ms ease;
 
   &:hover {
     opacity: 0.8;
@@ -771,7 +771,7 @@ body .wc-block-checkout__form-submit {
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-  transition: color 150ms ease;
+  transition: color 200ms ease;
 
   &:hover {
     color: v.$neutral-900;
@@ -914,7 +914,7 @@ body .wc-block-checkout__form-submit {
   text-decoration: underline;
   text-underline-offset: 3px;
   cursor: pointer;
-  transition: color 150ms ease;
+  transition: color 200ms ease;
 
   &:hover {
     color: v.$neutral-900;
@@ -943,8 +943,8 @@ body .wc-block-checkout__form-submit {
   text-decoration: none;
   cursor: pointer;
   transition:
-    background-color 150ms ease,
-    opacity 150ms ease;
+    background-color 200ms ease,
+    opacity 200ms ease;
 
   &:hover {
     background-color: v.$neutral-800;
@@ -1125,7 +1125,7 @@ body .wc-block-checkout__form-submit {
       letter-spacing: 0.1em;
       border: none;
       cursor: pointer;
-      transition: background-color 150ms ease;
+      transition: background-color 200ms ease;
 
       &:hover {
         background-color: v.$color-primary-hover;
@@ -1590,7 +1590,7 @@ body .wc-block-checkout__form-submit {
     border: none;
     border-radius: 0;
     cursor: pointer;
-    transition: opacity 150ms ease;
+    transition: opacity 200ms ease;
     padding: 0;
 
     &:hover {
@@ -1854,7 +1854,7 @@ body .wc-block-checkout__form-submit {
     border: none;
     border-radius: 0;
     cursor: pointer;
-    transition: opacity 150ms ease;
+    transition: opacity 200ms ease;
 
     &:hover {
       opacity: 0.8;

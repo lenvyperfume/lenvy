@@ -59,7 +59,7 @@ $image_html = $image_id
 
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="text-sm font-medium text-neutral-800 hover:text-neutral-900 transition-colors duration-150 line-clamp-2 leading-snug"
+			class="text-sm font-medium text-neutral-800 hover:text-neutral-900 transition-colors duration-200 line-clamp-2 leading-snug"
 		>
 			<?php echo esc_html($title); ?>
 		</a>

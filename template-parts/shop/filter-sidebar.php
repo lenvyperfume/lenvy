@@ -30,7 +30,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 					href="<?php echo esc_url(strtok((string) $_SERVER['REQUEST_URI'], '?'));
    	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput
    	?>"
-					class="text-xs text-neutral-500 hover:text-black underline underline-offset-2 transition-colors duration-150"
+					class="text-xs text-neutral-500 hover:text-black underline underline-offset-2 transition-colors duration-200"
 				>
 					<?php esc_html_e('Clear all', 'lenvy'); ?>
 				</a>
@@ -131,7 +131,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 
 			<button
 				type="submit"
-				class="mt-5 w-full bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-150"
+				class="mt-5 w-full bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-200"
 			>
 				<?php esc_html_e('Apply filters', 'lenvy'); ?>
 			</button>

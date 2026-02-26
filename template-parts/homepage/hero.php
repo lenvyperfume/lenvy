@@ -23,7 +23,7 @@ $image_url = is_array( $hero_image ) ? ( $hero_image['url'] ?? '' ) : '';
 
 <section
 	class="relative overflow-hidden bg-neutral-950"
-	style="height: clamp(360px, 62vh, 720px);"
+	style="height: clamp(400px, 70vh, 800px);"
 	aria-label="<?php esc_attr_e( 'Hero', 'lenvy' ); ?>"
 >
 
@@ -62,7 +62,7 @@ $image_url = is_array( $hero_image ) ? ( $hero_image['url'] ?? '' ) : '';
 
 	<!-- Subtle editorial vignette — depth, not text legibility -->
 	<div
-		class="absolute inset-0 bg-gradient-to-t from-neutral-950/30 via-transparent to-neutral-950/10"
+		class="absolute inset-0 bg-gradient-to-t from-neutral-950/20 via-transparent to-neutral-950/10"
 		aria-hidden="true"
 	></div>
 

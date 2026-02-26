@@ -62,7 +62,7 @@ ob_start();
 			>
 			<label
 				for="<?php echo $input_id; ?>"
-				class="flex items-center justify-between flex-1 text-sm text-neutral-700 cursor-pointer hover:text-black transition-colors duration-150"
+				class="flex items-center justify-between flex-1 text-sm text-neutral-700 cursor-pointer hover:text-black transition-colors duration-200"
 			>
 				<span><?php echo esc_html($term->name); ?></span>
 				<span class="text-xs text-neutral-400">(<?php echo esc_html($term->count); ?>)</span>

@@ -24,7 +24,7 @@ $base_url = strtok((string) $_SERVER['REQUEST_URI'], '?');
 		<?php $remove_url = add_query_arg($filter['remove_args'], $base_url); ?>
 		<a
 			href="<?php echo esc_url($remove_url); ?>"
-			class="inline-flex items-center gap-1.5 text-[11px] font-medium bg-neutral-100 text-neutral-700 hover:bg-neutral-200 px-3 py-1.5 transition-colors duration-150"
+			class="inline-flex items-center gap-1.5 text-[11px] font-medium bg-neutral-100 text-neutral-700 hover:bg-neutral-200 px-3 py-1.5 transition-colors duration-200"
 			aria-label="<?php echo esc_attr(sprintf(__('Remove filter: %s', 'lenvy'), $filter['label'])); ?>"
 		>
 			<?php echo esc_html($filter['label']); ?>
@@ -34,7 +34,7 @@ $base_url = strtok((string) $_SERVER['REQUEST_URI'], '?');
 
 	<a
 		href="<?php echo esc_url($base_url); ?>"
-		class="text-[11px] text-neutral-400 hover:text-neutral-900 underline underline-offset-4 transition-colors duration-150 ml-1"
+		class="text-[11px] text-neutral-400 hover:text-neutral-900 underline underline-offset-4 transition-colors duration-200 ml-1"
 	>
 		<?php esc_html_e('Wis alles', 'lenvy'); ?>
 	</a>

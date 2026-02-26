@@ -7,10 +7,49 @@
   width: 100%;
   max-width: var(--container-width);
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: 1.5rem;
 
   @media (min-width: 768px) {
-    padding-inline: 2rem;
+    padding-inline: 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 3rem;
+  }
+}
+
+// ─── Full-width section wrapper ──────────────────────────────────────────────
+// No max-width — spans the viewport with generous edge padding.
+// Used for product grids, carousels, category grids where content should feel expansive.
+
+.lenvy-section {
+  width: 100%;
+  padding-inline: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 4rem;
+  }
+
+  @media (min-width: 1280px) {
+    padding-inline: clamp(4rem, 5vw, 6rem);
+  }
+}
+
+// ─── Narrow container ────────────────────────────────────────────────────────
+// For editorial text blocks — tighter measure for comfortable reading.
+
+.lenvy-container-narrow {
+  width: 100%;
+  max-width: 960px;
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+
+  @media (min-width: 768px) {
+    padding-inline: 2.5rem;
   }
 }
 
@@ -46,8 +85,8 @@
     text-decoration: none;
     border: 1px solid transparent;
     transition:
-      color 150ms ease,
-      border-color 150ms ease;
+      color 200ms ease,
+      border-color 200ms ease;
 
     &:hover {
       color: v.$color-black;
@@ -109,13 +148,13 @@
 // Transition helpers
 .transition-base {
   transition-property: color, background-color, border-color, opacity, transform;
-  transition-duration: 150ms;
+  transition-duration: 200ms;
   transition-timing-function: ease;
 }
 
 .transition-slow {
   transition-property: color, background-color, border-color, opacity, transform, box-shadow;
-  transition-duration: 300ms;
+  transition-duration: 500ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -200,10 +239,10 @@
   width: 2rem;
   height: 2rem;
   border-radius: 9999px;
-  border: 1px solid v.$neutral-200;
+  border: 1px solid v.$neutral-100;
   background: v.$color-white;
   color: v.$neutral-600;
-  transition: color v.$transition-base, border-color v.$transition-base;
+  transition: color v.$transition-base, border-color v.$transition-base, background-color v.$transition-base;
   cursor: pointer;
 
   &:hover:not(:disabled) {
@@ -337,7 +376,7 @@
     object-fit: contain;
     filter: grayscale(1);
     opacity: 0.5;
-    transition: filter 300ms ease, opacity 300ms ease;
+    transition: filter 500ms ease, opacity 500ms ease;
   }
 
   &:hover img,

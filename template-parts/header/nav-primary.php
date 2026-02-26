@@ -20,7 +20,7 @@ if (!has_nav_menu('primary')) {
 >
 	<?php wp_nav_menu([
  	'theme_location' => 'primary',
- 	'menu_class' => 'flex items-center gap-7',
+ 	'menu_class' => 'flex items-center gap-8 font-normal',
  	'container' => false,
  	'walker' => new Lenvy_Primary_Nav_Walker(),
  	'fallback_cb' => false,

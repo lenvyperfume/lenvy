@@ -56,13 +56,13 @@ if (empty($all_ids)) {
 
 <!-- Thumbnail strip -->
 <?php if (count($all_ids) > 1): ?>
-<div class="flex gap-3 mt-4 overflow-x-auto scrollbar-hide" data-gallery-thumbs>
+<div class="flex gap-3 mt-5 overflow-x-auto scrollbar-hide" data-gallery-thumbs>
 	<?php foreach ($all_ids as $i => $img_id): ?>
 		<?php $full_src = wp_get_attachment_image_url($img_id, 'woocommerce_single'); ?>
 		<button
 			type="button"
-			class="shrink-0 w-[72px] aspect-product overflow-hidden bg-neutral-50 border-b-2 transition-colors duration-150 <?php echo 0 === $i
-				? 'border-black'
+			class="shrink-0 w-20 aspect-product overflow-hidden bg-neutral-50 border-b-2 transition-colors duration-200 <?php echo 0 === $i
+				? 'border-neutral-900'
 				: 'border-transparent hover:border-neutral-300'; ?>"
 			data-gallery-thumb
 			data-src="<?php echo esc_url((string) $full_src); ?>"

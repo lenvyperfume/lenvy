@@ -24,7 +24,7 @@ $categories = get_the_category();
 	<div class="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-400 mb-3">
 		<?php if ( $categories ) : ?>
 			<a href="<?php echo esc_url( get_category_link( $categories[0]->term_id ) ); ?>"
-			   class="text-neutral-800 hover:text-neutral-500 transition-colors duration-150">
+			   class="text-neutral-800 hover:text-neutral-500 transition-colors duration-200">
 				<?php echo esc_html( $categories[0]->name ); ?>
 			</a>
 			<span class="text-neutral-200" aria-hidden="true">·</span>
@@ -34,7 +34,7 @@ $categories = get_the_category();
 		</time>
 	</div>
 
-	<h2 class="text-lg font-serif italic text-neutral-900 leading-snug mb-3 group-hover:text-neutral-600 transition-colors duration-150">
+	<h2 class="text-lg font-serif italic text-neutral-900 leading-snug mb-3 group-hover:text-neutral-600 transition-colors duration-200">
 		<a href="<?php the_permalink(); ?>">
 			<?php the_title(); ?>
 		</a>

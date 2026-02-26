@@ -33,11 +33,11 @@ defined('ABSPATH') || exit();
 				</div>
 
 				<div class="flex justify-center gap-3">
-					<a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-150">
+					<a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200">
 						<?php esc_html_e('Opnieuw betalen', 'lenvy'); ?>
 					</a>
 					<?php if (is_user_logged_in()): ?>
-						<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest border border-neutral-200 text-neutral-900 hover:border-neutral-900 transition-colors duration-150">
+						<a href="<?php echo esc_url(wc_get_page_permalink('myaccount')); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest border border-neutral-200 text-neutral-900 hover:border-neutral-900 transition-colors duration-200">
 							<?php esc_html_e('Mijn account', 'lenvy'); ?>
 						</a>
 					<?php endif; ?>
@@ -100,7 +100,7 @@ defined('ABSPATH') || exit();
 					<?php if (wc_get_page_id('shop') > 0): ?>
 						<a
 							href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>"
-							class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-150"
+							class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200"
 						>
 							<?php esc_html_e('Verder winkelen', 'lenvy'); ?>
 						</a>

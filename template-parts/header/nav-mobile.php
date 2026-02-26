@@ -50,7 +50,7 @@ defined('ABSPATH') || exit(); ?>
 		<button
 			type="button"
 			data-drawer-close
-			class="p-2 text-neutral-500 hover:text-black transition-colors duration-150"
+			class="p-2 text-neutral-500 hover:text-black transition-colors duration-200"
 			aria-label="<?php esc_attr_e('Close navigation', 'lenvy'); ?>"
 		>
 			<?php lenvy_icon('close', '', 'md'); ?>

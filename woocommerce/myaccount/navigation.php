@@ -35,7 +35,7 @@ do_action( 'woocommerce_before_account_navigation' );
 			<li class="<?php echo esc_attr( $classes ); ?>">
 				<a
 					href="<?php echo esc_url( wc_get_account_endpoint_url( $endpoint ) ); ?>"
-					class="flex items-center gap-2.5 py-2.5 text-sm transition-colors duration-150 <?php echo esc_attr( $link_class ); ?>"
+					class="flex items-center gap-2.5 py-2.5 text-sm transition-colors duration-200 <?php echo esc_attr( $link_class ); ?>"
 					<?php echo wc_is_current_account_menu_item( $endpoint ) ? 'aria-current="page"' : ''; ?>
 				>
 					<span class="w-0.5 h-3.5 shrink-0 <?php echo $is_active ? 'bg-black' : 'bg-transparent'; ?>" aria-hidden="true"></span>
