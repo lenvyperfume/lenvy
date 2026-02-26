@@ -56,7 +56,7 @@ ob_start();
 				id="<?php echo $input_id; ?>"
 				name="<?php echo esc_attr($query_var); ?>[]"
 				value="<?php echo esc_attr($term->slug); ?>"
-				class="w-3.5 h-3.5 border border-neutral-300 accent-black cursor-pointer"
+				class="lenvy-checkbox"
 				<?php checked($checked); ?>
 				data-filter-checkbox
 			>

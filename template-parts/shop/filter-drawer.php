@@ -26,14 +26,14 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 <div
 	id="lenvy-filter-drawer"
 	data-filter-drawer
-	class="fixed inset-y-0 left-0 z-[50] w-[340px] max-w-[calc(100vw-3rem)] bg-white overflow-y-auto -translate-x-full transition-transform duration-300 flex flex-col"
+	class="fixed inset-y-0 left-0 z-[50] w-[400px] max-w-[calc(100vw-3rem)] bg-white overflow-y-auto -translate-x-full transition-transform duration-300 flex flex-col"
 	aria-hidden="true"
 	role="dialog"
 	aria-label="<?php esc_attr_e('Product filters', 'lenvy'); ?>"
 >
 	<!-- Header -->
-	<div class="flex items-center justify-between px-6 h-14 border-b border-neutral-100 shrink-0">
-		<span class="text-[11px] font-semibold uppercase tracking-widest text-neutral-800">
+	<div class="flex items-center justify-between px-7 h-16 border-b border-neutral-100 shrink-0">
+		<span class="text-xs font-semibold uppercase tracking-widest text-neutral-800">
 			<?php esc_html_e('Filters', 'lenvy'); ?>
 		</span>
 		<button
@@ -47,7 +47,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 	</div>
 
 	<!-- Filter form (scrollable body) -->
-	<div class="flex-1 overflow-y-auto px-6">
+	<div class="flex-1 overflow-y-auto px-7">
 		<form method="GET" action="" id="lenvy-filter-drawer-form" data-filter-form>
 
 			<?php if (isset($_GET['orderby'])):
@@ -109,7 +109,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 			]);
 			?>
 
-			<div class="border-b border-neutral-100 py-4 space-y-3">
+			<div class="border-b border-neutral-100 py-5 space-y-3">
 				<?php
 				// phpcs:ignore WordPress.Security.NonceVerification
 				$available = !empty($_GET['filter_available']);
@@ -118,11 +118,11 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 				?>
 				<label class="flex items-center justify-between cursor-pointer">
 					<span class="text-sm text-neutral-700"><?php esc_html_e('Op voorraad', 'lenvy'); ?></span>
-					<input type="checkbox" name="filter_available" value="1" class="w-3.5 h-3.5 accent-black" data-filter-checkbox <?php checked($available); ?>>
+					<input type="checkbox" name="filter_available" value="1" class="lenvy-checkbox" data-filter-checkbox <?php checked($available); ?>>
 				</label>
 				<label class="flex items-center justify-between cursor-pointer">
 					<span class="text-sm text-neutral-700"><?php esc_html_e('Sale', 'lenvy'); ?></span>
-					<input type="checkbox" name="filter_onsale" value="1" class="w-3.5 h-3.5 accent-black" data-filter-checkbox <?php checked($onsale); ?>>
+					<input type="checkbox" name="filter_onsale" value="1" class="lenvy-checkbox" data-filter-checkbox <?php checked($onsale); ?>>
 				</label>
 			</div>
 
@@ -130,7 +130,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 	</div>
 
 	<!-- Sticky footer -->
-	<div class="shrink-0 px-6 py-4 border-t border-neutral-100 flex gap-3">
+	<div class="shrink-0 px-7 py-5 border-t border-neutral-100 flex gap-3">
 		<?php if (lenvy_is_filtered()): ?>
 			<a
 				href="<?php echo esc_url(strtok((string) $_SERVER['REQUEST_URI'], '?'));

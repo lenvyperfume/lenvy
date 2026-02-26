@@ -28,7 +28,7 @@ $panel_id = 'filter-panel-' . esc_attr($name);
 $toggle_id = 'filter-toggle-' . esc_attr($name);
 ?>
 
-<div class="border-b border-neutral-100 py-4" data-filter-accordion>
+<div class="border-b border-neutral-100 py-5" data-filter-accordion>
 	<button
 		id="<?php echo $toggle_id; ?>"
 		type="button"

@@ -98,7 +98,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
    ?>
 
 			<!-- In stock + On sale toggles -->
-			<div class="border-b border-neutral-100 py-4 space-y-3">
+			<div class="border-b border-neutral-100 py-5 space-y-3">
 				<?php
     // phpcs:ignore WordPress.Security.NonceVerification
     $available = !empty($_GET['filter_available']);
@@ -111,7 +111,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 						type="checkbox"
 						name="filter_available"
 						value="1"
-						class="w-3.5 h-3.5 accent-black"
+						class="lenvy-checkbox"
 						data-filter-checkbox
 						<?php checked($available); ?>
 					>
@@ -122,7 +122,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 						type="checkbox"
 						name="filter_onsale"
 						value="1"
-						class="w-3.5 h-3.5 accent-black"
+						class="lenvy-checkbox"
 						data-filter-checkbox
 						<?php checked($onsale); ?>
 					>
