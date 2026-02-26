@@ -141,9 +141,10 @@ add_filter(
 
 add_filter('woocommerce_enable_order_notes_field', '__return_false');
 
-// ─── Checkout: remove privacy policy text ────────────────────────────────────
+// ─── Remove privacy policy text (checkout + registration) ────────────────────
 
 remove_action('woocommerce_checkout_terms_and_conditions', 'wc_checkout_privacy_policy_text', 20);
+remove_action('woocommerce_register_form', 'wc_registration_privacy_policy_text', 20);
 
 // ─── Checkout: remove coupon notice at top (coupon is in cart sidebar) ───────
 

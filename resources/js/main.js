@@ -17,6 +17,7 @@ import { initQuickAdd } from './modules/quick-add.js';
 import { initAjaxFilters } from './modules/ajax-filters.js';
 import { initBrandScroller } from './modules/brand-scroller.js';
 import { initProductCarousel } from './modules/product-carousel.js';
+import { initBrandsFilter } from './modules/brands-filter.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -34,13 +35,40 @@ document.addEventListener('DOMContentLoaded', () => {
   initAjaxFilters();
   initBrandScroller();
   initProductCarousel();
+  initBrandsFilter();
 
-  // Sort select — navigate via URL so price/filter form inputs are never dragged along.
-  document.querySelectorAll('[data-sort-select]').forEach((select) => {
-    select.addEventListener('change', () => {
-      const url = new URL(window.location.href);
-      url.searchParams.set('orderby', select.value);
-      window.location.href = url.toString();
+  // Custom sort dropdown.
+  document.querySelectorAll('[data-sort-dropdown]').forEach((dropdown) => {
+    const trigger = dropdown.querySelector('[data-sort-trigger]');
+    const panel = dropdown.querySelector('[data-sort-options]');
+    if (!trigger || !panel) return;
+
+    const open = () => {
+      trigger.setAttribute('aria-expanded', 'true');
+      panel.classList.remove('opacity-0', 'invisible', 'translate-y-1');
+      trigger.querySelector('svg')?.classList.add('rotate-180');
+    };
+
+    const close = () => {
+      trigger.setAttribute('aria-expanded', 'false');
+      panel.classList.add('opacity-0', 'invisible', 'translate-y-1');
+      trigger.querySelector('svg')?.classList.remove('rotate-180');
+    };
+
+    trigger.addEventListener('click', () => {
+      trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
+    });
+
+    dropdown.querySelectorAll('[data-sort-value]').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const url = new URL(window.location.href);
+        url.searchParams.set('orderby', btn.dataset.sortValue);
+        window.location.href = url.toString();
+      });
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!dropdown.contains(e.target)) close();
     });
   });
 
@@ -50,6 +78,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (overlay && !overlay.classList.contains('opacity-0')) closeSearch();
     if (drawer && !drawer.classList.contains('-translate-x-full')) closeDrawer();
     if (filterDrawer && !filterDrawer.classList.contains('-translate-x-full')) closeFilterDrawer();
+    // Close any open sort dropdowns.
+    document.querySelectorAll('[data-sort-trigger][aria-expanded="true"]').forEach((t) => t.click());
   });
 });
 
