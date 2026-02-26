@@ -103,7 +103,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 
 				<button
 					type="submit"
-					class="woocommerce-button button woocommerce-form-login__submit w-full bg-black text-white text-xs font-medium uppercase tracking-widest py-4 transition-opacity hover:opacity-70 cursor-pointer"
+					class="woocommerce-button button woocommerce-form-login__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
 					name="login"
 					value="<?php esc_attr_e( 'Log in', 'lenvy' ); ?>"
 				>
@@ -201,7 +201,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 
 				<button
 					type="submit"
-					class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit w-full bg-black text-white text-xs font-medium uppercase tracking-widest py-4 transition-opacity hover:opacity-70 cursor-pointer"
+					class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
 					name="register"
 					value="<?php esc_attr_e( 'Create account', 'lenvy' ); ?>"
 				>

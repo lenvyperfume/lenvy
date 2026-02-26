@@ -933,8 +933,8 @@ body .wc-block-checkout__form-submit {
   height: 3rem;
   line-height: 3rem;
   text-align: center;
-  background-color: v.$color-black;
-  color: v.$color-white;
+  background-color: v.$color-primary;
+  color: v.$color-black;
   font-family: v.$font-sans;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -942,13 +942,11 @@ body .wc-block-checkout__form-submit {
   letter-spacing: 0.12em;
   text-decoration: none;
   cursor: pointer;
-  transition:
-    background-color 200ms ease,
-    opacity 200ms ease;
+  transition: background-color 200ms ease;
 
   &:hover {
-    background-color: v.$neutral-800;
-    color: v.$color-white;
+    background-color: v.$color-primary-hover;
+    color: v.$color-black;
   }
 }
 
@@ -1535,7 +1533,7 @@ body .wc-block-checkout__form-submit {
 // Labels are Tailwind-styled inline in form-login.php. Only modernise the
 // inputs here: taller, background tint, double-ring focus.
 
-.lenvy-account-auth {
+.woocommerce .lenvy-account-auth {
   .form-row {
     input[type='text'],
     input[type='email'],
@@ -1578,8 +1576,8 @@ body .wc-block-checkout__form-submit {
     display: block;
     width: 100%;
     height: 3rem;
-    background-color: v.$color-black;
-    color: v.$color-white;
+    background-color: v.$color-primary;
+    color: v.$color-black;
     font-family: v.$font-sans;
     font-size: 0.6875rem;
     font-weight: 500;
@@ -1590,13 +1588,12 @@ body .wc-block-checkout__form-submit {
     border: none;
     border-radius: 0;
     cursor: pointer;
-    transition: opacity 200ms ease;
+    transition: background-color 200ms ease;
     padding: 0;
 
     &:hover {
-      opacity: 0.8;
-      background-color: v.$color-black;
-      color: v.$color-white;
+      background-color: v.$color-primary-hover;
+      color: v.$color-black;
     }
   }
 }
@@ -1605,7 +1602,7 @@ body .wc-block-checkout__form-submit {
 // These pages render WC form-row markup inside .woocommerce-MyAccount-content.
 // Apply the same IFTA label pattern + modern inputs as checkout.
 
-.woocommerce-MyAccount-content {
+.woocommerce .woocommerce-MyAccount-content {
   // Grid layout for edit-account form (first/last name side by side)
   form.edit-account {
     display: grid;
@@ -1844,8 +1841,8 @@ body .wc-block-checkout__form-submit {
     display: block;
     width: 100%;
     height: 3rem;
-    background-color: v.$color-black;
-    color: v.$color-white;
+    background-color: v.$color-primary;
+    color: v.$color-black;
     font-family: v.$font-sans;
     font-size: 0.6875rem;
     font-weight: 500;
@@ -1854,10 +1851,10 @@ body .wc-block-checkout__form-submit {
     border: none;
     border-radius: 0;
     cursor: pointer;
-    transition: opacity 200ms ease;
+    transition: background-color 200ms ease;
 
     &:hover {
-      opacity: 0.8;
+      background-color: v.$color-primary-hover;
     }
   }
 }

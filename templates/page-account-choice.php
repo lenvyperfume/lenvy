@@ -40,7 +40,7 @@ get_header();
 					</p>
 					<a
 						href="<?php echo esc_url( wp_login_url( wc_get_checkout_url() ) ); ?>"
-						class="block w-full text-center bg-black text-white text-xs font-medium uppercase tracking-widest py-3 px-6 transition-opacity hover:opacity-70"
+						class="block w-full text-center bg-primary text-black text-xs font-medium uppercase tracking-widest py-3 px-6 transition-colors hover:bg-primary-hover"
 					>
 						<?php esc_html_e( 'Log in', 'lenvy' ); ?>
 					</a>
@@ -56,7 +56,7 @@ get_header();
 					</p>
 					<a
 						href="<?php echo esc_url( wp_registration_url() ); ?>"
-						class="block w-full text-center bg-black text-white text-xs font-medium uppercase tracking-widest py-3 px-6 transition-opacity hover:opacity-70"
+						class="block w-full text-center bg-primary text-black text-xs font-medium uppercase tracking-widest py-3 px-6 transition-colors hover:bg-primary-hover"
 					>
 						<?php esc_html_e( 'Create account', 'lenvy' ); ?>
 					</a>
