@@ -117,7 +117,45 @@ add_filter(
 	},
 );
 
-// ─── Dequeue WC block styles ─────────────────────────────────────────────────
+// ─── Force classic shortcodes for cart & checkout ────────────────────────────
+// WooCommerce 8.3+ uses Gutenberg blocks (wp:woocommerce/cart, wp:woocommerce/checkout)
+// by default, which bypass our custom template overrides in woocommerce/cart/ and
+// woocommerce/checkout/. Replace block content with classic shortcodes so our
+// templates control the layout.
+
+add_filter(
+	'the_content',
+	function (string $content): string {
+		if (function_exists('is_cart') && is_cart()) {
+			return '[woocommerce_cart]';
+		}
+		if (function_exists('is_checkout') && is_checkout() && !is_order_received_page()) {
+			return '[woocommerce_checkout]';
+		}
+		return $content;
+	},
+	1,
+);
+
+// ─── Checkout: remove order notes (additional information) ───────────────────
+
+add_filter('woocommerce_enable_order_notes_field', '__return_false');
+
+// ─── Checkout: remove privacy policy text ────────────────────────────────────
+
+remove_action('woocommerce_checkout_terms_and_conditions', 'wc_checkout_privacy_policy_text', 20);
+
+// ─── Checkout: remove coupon notice at top (coupon is in cart sidebar) ───────
+
+remove_action('woocommerce_before_checkout_form', 'woocommerce_checkout_coupon_form', 10);
+
+// ─── Dequeue all WC default styles ──────────────────────────────────────────
+// The theme provides comprehensive custom styles for every WC element.
+// WC's built-in woocommerce-general.css, woocommerce-layout.css and
+// woocommerce-smallscreen.css use high-specificity selectors that fight
+// our theme styles (e.g. .woocommerce form .form-row input.input-text).
+
+add_filter('woocommerce_enqueue_styles', '__return_empty_array');
 
 add_action(
 	'wp_enqueue_scripts',

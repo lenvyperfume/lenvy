@@ -1,6 +1,6 @@
 <?php
 /**
- * Related products — grid using product-card component.
+ * Related products — uses product-grid component.
  *
  * Overrides woocommerce/single-product/related.php
  *
@@ -8,7 +8,6 @@
  * @see     WC templates/single-product/related.php
  *
  * @var WC_Product[] $related_products
- * @var array        $args
  */
 
 defined('ABSPATH') || exit();
@@ -16,20 +15,21 @@ defined('ABSPATH') || exit();
 if (empty($related_products)) {
 	return;
 }
+
+$product_ids = array_map(function ($p) {
+	return $p->get_id();
+}, $related_products);
 ?>
 
-<section class="mt-16 pt-10 border-t border-neutral-100">
+<section class="mt-20 pt-12 border-t border-neutral-100">
 
-	<h2 class="text-sm font-semibold uppercase tracking-widest text-neutral-800 mb-8">
-		<?php esc_html_e('You may also like', 'lenvy'); ?>
+	<h2 class="text-2xl font-serif italic text-neutral-900 mb-10">
+		<?php esc_html_e('Misschien vind je dit ook leuk', 'lenvy'); ?>
 	</h2>
 
-	<div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
-		<?php foreach ($related_products as $related_product): ?>
-			<?php get_template_part('template-parts/components/product-card', null, [
-   	'product_id' => $related_product->get_id(),
-   ]); ?>
-		<?php endforeach; ?>
-	</div>
+	<?php get_template_part('template-parts/components/product-grid', null, [
+		'product_ids' => $product_ids,
+		'columns'     => 4,
+	]); ?>
 
 </section>

@@ -16,6 +16,7 @@ import { initMiniCart } from './modules/mini-cart.js';
 import { initQuickAdd } from './modules/quick-add.js';
 import { initAjaxFilters } from './modules/ajax-filters.js';
 import { initBrandScroller } from './modules/brand-scroller.js';
+import { initProductCarousel } from './modules/product-carousel.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -32,6 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuickAdd();
   initAjaxFilters();
   initBrandScroller();
+  initProductCarousel();
 
   // Sort select — navigate via URL so price/filter form inputs are never dragged along.
   document.querySelectorAll('[data-sort-select]').forEach((select) => {
@@ -51,13 +53,40 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// ── WooCommerce cart quantity — re-enable update button on input change ────────
+// ── Quantity stepper: −/+ buttons ──────────────────────────────────────────────
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-qty-minus], [data-qty-plus]');
+  if (!btn) return;
+
+  const wrapper = btn.closest('[data-lenvy-qty]');
+  const input = wrapper?.querySelector('input.qty');
+  if (!input) return;
+
+  const step = parseFloat(input.step) || 1;
+  const min = parseFloat(input.min) || 0;
+  const max = parseFloat(input.max) || Infinity;
+  let val = parseFloat(input.value) || min;
+
+  if (btn.hasAttribute('data-qty-minus')) {
+    val = Math.max(min, val - step);
+  } else {
+    val = Math.min(max, val + step);
+  }
+
+  input.value = val;
+  input.dispatchEvent(new Event('change', { bubbles: true }));
+});
+
+// ── WooCommerce cart — auto-submit on quantity change ─────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('input.qty').forEach((input) => {
-    input.addEventListener('change', () => {
-      const form = input.closest('form.woocommerce-cart-form');
-      const updateBtn = form?.querySelector('[name="update_cart"]');
-      if (updateBtn) updateBtn.disabled = false;
-    });
+  let debounce = null;
+  document.addEventListener('change', (e) => {
+    if (!e.target.matches('.woocommerce-cart-form input.qty')) return;
+    const form = e.target.closest('form.woocommerce-cart-form');
+    const updateBtn = form?.querySelector('[name="update_cart"]');
+    if (!form || !updateBtn) return;
+    updateBtn.disabled = false;
+    clearTimeout(debounce);
+    debounce = setTimeout(() => updateBtn.click(), 600);
   });
 });

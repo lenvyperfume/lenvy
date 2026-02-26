@@ -2,7 +2,7 @@
 /**
  * Homepage — featured categories grid.
  *
- * Renders up to 6 ACF-selected product_cat terms as portrait image cards.
+ * Renders up to 4 ACF-selected product_cat terms as portrait image cards.
  * Image priority: ACF banner (lenvy_cat_banner_image) → WC thumbnail_id meta.
  *
  * @package Lenvy
@@ -34,8 +34,8 @@ $count = count($cats);
 // Responsive grid class adapts to how many categories are shown
 $grid_cols = match (true) {
 	$count <= 2 => 'grid-cols-2',
-	$count === 3 => 'grid-cols-3',
-	$count === 4 => 'grid-cols-2 md:grid-cols-4',
+	$count === 3 => 'grid-cols-2 md:grid-cols-3',
+	$count <= 4 => 'grid-cols-2 md:grid-cols-4',
 	$count === 5 => 'grid-cols-2 md:grid-cols-3 lg:grid-cols-5',
 	default => 'grid-cols-2 md:grid-cols-3 lg:grid-cols-6',
 };
@@ -45,12 +45,13 @@ $shop_url = function_exists('wc_get_page_permalink')
 	: get_post_type_archive_link('product');
 ?>
 
-<section class="py-16 lg:py-24">
+<section class="py-10 lg:py-14">
 	<div class="lenvy-container">
 
 		<!-- Section header -->
 		<div class="flex items-center justify-between mb-8 lg:mb-12">
-			<h2 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
+			<h2 class="flex items-center gap-3 text-xs font-medium uppercase tracking-widest text-neutral-500">
+				<span class="inline-block w-6 h-0.5 bg-primary" aria-hidden="true"></span>
 				<?php esc_html_e('Shop by Category', 'lenvy'); ?>
 			</h2>
 			<a

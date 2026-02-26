@@ -366,6 +366,53 @@ function lenvy_is_filtered(): bool {
 	return !empty(lenvy_get_active_filters());
 }
 
+// ─── Homepage product queries ─────────────────────────────────────────────
+
+/**
+ * Return WC_Product objects for homepage carousels.
+ *
+ * @param  string $type  'bestsellers' | 'new' | 'sale'
+ * @param  int    $limit Maximum products to return.
+ * @return WC_Product[]
+ */
+function lenvy_get_homepage_products(string $type, int $limit = 12): array {
+	if (!function_exists('wc_get_products')) {
+		return [];
+	}
+
+	$args = [
+		'status'     => 'publish',
+		'visibility' => 'visible',
+		'limit'      => $limit,
+	];
+
+	switch ($type) {
+		case 'bestsellers':
+			$args['orderby'] = 'popularity';
+			break;
+
+		case 'new':
+			$args['orderby'] = 'date';
+			$args['order']   = 'DESC';
+			break;
+
+		case 'sale':
+			$sale_ids = wc_get_product_ids_on_sale();
+			if (empty($sale_ids)) {
+				return [];
+			}
+			$args['include'] = $sale_ids;
+			$args['orderby'] = 'date';
+			$args['order']   = 'DESC';
+			break;
+
+		default:
+			return [];
+	}
+
+	return wc_get_products($args);
+}
+
 // ─── Account helpers ──────────────────────────────────────────────────────────
 
 /**

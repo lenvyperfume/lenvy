@@ -108,9 +108,7 @@ function fetchFiltered(params) {
         if (activeEl) {
           activeEl.outerHTML = active;
         } else {
-          const sortBar =
-            document.querySelector('[data-filter-sidebar]')?.nextElementSibling ??
-            grid.closest('.flex-1')?.querySelector('[data-active-filters]');
+          const sortBar = document.querySelector('[data-sort-bar]');
           if (sortBar) sortBar.insertAdjacentHTML('afterend', active);
         }
       } else if (activeEl) {

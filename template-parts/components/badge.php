@@ -4,22 +4,22 @@
  *
  * Usage:
  *   get_template_part('template-parts/components/badge', null, [
- *     'text'    => 'Sale',    // required
+ *     'text'    => 'Sale',
  *     'variant' => 'sale',    // sale|new|oos|custom
  *   ]);
  *
  * Variants:
- *   sale   — brand primary background (lavender) — used on sale products
- *   new    — black fill — new arrivals
- *   oos    — neutral muted — out of stock
- *   custom — neutral light — any other label
+ *   sale   — black fill, white text
+ *   new    — black fill, white text
+ *   oos    — text-only, muted (no background)
+ *   custom — subtle neutral background
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-$text = $args['text'] ?? '';
+$text    = $args['text'] ?? '';
 $variant = $args['variant'] ?? 'custom';
 
 if (empty($text)) {
@@ -27,16 +27,14 @@ if (empty($text)) {
 }
 
 $variants = [
-	'sale' => 'bg-primary text-black',
-	'new' => 'bg-black text-white',
-	'oos' => 'bg-neutral-200 text-neutral-500',
-	'custom' => 'bg-neutral-100 text-neutral-700',
+	'sale'   => 'bg-black text-white px-2.5 py-1',
+	'new'    => 'bg-primary text-black px-2.5 py-1',
+	'oos'    => 'text-neutral-400',
+	'custom' => 'bg-neutral-100 text-neutral-700 px-2.5 py-1',
 ];
 
 $variant_class = $variants[$variant] ?? $variants['custom'];
 ?>
-<span class="inline-block px-2 py-0.5 text-xs font-medium uppercase tracking-widest <?php echo esc_attr(
-	$variant_class,
-); ?>">
+<span class="inline-block text-[10px] font-medium uppercase tracking-widest <?php echo esc_attr($variant_class); ?>">
 	<?php echo esc_html($text); ?>
 </span>

@@ -30,7 +30,7 @@ function initSingle(gallery) {
     };
     preload.src = src;
 
-    // Update active thumb border.
+    // Update active thumb border (border-b-2 bottom accent).
     thumbs.forEach((t) => {
       t.classList.remove('border-black');
       t.classList.add('border-transparent');

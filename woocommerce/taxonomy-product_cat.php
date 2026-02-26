@@ -1,6 +1,6 @@
 <?php
 /**
- * Product category archive — banner + ACF enhancements + filter/grid layout.
+ * Product category archive — banner + full-width grid with drawer filters.
  *
  * Overrides woocommerce/taxonomy-product_cat.php
  *
@@ -17,21 +17,20 @@ $term = get_queried_object();
 
 <?php
 // ── Category banner ───────────────────────────────────────────────────────────
-$banner_image = lenvy_field('lenvy_cat_banner_image', 'term_' . $term->term_id);
+$banner_image   = lenvy_field('lenvy_cat_banner_image', 'term_' . $term->term_id);
 $banner_heading = lenvy_field('lenvy_cat_banner_heading', 'term_' . $term->term_id) ?: $term->name;
 $banner_image_id = is_array($banner_image) ? (int) ($banner_image['ID'] ?? 0) : (int) $banner_image;
 
 if ($banner_image_id):
 	$banner_img = wp_get_attachment_image($banner_image_id, 'full', false, [
-		'class' => 'w-full h-full object-cover',
+		'class'         => 'w-full h-full object-cover',
 		'fetchpriority' => 'high',
-		'loading' => 'eager',
-		'alt' => esc_attr($banner_heading),
+		'loading'       => 'eager',
+		'alt'           => esc_attr($banner_heading),
 	]); ?>
 	<div class="relative h-40 md:h-56 overflow-hidden bg-neutral-900">
-		<?php echo $banner_img;
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	?>
+		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $banner_img; ?>
 		<div class="absolute inset-0 bg-neutral-900/50 flex items-end">
 			<div class="lenvy-container pb-8">
 				<h1 class="text-3xl md:text-4xl font-serif italic text-white">
@@ -40,82 +39,58 @@ if ($banner_image_id):
 			</div>
 		</div>
 	</div>
-<?php
-else:
-	 ?>
+<?php else: ?>
 	<div class="py-10 border-b border-neutral-100">
 		<div class="lenvy-container">
-			<h1 class="text-2xl font-serif italic text-neutral-900">
+			<h1 class="text-3xl font-serif italic text-neutral-900">
 				<?php echo esc_html($banner_heading); ?>
 			</h1>
 		</div>
 	</div>
-<?php
-endif;
-?>
+<?php endif; ?>
 
-<main id="primary" class="py-8 lg:py-12">
+<main id="primary" class="py-10 lg:py-16">
 	<div class="lenvy-container">
 
 		<?php get_template_part('template-parts/components/breadcrumb'); ?>
 
-		<div class="flex gap-8 mt-6">
+		<?php get_template_part('template-parts/shop/sort-bar'); ?>
 
-			<?php get_template_part('template-parts/shop/filter-sidebar'); ?>
+		<?php if (lenvy_is_filtered()): ?>
+			<?php get_template_part('template-parts/shop/filter-active'); ?>
+		<?php endif; ?>
 
-			<div class="flex-1 min-w-0">
+		<?php if (woocommerce_product_loop()): ?>
 
-				<?php get_template_part('template-parts/shop/sort-bar'); ?>
+			<?php do_action('woocommerce_before_shop_loop'); ?>
 
-				<?php if (lenvy_is_filtered()): ?>
-					<?php get_template_part('template-parts/shop/filter-active'); ?>
-				<?php endif; ?>
+			<div class="mt-8">
+				<?php get_template_part('template-parts/components/product-grid', null, [
+					'taxonomy' => 'product_cat',
+					'term'     => $term->slug,
+				]); ?>
+			</div>
 
-				<?php if (woocommerce_product_loop()): ?>
+			<?php do_action('woocommerce_after_shop_loop'); ?>
 
-					<?php do_action('woocommerce_before_shop_loop'); ?>
+			<?php lenvy_pagination(); ?>
 
-					<div
-					class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 mt-6"
-					data-product-grid
-					data-taxonomy="product_cat"
-					data-term="<?php echo esc_attr($term->slug); ?>"
-				>
-						<?php while (have_posts()):
-      	the_post(); ?>
-							<?php get_template_part('template-parts/components/product-card', null, [
-       	'product_id' => get_the_ID(),
-       ]); ?>
-						<?php
-      endwhile; ?>
-					</div>
+		<?php else: ?>
 
-					<?php do_action('woocommerce_after_shop_loop'); ?>
+			<?php get_template_part('woocommerce/loop/no-products-found'); ?>
 
-					<?php lenvy_pagination(); ?>
+		<?php endif; ?>
 
-				<?php else: ?>
+		<?php
+		$seo_text = lenvy_field('lenvy_cat_seo_text', 'term_' . $term->term_id);
+		if ($seo_text): ?>
+		<div class="mt-20 pt-12 border-t border-neutral-100 entry-content">
+			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — ACF WYSIWYG
+			echo wp_kses_post($seo_text); ?>
+		</div>
+		<?php endif; ?>
 
-					<?php get_template_part('woocommerce/loop/no-products-found'); ?>
-
-				<?php endif; ?>
-
-				<?php
-    // ── ACF SEO text below the grid ───────────────────────────────────
-    $seo_text = lenvy_field('lenvy_cat_seo_text', 'term_' . $term->term_id);
-    if ($seo_text): ?>
-					<div class="mt-16 pt-10 border-t border-neutral-100 prose prose-sm max-w-none text-neutral-600">
-						<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — ACF WYSIWYG returns safe HTML.
-      echo wp_kses_post($seo_text); ?>
-					</div>
-				<?php endif;
-    ?>
-
-			</div><!-- .flex-1 -->
-
-		</div><!-- .flex -->
-
-	</div><!-- .lenvy-container -->
+	</div>
 </main>
 
 <?php get_template_part('template-parts/shop/filter-drawer'); ?>

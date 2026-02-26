@@ -275,3 +275,102 @@ function lenvy_ajax_filter_products(): void {
 
 add_action('wp_ajax_lenvy_filter_products', 'lenvy_ajax_filter_products');
 add_action('wp_ajax_nopriv_lenvy_filter_products', 'lenvy_ajax_filter_products');
+
+// ─── Handler: live search ─────────────────────────────────────────────────────
+
+function lenvy_ajax_live_search(): void {
+	check_ajax_referer('lenvy_ajax', 'nonce');
+
+	$query = isset($_GET['query']) ? sanitize_text_field(wp_unslash((string) $_GET['query'])) : '';
+
+	if (mb_strlen($query) < 2) {
+		wp_send_json_error(['message' => __('Query too short.', 'lenvy')]);
+	}
+
+	// ── Products (max 6) ──────────────────────────────────────────────────────
+	$product_query = new WP_Query([
+		'post_type'      => 'product',
+		'post_status'    => 'publish',
+		's'              => $query,
+		'posts_per_page' => 6,
+		'tax_query'      => [
+			[
+				'taxonomy' => 'product_visibility',
+				'field'    => 'name',
+				'terms'    => 'exclude-from-search',
+				'operator' => 'NOT IN',
+			],
+		],
+	]);
+
+	ob_start();
+	if ($product_query->have_posts()) {
+		while ($product_query->have_posts()) {
+			$product_query->the_post();
+			get_template_part('template-parts/components/product-card-mini', null, [
+				'product_id' => get_the_ID(),
+			]);
+		}
+	}
+	$products_html = (string) ob_get_clean();
+	wp_reset_postdata();
+
+	// ── Brands (max 4) ────────────────────────────────────────────────────────
+	$brand_terms = get_terms([
+		'taxonomy'   => 'product_brand',
+		'name__like' => $query,
+		'hide_empty' => true,
+		'number'     => 4,
+		'orderby'    => 'count',
+		'order'      => 'DESC',
+	]);
+
+	$brands = [];
+	if (!is_wp_error($brand_terms) && is_array($brand_terms)) {
+		foreach ($brand_terms as $term) {
+			$brands[] = [
+				'name'  => $term->name,
+				'url'   => get_term_link($term),
+				'count' => (int) $term->count,
+			];
+		}
+	}
+
+	// ── Categories (max 4) ────────────────────────────────────────────────────
+	$cat_terms = get_terms([
+		'taxonomy'   => 'product_cat',
+		'name__like' => $query,
+		'hide_empty' => true,
+		'number'     => 4,
+		'orderby'    => 'count',
+		'order'      => 'DESC',
+	]);
+
+	$categories = [];
+	if (!is_wp_error($cat_terms) && is_array($cat_terms)) {
+		foreach ($cat_terms as $term) {
+			$categories[] = [
+				'name'  => $term->name,
+				'url'   => get_term_link($term),
+				'count' => (int) $term->count,
+			];
+		}
+	}
+
+	$results_url = add_query_arg(
+		['s' => $query, 'post_type' => 'product'],
+		home_url('/'),
+	);
+
+	wp_send_json_success([
+		'products_html'  => $products_html,
+		'products_count' => (int) $product_query->found_posts,
+		'brands'         => $brands,
+		'categories'     => $categories,
+		'results_url'    => esc_url($results_url),
+		'query'          => $query,
+	]);
+}
+
+add_action('wp_ajax_lenvy_live_search', 'lenvy_ajax_live_search');
+add_action('wp_ajax_nopriv_lenvy_live_search', 'lenvy_ajax_live_search');

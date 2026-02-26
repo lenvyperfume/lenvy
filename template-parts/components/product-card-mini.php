@@ -1,6 +1,6 @@
 <?php
 /**
- * Compact horizontal product card — for related/upsell rows.
+ * Compact horizontal product card — for upsells, cross-sells, and mini lists.
  *
  * Usage:
  *   get_template_part('template-parts/components/product-card-mini', null, [
@@ -20,46 +20,54 @@ if (!$product || !$product->is_visible()) {
 	return;
 }
 
-$permalink = get_permalink($product_id);
-$title = $product->get_name();
+$permalink  = get_permalink($product_id);
+$title      = $product->get_name();
 $price_html = $product->get_price_html();
-$is_sale = $product->is_on_sale();
 
-$image_html = wp_get_attachment_image((int) $product->get_image_id(), 'woocommerce_thumbnail', false, [
-	'class' => 'w-full h-full object-cover',
-	'loading' => 'lazy',
-	'alt' => esc_attr($title),
-]);
+// Brand.
+$brands     = get_the_terms($product_id, 'product_brand');
+$brand_name = ($brands && !is_wp_error($brands)) ? $brands[0]->name : '';
 
-if (!$image_html) {
-	$image_html = wc_placeholder_img('woocommerce_thumbnail', ['class' => 'w-full h-full object-cover']);
-}
+// Image — portrait thumbnail.
+$image_id   = (int) $product->get_image_id();
+$image_html = $image_id
+	? wp_get_attachment_image($image_id, 'woocommerce_thumbnail', false, [
+		'class'   => 'w-full h-full object-cover',
+		'loading' => 'lazy',
+		'alt'     => esc_attr($title),
+	])
+	: wc_placeholder_img('woocommerce_thumbnail', ['class' => 'w-full h-full object-cover']);
 ?>
 
 <article class="flex items-center gap-4">
 	<a
 		href="<?php echo esc_url($permalink); ?>"
-		class="shrink-0 w-20 h-20 overflow-hidden bg-neutral-50"
+		class="shrink-0 w-16 aspect-product overflow-hidden bg-neutral-50"
 		tabindex="-1"
 		aria-hidden="true"
 	>
-		<?php echo $image_html;
-// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-?>
+		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $image_html; ?>
 	</a>
 
 	<div class="flex-1 min-w-0">
+		<?php if ($brand_name): ?>
+		<span class="text-[10px] uppercase tracking-[0.1em] text-neutral-400 line-clamp-1">
+			<?php echo esc_html($brand_name); ?>
+		</span>
+		<?php endif; ?>
+
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="text-sm font-medium text-neutral-900 hover:text-black transition-colors duration-150 line-clamp-2 leading-snug"
+			class="text-sm font-medium text-neutral-800 hover:text-neutral-900 transition-colors duration-150 line-clamp-2 leading-snug"
 		>
 			<?php echo esc_html($title); ?>
 		</a>
 
 		<?php if ($price_html): ?>
-		<div class="mt-1 text-sm font-semibold text-neutral-900 lenvy-card-price">
+		<div class="mt-1 lenvy-card-price">
 			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-   echo $price_html; ?>
+			echo $price_html; ?>
 		</div>
 		<?php endif; ?>
 	</div>

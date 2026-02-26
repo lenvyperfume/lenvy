@@ -90,8 +90,9 @@
   textarea,
   select {
     width: 100%;
-    padding: 0.625rem 0.875rem;
-    border: 1px solid v.$neutral-300;
+    height: 2.75rem; // 44px
+    padding: 0 0.875rem;
+    border: 1px solid v.$neutral-200;
     background-color: v.$color-white;
     color: v.$neutral-900;
     font-family: v.$font-sans;
@@ -103,7 +104,7 @@
 
     &:focus {
       outline: none;
-      border-color: v.$color-black;
+      border-color: v.$neutral-900;
     }
 
     &::placeholder {
@@ -111,11 +112,61 @@
     }
   }
 
+  textarea {
+    height: auto;
+    padding: 0.625rem 0.875rem;
+    min-height: 6rem;
+  }
+
+  select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.875rem center;
+    padding-right: 2.5rem;
+  }
+
   // Quantity input — used in cart and product pages
   input.qty {
     width: 3.5rem;
     text-align: center;
     padding-inline: 0.5rem;
+  }
+
+  // Two-column field rows (WC uses .form-row-first / .form-row-last).
+  .woocommerce-checkout .form-row-first,
+  .woocommerce-checkout .form-row-last {
+    float: none;
+    width: 100%;
+  }
+
+  .woocommerce-checkout #customer_details .woocommerce-billing-fields__field-wrapper,
+  .woocommerce-checkout #customer_details .woocommerce-shipping-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.125rem 0.75rem;
+
+    .form-row-wide {
+      grid-column: 1 / -1;
+    }
+
+    .form-row-first,
+    .form-row-last {
+      grid-column: auto;
+    }
+
+    @media (max-width: 639px) {
+      grid-template-columns: 1fr;
+
+      .form-row-first,
+      .form-row-last {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  // WC login notice at checkout top.
+  .woocommerce-form-login-toggle {
+    margin-bottom: 1.5rem;
   }
 }
 
@@ -168,19 +219,20 @@
 
   form.cart {
     display: flex;
-    align-items: center;
+    align-items: stretch;
     flex-wrap: wrap;
     gap: 0.75rem;
   }
 
-  // Simple product add-to-cart button.
+  // Add-to-cart button — full-width primary CTA.
   button.single_add_to_cart_button {
     flex: 1;
-    min-width: 160px;
-    padding: 0.875rem 1.75rem;
+    min-width: 0;
+    height: 3.5rem; // h-14
+    padding-inline: 2rem;
     background-color: v.$color-primary;
     color: v.$color-black;
-    font-size: 0.75rem;
+    font-size: 0.6875rem; // 11px
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.1em;
@@ -287,21 +339,15 @@
   }
 }
 
-// ─── Single product — meta ────────────────────────────────────────────────────
+// ─── Single product — meta (legacy, kept for compat) ─────────────────────────
 
 .lenvy-product-meta {
   font-size: 0.75rem;
   color: v.$neutral-500;
   line-height: 1.8;
 
-  .posted_in,
-  .tagged_as,
-  .sku_wrapper {
-    display: block;
-  }
-
   a {
-    color: v.$neutral-700;
+    color: v.$neutral-600;
     text-decoration: underline;
     text-underline-offset: 2px;
 
@@ -311,90 +357,8 @@
   }
 }
 
-// ─── Single product — tabs ────────────────────────────────────────────────────
-
-.lenvy-product-tabs {
-  .wc-tabs-wrapper,
-  .woocommerce-tabs {
-    // Tab nav.
-    ul.tabs {
-      display: flex;
-      gap: 0;
-      border-bottom: 1px solid v.$neutral-200;
-      list-style: none;
-      margin: 0 0 2rem;
-      padding: 0;
-
-      li {
-        margin: 0;
-
-        a {
-          display: block;
-          padding: 0.75rem 1.5rem;
-          font-size: 0.75rem;
-          font-weight: 500;
-          text-transform: uppercase;
-          letter-spacing: 0.1em;
-          color: v.$neutral-500;
-          text-decoration: none;
-          border-bottom: 2px solid transparent;
-          margin-bottom: -1px;
-          transition:
-            color 150ms ease,
-            border-color 150ms ease;
-
-          &:hover {
-            color: v.$color-black;
-          }
-        }
-
-        &.active a {
-          color: v.$color-black;
-          border-bottom-color: v.$color-black;
-        }
-      }
-    }
-
-    // Tab panel content.
-    .woocommerce-Tabs-panel {
-      font-size: 0.875rem;
-      color: v.$neutral-700;
-      line-height: 1.8;
-      max-width: 680px;
-
-      h2 {
-        display: none;
-      } // WC adds a heading — hidden since tab label suffices
-
-      p {
-        margin-bottom: 1rem;
-      }
-
-      table.shop_attributes {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 0.8125rem;
-
-        th,
-        td {
-          padding: 0.5rem 0.75rem;
-          text-align: left;
-          border-bottom: 1px solid v.$neutral-100;
-          vertical-align: top;
-        }
-
-        th {
-          width: 35%;
-          font-weight: 500;
-          color: v.$neutral-500;
-          text-transform: uppercase;
-          font-size: 0.6875rem;
-          letter-spacing: 0.05em;
-        }
-      }
-    }
-  }
-}
+// ─── Single product — tabs (removed; accordions used instead) ────────────────
+// Kept as a minimal fallback in case any plugin injects tabs.
 
 // ─── Single product — reviews ─────────────────────────────────────────────────
 
@@ -575,7 +539,7 @@ body .wc-block-checkout__form-submit {
 
 .lenvy-product-price {
   .price {
-    font-weight: 600;
+    font-weight: 500;
     color: v.$neutral-900;
 
     del {
@@ -598,13 +562,13 @@ body .wc-block-checkout__form-submit {
 // Regular price: neutral-900, semibold. Sale: ins = neutral-900, del = neutral-400 small.
 
 .lenvy-card-price {
-  font-size: 0.875rem; // text-sm
-  font-weight: 600;
-  color: v.$neutral-900;
+  font-size: 0.8125rem; // 13px
+  font-weight: 500;
+  color: v.$neutral-600;
 
   del {
     font-weight: 400;
-    font-size: 0.75rem; // text-xs
+    font-size: 0.6875rem; // 11px
     color: v.$neutral-400;
     text-decoration: line-through;
     margin-right: 0.25rem;
@@ -612,19 +576,70 @@ body .wc-block-checkout__form-submit {
 
   ins {
     text-decoration: none;
-    color: v.$neutral-900;
+    color: v.$neutral-600;
+  }
+}
+
+// ─── Cart page: item row ─────────────────────────────────────────────────────
+
+.lenvy-cart-row {
+  // Remove button: hidden by default, shows on hover at top-right.
+  .lenvy-cart-remove {
+    position: absolute;
+    top: 0.5rem;
+    right: 0;
+    width: 1.5rem;
+    height: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.125rem;
+    line-height: 1;
+    color: v.$neutral-300;
+    text-decoration: none;
+    opacity: 0;
+    transition:
+      opacity 150ms ease,
+      color 150ms ease;
+
+    // Override WC default .remove red circle styles.
+    &:hover {
+      color: v.$neutral-900 !important;
+      background: none !important;
+    }
+  }
+
+  &:hover .lenvy-cart-remove {
+    opacity: 1;
+  }
+
+  // On touch devices, always show.
+  @media (hover: none) {
+    .lenvy-cart-remove {
+      opacity: 1;
+    }
+  }
+}
+
+// Override WC default .remove styling (red circle).
+.woocommerce a.remove {
+  color: v.$neutral-300 !important;
+  font-weight: 300;
+
+  &:hover {
+    color: v.$neutral-900 !important;
+    background: transparent !important;
   }
 }
 
 // ─── Cart page: item thumbnails ───────────────────────────────────────────────
-// The WC-generated <img> inside our flex item rows needs to fill its container.
 
 .cart-item-thumb {
   img {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: contain;
   }
 
   a {
@@ -634,44 +649,158 @@ body .wc-block-checkout__form-submit {
   }
 }
 
-// ─── Cart page: quantity inputs ───────────────────────────────────────────────
-// Scoped to cart form so it doesn't clash with .lenvy-atc-form on the product page.
+// ─── Quantity stepper (global: cart + single product) ─────────────────────────
 
-.woocommerce-cart-form {
-  .quantity {
-    display: inline-flex;
-    align-items: center;
+.lenvy-qty {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid v.$neutral-200;
 
-    input.qty {
-      width: 3rem;
-      border: 1px solid v.$neutral-300;
-      text-align: center;
-      font-size: 0.875rem;
-      padding: 0.375rem 0.25rem;
+  input.qty {
+    width: 2.5rem;
+    height: 2rem;
+    border: none;
+    text-align: center;
+    font-size: 0.8125rem;
+    font-family: v.$font-sans;
+    padding: 0;
+    border-radius: 0;
+    color: v.$neutral-900;
+    -moz-appearance: textfield;
 
-      &:focus {
-        outline: none;
-        border-color: v.$color-black;
-      }
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    &:focus {
+      outline: none;
     }
   }
 }
 
-// ─── Cart totals (right column summary) ───────────────────────────────────────
-// Renders via woocommerce_cart_totals() → cart/cart-totals.php.
+.lenvy-qty__btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  background: none;
+  border: none;
+  font-size: 0.875rem;
+  color: v.$neutral-400;
+  cursor: pointer;
+  user-select: none;
+  transition: color 150ms ease;
+  padding: 0;
+  line-height: 1;
+
+  &:hover {
+    color: v.$neutral-900;
+  }
+}
+
+// Single product page: larger stepper.
+.lenvy-atc-form .lenvy-qty {
+  input.qty {
+    width: 3rem;
+    height: 3.5rem;
+    font-size: 0.875rem;
+  }
+
+  .lenvy-qty__btn {
+    width: 2.5rem;
+    height: 3.5rem;
+    font-size: 1rem;
+  }
+}
+
+// ─── Cart page: coupon & update button ───────────────────────────────────────
+
+.lenvy-coupon-input {
+  flex: 1;
+  height: 2.25rem;
+  padding: 0 0.625rem;
+  border: 1px solid v.$neutral-200;
+  font-family: v.$font-sans;
+  font-size: 0.8125rem;
+  color: v.$neutral-900;
+  border-radius: 0;
+  appearance: none;
+  background-color: v.$color-white;
+  transition: border-color 150ms ease;
+
+  &:focus {
+    outline: none;
+    border-color: v.$color-black;
+  }
+
+  &::placeholder {
+    color: v.$neutral-400;
+  }
+}
+
+.lenvy-coupon-btn {
+  height: 2.25rem;
+  padding: 0 1rem;
+  background-color: v.$color-black;
+  color: v.$color-white;
+  border: none;
+  font-family: v.$font-sans;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 150ms ease;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.lenvy-update-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  font-family: v.$font-sans;
+  font-size: 0.75rem;
+  color: v.$neutral-400;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: v.$neutral-900;
+  }
+}
+
+// ─── Cart totals (order summary sidebar) ─────────────────────────────────────
 
 .cart_totals {
+  background-color: v.$neutral-50;
+  padding: 1.5rem;
+
+  @media (min-width: 1024px) {
+    padding: 2rem;
+  }
+
   h2 {
+    font-family: v.$font-sans;
     font-size: 0.6875rem;
     font-weight: 600;
     text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: v.$neutral-800;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid v.$neutral-100;
+    letter-spacing: 0.1em;
+    color: v.$neutral-900;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0;
+    border-bottom: none;
   }
 
+  // Legacy .shop_table fallback (kept for plugins that inject rows).
   .shop_table {
     width: 100%;
     border-collapse: collapse;
@@ -680,15 +809,16 @@ body .wc-block-checkout__form-submit {
     tr {
       th,
       td {
-        padding: 0.625rem 0;
+        padding: 0.5rem 0;
         font-size: 0.875rem;
         vertical-align: top;
-        border-bottom: 1px solid v.$neutral-100;
+        border: none;
+        border-bottom: 1px solid v.$neutral-200;
       }
 
       th {
         font-weight: 400;
-        color: v.$neutral-600;
+        color: v.$neutral-500;
         padding-right: 1rem;
         text-align: left;
       }
@@ -704,7 +834,7 @@ body .wc-block-checkout__form-submit {
           font-weight: 600;
           font-size: 1rem;
           padding-top: 0.875rem;
-          padding-bottom: 0.875rem;
+          padding-bottom: 0;
           border-bottom: none;
         }
       }
@@ -715,10 +845,9 @@ body .wc-block-checkout__form-submit {
     }
   }
 
-  // Shipping calculator toggle link.
   .shipping-calculator-button {
     font-size: 0.8125rem;
-    color: v.$neutral-600;
+    color: v.$neutral-500;
     text-decoration: underline;
     text-underline-offset: 2px;
     cursor: pointer;
@@ -729,69 +858,209 @@ body .wc-block-checkout__form-submit {
   }
 }
 
-// ─── Checkout: order review table ─────────────────────────────────────────────
-// Rendered by review-order.php inside #order_review.
+// ─── Cart summary rows (custom markup, no <table>) ──────────────────────────
 
-.woocommerce-checkout-review-order-table {
-  width: 100%;
-  border-collapse: collapse;
+.lenvy-cart-summary-rows {
+  margin-bottom: 1.25rem;
+}
+
+.lenvy-summary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
   font-size: 0.875rem;
-  margin-bottom: 1rem;
+  color: v.$neutral-500;
+  border-bottom: 1px solid v.$neutral-200;
 
-  thead tr th {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    color: v.$neutral-500;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid v.$neutral-100;
-    text-align: left;
-
-    &:last-child {
-      text-align: right;
-    }
+  span:last-child {
+    color: v.$neutral-900;
+    text-align: right;
   }
 
-  tbody tr.cart_item {
-    td {
-      padding: 0.75rem 0;
-      border-bottom: 1px solid v.$neutral-100;
-      vertical-align: top;
-
-      &:last-child {
-        text-align: right;
-      }
-    }
+  &.lenvy-summary-discount span:last-child {
+    color: #15803d;
   }
 
-  tfoot tr {
-    th,
-    td {
-      padding: 0.5rem 0;
-      border-bottom: 1px solid v.$neutral-100;
-    }
+  &.lenvy-summary-total {
+    border-bottom: none;
+    padding-top: 0.75rem;
 
-    th {
-      font-weight: 400;
-      color: v.$neutral-600;
-      text-align: left;
-    }
-
-    td {
-      text-align: right;
+    span {
+      font-weight: 600;
+      font-size: 1rem;
       color: v.$neutral-900;
     }
+  }
+}
 
-    &.order-total {
-      th,
-      td {
-        font-weight: 600;
-        font-size: 1rem;
-        padding-top: 0.875rem;
-        padding-bottom: 0.875rem;
-        border-bottom: none;
-      }
+// ─── Cart: coupon toggle in summary ──────────────────────────────────────────
+
+.lenvy-coupon-toggle {
+  border-top: 1px solid v.$neutral-200;
+  margin-bottom: 1.25rem;
+}
+
+.lenvy-coupon-trigger {
+  display: block;
+  width: 100%;
+  padding: 0.75rem 0;
+  background: none;
+  border: none;
+  font-family: v.$font-sans;
+  font-size: 0.8125rem;
+  color: v.$neutral-500;
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  transition: color 150ms ease;
+
+  &:hover {
+    color: v.$neutral-900;
+  }
+}
+
+.lenvy-coupon-form {
+  padding-bottom: 0.75rem;
+}
+
+// ─── Cart: proceed to checkout button ────────────────────────────────────────
+
+.lenvy-checkout-btn {
+  display: block;
+  width: 100%;
+  height: 3rem;
+  line-height: 3rem;
+  text-align: center;
+  background-color: v.$color-black;
+  color: v.$color-white;
+  font-family: v.$font-sans;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    background-color 150ms ease,
+    opacity 150ms ease;
+
+  &:hover {
+    background-color: v.$neutral-800;
+    color: v.$color-white;
+  }
+}
+
+// ─── Checkout: summary panel ──────────────────────────────────────────────────
+
+.lenvy-checkout-summary {
+  background-color: v.$neutral-50;
+  padding: 1.5rem;
+
+  @media (min-width: 1024px) {
+    padding: 2rem;
+  }
+}
+
+.lenvy-checkout-summary__heading {
+  font-family: v.$font-sans;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: v.$neutral-900;
+  margin-bottom: 1.25rem;
+}
+
+// ─── Checkout: review order items ────────────────────────────────────────────
+
+.lenvy-review-items {
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid v.$neutral-200;
+}
+
+.lenvy-review-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0;
+  border-top: 1px solid v.$neutral-200;
+
+  &:first-child {
+    border-top: none;
+  }
+}
+
+.lenvy-review-item__thumb {
+  width: 3rem;
+  height: 4rem;
+  flex-shrink: 0;
+  overflow: hidden;
+  background-color: v.$color-white;
+
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+}
+
+.lenvy-review-item__info {
+  flex: 1;
+  min-width: 0;
+}
+
+.lenvy-review-item__name {
+  font-size: 0.8125rem;
+  color: v.$neutral-800;
+  line-height: 1.4;
+}
+
+.lenvy-review-item__qty {
+  color: v.$neutral-400;
+  font-weight: 400;
+}
+
+.lenvy-review-item__price {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: v.$neutral-900;
+}
+
+// ─── Checkout: review totals ─────────────────────────────────────────────────
+
+.lenvy-review-totals {
+  margin-bottom: 1.5rem;
+}
+
+.lenvy-review-totals__row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  font-size: 0.875rem;
+  color: v.$neutral-500;
+  border-bottom: 1px solid v.$neutral-200;
+
+  span:last-child {
+    color: v.$neutral-900;
+  }
+
+  &.lenvy-review-totals__discount span:last-child {
+    color: #15803d;
+  }
+
+  &.lenvy-review-totals__total {
+    border-bottom: none;
+    padding-top: 0.75rem;
+
+    span {
+      font-weight: 600;
+      font-size: 1rem;
+      color: v.$neutral-900;
     }
   }
 }
@@ -799,17 +1068,18 @@ body .wc-block-checkout__form-submit {
 // ─── Checkout: payment gateways ───────────────────────────────────────────────
 
 #payment {
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
+  border-top: 1px solid v.$neutral-200;
+  padding-top: 1.25rem;
 
   ul.payment_methods {
     list-style: none;
-    margin: 0 0 1.5rem;
+    margin: 0 0 1.25rem;
     padding: 0;
-    border: 1px solid v.$neutral-200;
 
     li.wc_payment_method {
-      padding: 0.875rem 1rem;
-      border-bottom: 1px solid v.$neutral-100;
+      padding: 0.625rem 0;
+      border-bottom: 1px solid v.$neutral-200;
 
       &:last-child {
         border-bottom: none;
@@ -819,7 +1089,7 @@ body .wc-block-checkout__form-submit {
         display: flex;
         align-items: center;
         gap: 0.5rem;
-        font-size: 0.875rem;
+        font-size: 0.8125rem;
         font-weight: 500;
         color: v.$neutral-900;
         cursor: pointer;
@@ -830,50 +1100,302 @@ body .wc-block-checkout__form-submit {
       }
 
       .payment_box {
-        margin-top: 0.75rem;
-        padding: 0.75rem;
-        background-color: v.$neutral-50;
-        font-size: 0.8125rem;
-        color: v.$neutral-600;
+        margin-top: 0.5rem;
+        padding: 0.625rem;
+        background-color: v.$color-white;
+        font-size: 0.75rem;
+        color: v.$neutral-500;
         line-height: 1.6;
+      }
+    }
+  }
+
+  // Place order button.
+  .place-order {
+    #place_order {
+      display: block;
+      width: 100%;
+      height: 3rem;
+      background-color: v.$color-primary;
+      color: v.$color-black;
+      font-family: v.$font-sans;
+      font-size: 0.6875rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      border: none;
+      cursor: pointer;
+      transition: background-color 150ms ease;
+
+      &:hover {
+        background-color: v.$color-primary-hover;
       }
     }
   }
 }
 
-// ─── Checkout: form field labels ──────────────────────────────────────────────
-// WC generates labels from field registration — normalise to match theme style.
+// ─── Checkout: modern form fields (IFTA labels) ─────────────────────────────
+// In-Field Top Aligned labels: the label sits inside the input at the top,
+// always visible. Inputs use a subtle background tint that clears on focus,
+// with a double-ring focus indicator (border + box-shadow).
 
-.woocommerce-billing-fields,
-.woocommerce-shipping-fields,
-.woocommerce-additional-fields {
-  h3 {
-    font-size: 0.6875rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    color: v.$neutral-800;
-    margin-bottom: 1.25rem;
-    padding-bottom: 0.75rem;
-    border-bottom: 1px solid v.$neutral-100;
+.lenvy-checkout-fields {
+  // Section wrappers
+  .woocommerce-billing-fields,
+  .woocommerce-shipping-fields,
+  .woocommerce-additional-fields,
+  .woocommerce-account-fields {
+    &:not(:first-child) {
+      margin-top: 2rem;
+    }
+
+    // Section headings — clean, no border
+    h3 {
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      font-weight: 600;
+      text-transform: none;
+      letter-spacing: 0;
+      color: v.$neutral-900;
+      margin-bottom: 1.5rem;
+      padding-bottom: 0;
+      border-bottom: none;
+    }
   }
 
-  .form-row {
-    margin-bottom: 1rem;
+  // ── IFTA label pattern ──────────────────────────────────────────────────────
 
-    label {
+  .form-row {
+    position: relative;
+    margin-bottom: 0;
+
+    // IFTA label — only for rows that contain an input wrapper (text/select)
+    &:has(.woocommerce-input-wrapper) > label {
+      position: absolute;
+      top: 0.4375rem;
+      left: 0.875rem;
+      right: 0.875rem;
+      z-index: 1;
       display: block;
-      font-size: 0.75rem;
-      font-weight: 500;
+      font-size: 0.5625rem;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: v.$neutral-400;
+      pointer-events: none;
+      margin-bottom: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 200ms ease;
+    }
+
+    // Focused: label darkens for visual feedback
+    &:has(input:focus, select:focus, .select2-container--focus, .select2-container--open) > label {
       color: v.$neutral-600;
-      margin-bottom: 0.375rem;
     }
 
     .required {
-      color: v.$neutral-400;
+      color: v.$neutral-300;
+      font-weight: 400;
     }
+
+    // Checkbox labels stay normal (not IFTA)
+    label.checkbox,
+    .woocommerce-form__label-for-checkbox {
+      position: static;
+      font-size: 0.8125rem;
+      font-weight: 400;
+      text-transform: none;
+      letter-spacing: 0;
+      color: v.$neutral-600;
+      pointer-events: all;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+    }
+  }
+
+  // ── Inputs & selects ────────────────────────────────────────────────────────
+  // Nest through .form-row for specificity that beats any residual WC styles.
+
+  .form-row {
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='password'],
+    input[type='number'],
+    input[type='search'],
+    .input-text {
+      height: 3.25rem;
+      padding: 1.125rem 0.875rem 0.375rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      color: v.$neutral-900;
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      &:focus {
+        outline: none;
+        background-color: v.$color-white;
+        border-color: v.$neutral-900;
+        box-shadow: 0 0 0 1px v.$neutral-900;
+      }
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    select {
+      height: 3.25rem;
+      padding: 1.125rem 2.5rem 0.375rem 0.875rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      color: v.$neutral-900;
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a3a3a3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.875rem center;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      &:focus {
+        outline: none;
+        background-color: v.$color-white;
+        border-color: v.$neutral-900;
+        box-shadow: 0 0 0 1px v.$neutral-900;
+      }
+    }
+
+    // Select2 (country / state dropdowns)
+    .select2-container .select2-selection--single {
+      height: 3.25rem;
+      padding-top: 1rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      border-radius: 0;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      .select2-selection__rendered {
+        padding-left: 0.875rem;
+        padding-right: 2.5rem;
+        line-height: 2rem;
+        color: v.$neutral-900;
+        font-family: v.$font-sans;
+        font-size: 0.875rem;
+      }
+
+      .select2-selection__arrow {
+        height: 3.25rem;
+        right: 0.5rem;
+      }
+    }
+
+    .select2-container--focus .select2-selection--single,
+    .select2-container--open .select2-selection--single {
+      background-color: v.$color-white !important;
+      border-color: v.$neutral-900 !important;
+      box-shadow: 0 0 0 1px v.$neutral-900;
+    }
+  }
+
+  // ── Validation states ───────────────────────────────────────────────────────
+
+  .form-row.woocommerce-invalid {
+    input,
+    select,
+    .select2-container .select2-selection--single {
+      border-color: #dc2626 !important;
+      box-shadow: 0 0 0 1px #dc2626;
+      background-color: #fef2f2;
+    }
+
+    > label {
+      color: #dc2626;
+    }
+  }
+
+  .form-row.woocommerce-validated {
+    input,
+    select,
+    .select2-container .select2-selection--single {
+      border-color: transparent;
+      background-color: v.$neutral-50;
+    }
+  }
+}
+
+// ─── Checkout: WC terms checkbox ─────────────────────────────────────────────
+
+.woocommerce-terms-and-conditions-wrapper {
+  margin-bottom: 1rem;
+
+  .woocommerce-form__label-for-checkbox {
+    font-size: 0.8125rem;
+    color: v.$neutral-600;
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    line-height: 1.5;
+
+    input {
+      margin-top: 0.25rem;
+      accent-color: v.$color-black;
+    }
+  }
+}
+
+// ─── Thank-you page: order details ───────────────────────────────────────────
+
+.lenvy-thankyou-details {
+  border: 1px solid v.$neutral-200;
+  padding: 0 1.5rem;
+}
+
+.lenvy-thankyou-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid v.$neutral-100;
+  font-size: 0.875rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  span {
+    color: v.$neutral-500;
+  }
+
+  strong {
+    color: v.$neutral-900;
+    font-weight: 500;
   }
 }
 
@@ -1009,6 +1531,337 @@ body .wc-block-checkout__form-submit {
   }
 }
 
+// ─── Account: login / register form inputs ───────────────────────────────────
+// Labels are Tailwind-styled inline in form-login.php. Only modernise the
+// inputs here: taller, background tint, double-ring focus.
+
+.lenvy-account-auth {
+  .form-row {
+    input[type='text'],
+    input[type='email'],
+    input[type='password'],
+    .input-text {
+      height: 3.25rem;
+      padding: 0.625rem 0.875rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      color: v.$neutral-900;
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      &:focus {
+        outline: none;
+        background-color: v.$color-white;
+        border-color: v.$neutral-900;
+        box-shadow: 0 0 0 1px v.$neutral-900;
+      }
+
+      &::placeholder {
+        color: v.$neutral-400;
+      }
+    }
+  }
+
+  // Override WC global button styles — these buttons use Tailwind for visuals.
+  button.button,
+  .woocommerce-button {
+    display: block;
+    width: 100%;
+    height: 3rem;
+    background-color: v.$color-black;
+    color: v.$color-white;
+    font-family: v.$font-sans;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    line-height: 3rem;
+    text-align: center;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+    padding: 0;
+
+    &:hover {
+      opacity: 0.8;
+      background-color: v.$color-black;
+      color: v.$color-white;
+    }
+  }
+}
+
+// ─── Account: edit-account & edit-address forms (IFTA) ───────────────────────
+// These pages render WC form-row markup inside .woocommerce-MyAccount-content.
+// Apply the same IFTA label pattern + modern inputs as checkout.
+
+.woocommerce-MyAccount-content {
+  // Grid layout for edit-account form (first/last name side by side)
+  form.edit-account {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.125rem 0.75rem;
+
+    .form-row-wide,
+    fieldset,
+    > p:last-child,
+    .clear {
+      grid-column: 1 / -1;
+    }
+
+    .clear {
+      display: none;
+    }
+
+    @media (max-width: 639px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  // Grid layout for edit-address form
+  .woocommerce-address-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.125rem 0.75rem;
+
+    .form-row-wide {
+      grid-column: 1 / -1;
+    }
+
+    .form-row-first,
+    .form-row-last {
+      grid-column: auto;
+    }
+
+    @media (max-width: 639px) {
+      grid-template-columns: 1fr;
+
+      .form-row-first,
+      .form-row-last {
+        grid-column: 1 / -1;
+      }
+    }
+  }
+
+  // Fieldset (password change section)
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 1.5rem 0 0;
+
+    legend {
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: v.$neutral-900;
+      margin-bottom: 1.5rem;
+      padding: 0;
+    }
+
+    // Password fields stack vertically — need gap since they're not in a CSS grid.
+    .form-row {
+      margin-bottom: 1.125rem;
+    }
+  }
+
+  // Address page heading
+  .woocommerce-address-fields h2 {
+    font-family: v.$font-sans;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: v.$neutral-900;
+    margin-bottom: 1.5rem;
+  }
+
+  // Spacing between address field grid and submit button
+  .woocommerce-address-fields__field-wrapper {
+    margin-bottom: 1.5rem;
+  }
+
+  // IFTA label — for rows containing text/select inputs
+  .form-row {
+    position: relative;
+    margin-bottom: 0;
+
+    &:has(input:not([type='checkbox']):not([type='hidden']), select, .password-input) > label:not(.checkbox):not(.woocommerce-form__label-for-checkbox) {
+      position: absolute;
+      top: 0.4375rem;
+      left: 0.875rem;
+      right: 0.875rem;
+      z-index: 1;
+      display: block;
+      font-size: 0.5625rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      line-height: 1;
+      color: v.$neutral-400;
+      pointer-events: none;
+      margin-bottom: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      transition: color 200ms ease;
+    }
+
+    &:has(input:focus, select:focus, .select2-container--focus, .select2-container--open) > label:not(.checkbox):not(.woocommerce-form__label-for-checkbox) {
+      color: v.$neutral-600;
+    }
+
+    .required {
+      color: v.$neutral-300;
+      font-weight: 400;
+    }
+
+    // Modern input treatment
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='password'],
+    input[type='number'],
+    .input-text {
+      height: 3.25rem;
+      padding: 1.125rem 0.875rem 0.375rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      color: v.$neutral-900;
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      &:focus {
+        outline: none;
+        background-color: v.$color-white;
+        border-color: v.$neutral-900;
+        box-shadow: 0 0 0 1px v.$neutral-900;
+      }
+
+      &::placeholder {
+        color: transparent;
+      }
+    }
+
+    select {
+      height: 3.25rem;
+      padding: 1.125rem 2.5rem 0.375rem 0.875rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      color: v.$neutral-900;
+      font-family: v.$font-sans;
+      font-size: 0.875rem;
+      line-height: 1.5;
+      border-radius: 0;
+      width: 100%;
+      box-sizing: border-box;
+      appearance: none;
+      outline: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23a3a3a3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 0.875rem center;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      &:focus {
+        outline: none;
+        background-color: v.$color-white;
+        border-color: v.$neutral-900;
+        box-shadow: 0 0 0 1px v.$neutral-900;
+      }
+    }
+
+    // Select2 (country/state dropdowns)
+    .select2-container .select2-selection--single {
+      height: 3.25rem;
+      padding-top: 1rem;
+      background-color: v.$neutral-50;
+      border: 1px solid transparent;
+      border-radius: 0;
+      transition:
+        border-color 200ms ease,
+        box-shadow 200ms ease,
+        background-color 200ms ease;
+
+      .select2-selection__rendered {
+        padding-left: 0.875rem;
+        padding-right: 2.5rem;
+        line-height: 2rem;
+        color: v.$neutral-900;
+        font-family: v.$font-sans;
+        font-size: 0.875rem;
+      }
+
+      .select2-selection__arrow {
+        height: 3.25rem;
+        right: 0.5rem;
+      }
+    }
+
+    .select2-container--focus .select2-selection--single,
+    .select2-container--open .select2-selection--single {
+      background-color: v.$color-white !important;
+      border-color: v.$neutral-900 !important;
+      box-shadow: 0 0 0 1px v.$neutral-900;
+    }
+
+    // Validation
+    &.woocommerce-invalid {
+      input, select, .select2-container .select2-selection--single {
+        border-color: #dc2626 !important;
+        box-shadow: 0 0 0 1px #dc2626;
+        background-color: #fef2f2;
+      }
+
+      > label {
+        color: #dc2626;
+      }
+    }
+  }
+
+  // Save / submit button
+  .woocommerce-Button,
+  button.button {
+    display: block;
+    width: 100%;
+    height: 3rem;
+    background-color: v.$color-black;
+    color: v.$color-white;
+    font-family: v.$font-sans;
+    font-size: 0.6875rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    transition: opacity 150ms ease;
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}
+
 // ─── WooCommerce Blocks: cart & checkout page container ───────────────────────
 // The cart and checkout pages use WC Block content (wp:woocommerce/cart and
 // wp:woocommerce/checkout). These render a bare full-width block wrapper with
@@ -1038,9 +1891,9 @@ body .wc-block-checkout__form-submit {
 
 .woocommerce span.onsale {
   display: inline-block;
-  padding: 0.125rem 0.5rem;
-  background-color: v.$color-primary;
-  color: v.$color-black;
+  padding: 0.25rem 0.625rem;
+  background-color: v.$color-black;
+  color: v.$color-white;
   font-size: 0.625rem;
   font-weight: 500;
   text-transform: uppercase;

@@ -4,41 +4,41 @@
  *
  * Usage:
  *   get_template_part('template-parts/components/button', null, [
- *     'label'      => 'Shop Now',   // button text; empty = icon-only
- *     'url'        => '/shop/',     // href (when type = 'a')
+ *     'label'      => 'Shop Now',
+ *     'url'        => '/shop/',
  *     'variant'    => 'primary',    // primary|secondary|outline|ghost
  *     'size'       => 'md',         // sm|md|lg
  *     'type'       => 'a',          // a|button|submit|reset
- *     'icon'       => 'arrow-right',// icon name (optional)
+ *     'icon'       => 'arrow-right',
  *     'icon_pos'   => 'right',      // left|right
- *     'full_width' => false,        // bool
+ *     'full_width' => false,
  *     'attrs'      => '',           // extra HTML attribute string
- *     'aria_label' => '',           // required for icon-only buttons
- *     'disabled'   => false,        // bool
+ *     'aria_label' => '',
+ *     'disabled'   => false,
  *   ]);
  *
  * Variants:
- *   primary   — brand primary fill → main CTA (Add to Cart, Shop Now, Apply filters)
- *   secondary — black fill → strong secondary action
- *   outline   — black border → versatile secondary
- *   ghost     — text-only with hover underline → minimal / editorial
+ *   primary   — lavender fill, main CTA (Add to Cart, Apply filters)
+ *   secondary — black fill, strong secondary (Checkout, Place order)
+ *   outline   — light border, subtle secondary (Continue shopping, Clear)
+ *   ghost     — text-only with hover underline, editorial links
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-$label = $args['label'] ?? '';
-$url = $args['url'] ?? '';
-$variant = $args['variant'] ?? 'primary';
-$size = $args['size'] ?? 'md';
-$type = $args['type'] ?? 'a';
-$icon = $args['icon'] ?? '';
-$icon_pos = $args['icon_pos'] ?? 'right';
+$label     = $args['label'] ?? '';
+$url       = $args['url'] ?? '';
+$variant   = $args['variant'] ?? 'primary';
+$size      = $args['size'] ?? 'md';
+$type      = $args['type'] ?? 'a';
+$icon      = $args['icon'] ?? '';
+$icon_pos  = $args['icon_pos'] ?? 'right';
 $full_width = !empty($args['full_width']);
-$attrs = $args['attrs'] ?? '';
+$attrs     = $args['attrs'] ?? '';
 $aria_label = $args['aria_label'] ?? '';
-$disabled = !empty($args['disabled']);
+$disabled  = !empty($args['disabled']);
 
 $icon_only = '' === $label && '' !== $icon;
 
@@ -46,17 +46,21 @@ $icon_only = '' === $label && '' !== $icon;
 $variants = [
 	'primary'   => 'bg-primary text-black hover:bg-primary-hover',
 	'secondary' => 'bg-black text-white hover:bg-neutral-800',
-	'outline'   => 'border border-neutral-900 bg-transparent text-neutral-900 hover:bg-neutral-50',
-	'ghost'     => 'bg-transparent text-neutral-900 hover:bg-neutral-100',
+	'outline'   => 'border border-neutral-300 text-neutral-700 hover:border-neutral-900 hover:text-neutral-900',
+	'ghost'     => 'text-neutral-500 underline-offset-4 hover:text-neutral-900 hover:underline',
 ];
 
 $variant_class = $variants[$variant] ?? $variants['primary'];
 
 // ── Size classes ──────────────────────────────────────────────────────────────
 if ($icon_only) {
-	$sizes = ['sm' => 'p-2', 'md' => 'p-3', 'lg' => 'p-3.5'];
+	$sizes = ['sm' => 'p-2', 'md' => 'p-2.5', 'lg' => 'p-3'];
 } else {
-	$sizes = ['sm' => 'px-5 py-2 text-xs', 'md' => 'px-6 py-2.5 text-sm', 'lg' => 'px-8 py-3.5 text-sm'];
+	$sizes = [
+		'sm' => 'h-10 px-6 text-xs',
+		'md' => 'h-12 px-8 text-sm',
+		'lg' => 'h-14 px-10 text-sm',
+	];
 }
 
 $size_class = $sizes[$size] ?? $sizes['md'];
@@ -108,19 +112,17 @@ $icon_args = ['name' => $icon, 'size' => 'sm'];
    	echo ' ' . $attrs;
    }
    ?>>
-<?php
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-
-	else: ?>
+<?php else: ?>
 <button type="<?php echo esc_attr(in_array($type, ['submit', 'reset'], true) ? $type : 'button'); ?>"
         class="<?php echo esc_attr($class); ?>"
         <?php
+        // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $aria_attr;
         if ($disabled) {
         	echo ' disabled';
         }
         if ($attrs) {
+        	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         	echo ' ' . $attrs;
         }
         ?>>
