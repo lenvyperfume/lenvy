@@ -44,10 +44,10 @@ $icon_only = '' === $label && '' !== $icon;
 
 // ── Variant classes ───────────────────────────────────────────────────────────
 $variants = [
-	'primary' => 'bg-primary text-black hover:bg-primary-hover',
+	'primary'   => 'bg-primary text-black hover:bg-primary-hover',
 	'secondary' => 'bg-black text-white hover:bg-neutral-800',
-	'outline' => 'border border-black text-black hover:bg-black hover:text-white',
-	'ghost' => 'text-black hover:text-neutral-500 underline-offset-4 hover:underline',
+	'outline'   => 'border border-neutral-900 bg-transparent text-neutral-900 hover:bg-neutral-50',
+	'ghost'     => 'bg-transparent text-neutral-900 hover:bg-neutral-100',
 ];
 
 $variant_class = $variants[$variant] ?? $variants['primary'];
@@ -56,13 +56,13 @@ $variant_class = $variants[$variant] ?? $variants['primary'];
 if ($icon_only) {
 	$sizes = ['sm' => 'p-2', 'md' => 'p-3', 'lg' => 'p-3.5'];
 } else {
-	$sizes = ['sm' => 'px-5 py-2 text-xs', 'md' => 'px-7 py-3.5 text-xs', 'lg' => 'px-9 py-4 text-sm'];
+	$sizes = ['sm' => 'px-5 py-2 text-xs', 'md' => 'px-6 py-2.5 text-sm', 'lg' => 'px-8 py-3.5 text-sm'];
 }
 
 $size_class = $sizes[$size] ?? $sizes['md'];
 
 // ── Base classes ──────────────────────────────────────────────────────────────
-$base = 'inline-flex items-center justify-center gap-2 font-medium uppercase tracking-widest';
+$base = 'inline-flex items-center justify-center gap-2 font-medium tracking-wide';
 $base .= ' transition-colors duration-200 select-none shrink-0';
 
 if ($full_width) {

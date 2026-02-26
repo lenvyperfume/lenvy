@@ -46,7 +46,7 @@ get_header();
 
 					<?php do_action('woocommerce_before_shop_loop'); ?>
 
-					<div class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10 mt-6" data-product-grid data-taxonomy="" data-term="">
+					<div class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 mt-6" data-product-grid data-taxonomy="" data-term="">
 						<?php while (have_posts()):
       	the_post(); ?>
 							<?php get_template_part('template-parts/components/product-card', null, [

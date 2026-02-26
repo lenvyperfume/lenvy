@@ -41,7 +41,7 @@ defined('ABSPATH') || exit(); ?>
    if ($logo_id) {
    	echo lenvy_get_image($logo_id, 'medium', 'block max-h-8 w-auto object-contain');
    } else {
-   	echo '<span class="text-sm font-semibold tracking-widest text-neutral-900 uppercase">' .
+   	echo '<span class="font-serif italic text-xl tracking-tight text-neutral-900">' .
    		esc_html(get_bloginfo('name')) .
    		'</span>';
    }

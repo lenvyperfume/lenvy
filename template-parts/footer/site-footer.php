@@ -50,7 +50,7 @@ $social_labels = [
 ];
 ?>
 
-<footer class="bg-primary text-neutral-700 overflow-hidden">
+<footer class="bg-neutral-50 border-t border-neutral-200 text-neutral-700 overflow-hidden">
 
 	<!-- ── Main grid ─────────────────────────────────────────────────────── -->
 	<div class="lenvy-container py-14">
@@ -198,7 +198,7 @@ $social_labels = [
 	</div>
 
 	<!-- ── Bottom bar ────────────────────────────────────────────────────── -->
-	<div class="lenvy-container border-t border-black/10 py-6">
+	<div class="lenvy-container border-t border-neutral-200 py-6">
 		<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
 
 			<p class="text-xs text-neutral-600">

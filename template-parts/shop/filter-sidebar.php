@@ -15,11 +15,11 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 ?>
 
 <aside
-	class="hidden lg:block w-60 shrink-0"
+	class="hidden lg:block w-[280px] shrink-0"
 	aria-label="<?php esc_attr_e('Product filters', 'lenvy'); ?>"
 	data-filter-sidebar
 >
-	<div class="sticky" style="top: var(--header-height, 60px);">
+	<div class="sticky" style="top: var(--header-height, 68px);">
 
 		<div class="flex items-center justify-between pb-4 border-b border-neutral-100">
 			<h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-800">

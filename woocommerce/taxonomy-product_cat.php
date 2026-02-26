@@ -76,7 +76,7 @@ endif;
 					<?php do_action('woocommerce_before_shop_loop'); ?>
 
 					<div
-					class="grid grid-cols-2 md:grid-cols-3 gap-x-4 gap-y-10 mt-6"
+					class="grid grid-cols-2 md:grid-cols-3 gap-x-6 gap-y-8 mt-6"
 					data-product-grid
 					data-taxonomy="product_cat"
 					data-term="<?php echo esc_attr($term->slug); ?>"

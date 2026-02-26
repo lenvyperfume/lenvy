@@ -57,7 +57,7 @@ if (!$image_html) {
 		</a>
 
 		<?php if ($price_html): ?>
-		<div class="mt-1 text-sm text-neutral-700">
+		<div class="mt-1 text-sm font-semibold text-neutral-900 lenvy-card-price">
 			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
    echo $price_html; ?>
 		</div>

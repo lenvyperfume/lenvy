@@ -26,7 +26,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 <?php if ($announcement_enabled && $announcement_text): ?>
 <div
 	data-announcement
-	class="bg-primary text-black text-center text-xs font-medium py-2.5 px-10 relative"
+	class="bg-black text-white text-center text-sm font-medium py-2 px-10 relative"
 >
 	<?php if (!empty($announcement_link['url'])): ?>
 		<a
@@ -40,7 +40,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 	<button
 		type="button"
 		data-dismiss-announcement
-		class="absolute right-4 top-1/2 -translate-y-1/2 text-black/60 hover:text-black transition-colors duration-150"
+		class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-150"
 		aria-label="<?php esc_attr_e('Dismiss announcement', 'lenvy'); ?>"
 	>
 		<?php lenvy_icon('close', '', 'xs'); ?>
@@ -108,6 +108,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 				<!-- Cart -->
 				<a
 					href="<?php echo esc_url($cart_url); ?>"
+					data-cart-link
 					class="relative p-2 text-neutral-500 hover:text-black transition-colors duration-150 rounded"
 					aria-label="<?php echo esc_attr(sprintf(_n('Cart, %d item', 'Cart, %d items', $cart_count, 'lenvy'), $cart_count)); ?>"
 				>

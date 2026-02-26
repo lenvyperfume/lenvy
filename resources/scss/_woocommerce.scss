@@ -570,6 +570,29 @@ body .wc-block-checkout__form-submit {
   }
 }
 
+// ─── Product card price (WC price HTML: <del> + <ins> for sale pricing) ───────
+// WC outputs: <del><span>€xx</span></del><ins><span>€yy</span></ins>
+// Regular price: neutral-900, semibold. Sale: ins = neutral-900, del = neutral-400 small.
+
+.lenvy-card-price {
+  font-size: 0.875rem; // text-sm
+  font-weight: 600;
+  color: v.$neutral-900;
+
+  del {
+    font-weight: 400;
+    font-size: 0.75rem; // text-xs
+    color: v.$neutral-400;
+    text-decoration: line-through;
+    margin-right: 0.25rem;
+  }
+
+  ins {
+    text-decoration: none;
+    color: v.$neutral-900;
+  }
+}
+
 // ─── Sale badge (WC native output) ────────────────────────────────────────────
 // WC renders <span class="onsale"> — override default styles.
 
