@@ -1,23 +1,39 @@
 <?php
 /**
- * The template for displaying all pages.
+ * Generic CMS page template.
+ *
+ * Used for standalone WordPress pages (About, FAQ, Contact, etc.).
+ * Supports optional featured image banner, breadcrumb, and full WP block content.
  *
  * @package Lenvy
  */
 
 get_header(); ?>
 
-<main id="primary" class="site-main py-12">
-	<div class="container mx-auto px-4 max-w-screen-xl">
-		<?php while (have_posts()):
-  	the_post();
-  	get_template_part('templates/content', 'page');
+<main id="primary" class="site-main py-12 lg:py-16">
+	<div class="lenvy-container">
 
-  	// If comments are open or we have at least one comment, load up the comment template.
-  	if (comments_open() || get_comments_number()):
-  		comments_template();
-  	endif;
-  endwhile; ?>
+		<?php while ( have_posts() ) : the_post(); ?>
+
+			<?php if ( has_post_thumbnail() ) : ?>
+				<div class="mb-10 overflow-hidden">
+					<?php the_post_thumbnail( 'full', [ 'class' => 'w-full max-h-96 object-cover' ] ); ?>
+				</div>
+			<?php endif; ?>
+
+			<header class="mb-8 max-w-2xl">
+				<?php get_template_part( 'template-parts/components/breadcrumb' ); ?>
+				<h1 class="mt-4 text-3xl font-serif italic text-neutral-900">
+					<?php the_title(); ?>
+				</h1>
+			</header>
+
+			<div class="entry-content max-w-2xl">
+				<?php the_content(); ?>
+			</div>
+
+		<?php endwhile; ?>
+
 	</div>
 </main>
 

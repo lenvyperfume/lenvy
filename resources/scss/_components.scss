@@ -109,6 +109,99 @@
   to   { transform: translateX(-50%); }
 }
 
+// ─── Entry content (page.php, single.php) ─────────────────────────────────────
+// Prose typographic styles applied to the_content() output blocks.
+
+.entry-content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: v.$neutral-700;
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: v.$font-serif;
+    font-style: italic;
+    color: v.$color-black;
+    margin-top: 2em;
+    margin-bottom: 0.75em;
+    line-height: 1.2;
+  }
+
+  h2 { font-size: 1.5rem; }
+  h3 { font-size: 1.25rem; }
+  h4 { font-size: 1.125rem; }
+
+  p {
+    margin-bottom: 1.5em;
+  }
+
+  a {
+    color: v.$color-black;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    &:hover {
+      color: v.$neutral-500;
+    }
+  }
+
+  ul,
+  ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+
+    li {
+      margin-bottom: 0.5em;
+    }
+  }
+
+  ul { list-style-type: disc; }
+  ol { list-style-type: decimal; }
+
+  blockquote,
+  .wp-block-quote {
+    border-left: 3px solid v.$color-primary;
+    padding-left: 1.25em;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 1.5em;
+    color: v.$neutral-600;
+    font-style: italic;
+  }
+
+  strong {
+    font-weight: 600;
+    color: v.$color-black;
+  }
+
+  img,
+  .wp-block-image {
+    margin-top: 2em;
+    margin-bottom: 2em;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid v.$neutral-100;
+    margin: 2.5em 0;
+  }
+
+  figure {
+    margin-bottom: 1.5em;
+  }
+
+  figcaption {
+    font-size: 0.8125rem;
+    color: v.$neutral-400;
+    text-align: center;
+    margin-top: 0.5em;
+  }
+}
+
 // Each slide — padding creates the visual gap between logos.
 .lenvy-brand-scroller__slide {
   flex: 0 0 auto;

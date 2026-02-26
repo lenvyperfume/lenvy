@@ -222,10 +222,7 @@ All 10 planned phases are complete. Additional work done:
 
 ## Remaining / Future Work
 
-- `page.php` — generic CMS page template
-- `single.php` — blog post template
-- `archive.php` — blog archive template
-- `search.php` — site-wide search results
-- `woocommerce/loop/no-products-found.php` — branded empty state
-- `woocommerce/loop/sale-flash.php` — custom sale badge
-- `woocommerce/global/wrapper-start.php` + `wrapper-end.php`
+- QA pass: cross-browser (Safari, Firefox, Chrome), mobile (filter drawer, ATC, single product)
+- Image size registration (`add_image_size`) — portrait ratio for perfume bottles
+- Accessibility audit: focus states, keyboard nav, ARIA on interactive components
+- WPML config audit (`wpml-config.xml`)
