@@ -111,7 +111,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 						type="checkbox"
 						name="filter_available"
 						value="1"
-						class="w-3.5 h-3.5 accent-primary"
+						class="w-3.5 h-3.5 accent-black"
 						data-filter-checkbox
 						<?php checked($available); ?>
 					>
@@ -122,7 +122,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 						type="checkbox"
 						name="filter_onsale"
 						value="1"
-						class="w-3.5 h-3.5 accent-primary"
+						class="w-3.5 h-3.5 accent-black"
 						data-filter-checkbox
 						<?php checked($onsale); ?>
 					>
@@ -131,7 +131,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 
 			<button
 				type="submit"
-				class="mt-5 w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-3 hover:bg-primary-hover transition-colors duration-150"
+				class="mt-5 w-full bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-150"
 			>
 				<?php esc_html_e('Apply filters', 'lenvy'); ?>
 			</button>

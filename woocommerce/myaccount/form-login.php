@@ -23,7 +23,7 @@ if ( is_user_logged_in() ) {
 $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 ?>
 
-<div class="lenvy-account-auth py-12 md:py-20">
+<div class="lenvy-account-auth py-12 md:py-20 px-4 sm:px-6">
 	<div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16">
 
 		<!-- ── Login ─────────────────────────────────────────────────────────── -->

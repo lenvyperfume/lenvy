@@ -570,6 +570,29 @@ body .wc-block-checkout__form-submit {
   }
 }
 
+// ─── Single product price ─────────────────────────────────────────────────────
+// WC wraps single product price in <p class="price"> with optional <del>/<ins>.
+
+.lenvy-product-price {
+  .price {
+    font-weight: 600;
+    color: v.$neutral-900;
+
+    del {
+      font-weight: 400;
+      font-size: 0.875rem;
+      color: v.$neutral-400;
+      text-decoration: line-through;
+      margin-right: 0.375rem;
+    }
+
+    ins {
+      text-decoration: none;
+      color: v.$neutral-900;
+    }
+  }
+}
+
 // ─── Product card price (WC price HTML: <del> + <ins> for sale pricing) ───────
 // WC outputs: <del><span>€xx</span></del><ins><span>€yy</span></ins>
 // Regular price: neutral-900, semibold. Sale: ins = neutral-900, del = neutral-400 small.
@@ -590,6 +613,423 @@ body .wc-block-checkout__form-submit {
   ins {
     text-decoration: none;
     color: v.$neutral-900;
+  }
+}
+
+// ─── Cart page: item thumbnails ───────────────────────────────────────────────
+// The WC-generated <img> inside our flex item rows needs to fill its container.
+
+.cart-item-thumb {
+  img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  a {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+}
+
+// ─── Cart page: quantity inputs ───────────────────────────────────────────────
+// Scoped to cart form so it doesn't clash with .lenvy-atc-form on the product page.
+
+.woocommerce-cart-form {
+  .quantity {
+    display: inline-flex;
+    align-items: center;
+
+    input.qty {
+      width: 3rem;
+      border: 1px solid v.$neutral-300;
+      text-align: center;
+      font-size: 0.875rem;
+      padding: 0.375rem 0.25rem;
+
+      &:focus {
+        outline: none;
+        border-color: v.$color-black;
+      }
+    }
+  }
+}
+
+// ─── Cart totals (right column summary) ───────────────────────────────────────
+// Renders via woocommerce_cart_totals() → cart/cart-totals.php.
+
+.cart_totals {
+  h2 {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: v.$neutral-800;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid v.$neutral-100;
+  }
+
+  .shop_table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 1.5rem;
+
+    tr {
+      th,
+      td {
+        padding: 0.625rem 0;
+        font-size: 0.875rem;
+        vertical-align: top;
+        border-bottom: 1px solid v.$neutral-100;
+      }
+
+      th {
+        font-weight: 400;
+        color: v.$neutral-600;
+        padding-right: 1rem;
+        text-align: left;
+      }
+
+      td {
+        color: v.$neutral-900;
+        text-align: right;
+      }
+
+      &.order-total {
+        th,
+        td {
+          font-weight: 600;
+          font-size: 1rem;
+          padding-top: 0.875rem;
+          padding-bottom: 0.875rem;
+          border-bottom: none;
+        }
+      }
+
+      &.cart-discount td {
+        color: #15803d;
+      }
+    }
+  }
+
+  // Shipping calculator toggle link.
+  .shipping-calculator-button {
+    font-size: 0.8125rem;
+    color: v.$neutral-600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    cursor: pointer;
+
+    &:hover {
+      color: v.$color-black;
+    }
+  }
+}
+
+// ─── Checkout: order review table ─────────────────────────────────────────────
+// Rendered by review-order.php inside #order_review.
+
+.woocommerce-checkout-review-order-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+
+  thead tr th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: v.$neutral-500;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid v.$neutral-100;
+    text-align: left;
+
+    &:last-child {
+      text-align: right;
+    }
+  }
+
+  tbody tr.cart_item {
+    td {
+      padding: 0.75rem 0;
+      border-bottom: 1px solid v.$neutral-100;
+      vertical-align: top;
+
+      &:last-child {
+        text-align: right;
+      }
+    }
+  }
+
+  tfoot tr {
+    th,
+    td {
+      padding: 0.5rem 0;
+      border-bottom: 1px solid v.$neutral-100;
+    }
+
+    th {
+      font-weight: 400;
+      color: v.$neutral-600;
+      text-align: left;
+    }
+
+    td {
+      text-align: right;
+      color: v.$neutral-900;
+    }
+
+    &.order-total {
+      th,
+      td {
+        font-weight: 600;
+        font-size: 1rem;
+        padding-top: 0.875rem;
+        padding-bottom: 0.875rem;
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+// ─── Checkout: payment gateways ───────────────────────────────────────────────
+
+#payment {
+  margin-top: 1.5rem;
+
+  ul.payment_methods {
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    border: 1px solid v.$neutral-200;
+
+    li.wc_payment_method {
+      padding: 0.875rem 1rem;
+      border-bottom: 1px solid v.$neutral-100;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      label {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: v.$neutral-900;
+        cursor: pointer;
+      }
+
+      input[type='radio'] {
+        accent-color: v.$color-black;
+      }
+
+      .payment_box {
+        margin-top: 0.75rem;
+        padding: 0.75rem;
+        background-color: v.$neutral-50;
+        font-size: 0.8125rem;
+        color: v.$neutral-600;
+        line-height: 1.6;
+      }
+    }
+  }
+}
+
+// ─── Checkout: form field labels ──────────────────────────────────────────────
+// WC generates labels from field registration — normalise to match theme style.
+
+.woocommerce-billing-fields,
+.woocommerce-shipping-fields,
+.woocommerce-additional-fields {
+  h3 {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: v.$neutral-800;
+    margin-bottom: 1.25rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid v.$neutral-100;
+  }
+
+  .form-row {
+    margin-bottom: 1rem;
+
+    label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: v.$neutral-600;
+      margin-bottom: 0.375rem;
+    }
+
+    .required {
+      color: v.$neutral-400;
+    }
+  }
+}
+
+// ─── My Account: layout reset ─────────────────────────────────────────────────
+// woocommerce-layout.css sets these float-based rules that fight our flex layout:
+//   .woocommerce-account .woocommerce-MyAccount-navigation { float: left; width: 30% }
+//   .woocommerce-account .woocommerce-MyAccount-content    { float: right; width: 68% }
+// Inside our 192px sidebar, width: 30% = ~57px — too narrow for any text without wrapping.
+// Reset both so our Tailwind flex container drives the layout.
+
+.woocommerce-account .woocommerce-MyAccount-navigation {
+  float: none !important;
+  width: 100% !important;
+}
+
+.woocommerce-account .woocommerce-MyAccount-content {
+  float: none !important;
+  width: 100% !important;
+}
+
+// ─── My Account: navigation ───────────────────────────────────────────────────
+// Reset WC's default list and link styles; Tailwind handles spacing via PHP classes.
+
+.woocommerce-MyAccount-navigation {
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  // WC default sets padding: 6px 12px on nav links — reset it.
+  ul li a {
+    padding: 0;
+    display: flex;
+  }
+}
+
+// ─── My Account: orders table ─────────────────────────────────────────────────
+
+.woocommerce-orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+
+  thead th {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: v.$neutral-500;
+    padding-bottom: 0.75rem;
+    padding-right: 1.5rem;
+    border-bottom: 1px solid v.$neutral-200;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  tbody td {
+    padding: 0.875rem 1.5rem 0.875rem 0;
+    border-bottom: 1px solid v.$neutral-100;
+    color: v.$neutral-800;
+    vertical-align: middle;
+  }
+
+  .woocommerce-button.button {
+    font-size: 0.6875rem;
+    padding: 0.375rem 0.875rem;
+  }
+}
+
+// ─── My Account: addresses ────────────────────────────────────────────────────
+// WC renders billing + shipping in .u-columns.col2-set.addresses with float-based
+// .col-1 / .col-2 children. The clearfix ::before/::after on .col2-set creates
+// anonymous flex children that break flex layout. Use a template override
+// (woocommerce/myaccount/my-address.php) with clean Tailwind grid markup instead.
+// The styles below are for the address card interior only.
+
+.woocommerce-Address {
+  min-width: 0;
+}
+
+// Address card header: h2 + edit link side by side.
+// WC template: <header class="woocommerce-Address-title title"><h2>...</h2><a class="edit">...</a></header>
+.woocommerce-Address-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid v.$neutral-100;
+
+  // WC template uses h2 (not h3) for the address type label.
+  h2 {
+    font-size: 0.6875rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: v.$neutral-800;
+    margin: 0;
+  }
+
+  .edit {
+    font-size: 0.75rem;
+    color: v.$neutral-500;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+    white-space: nowrap;
+    margin-left: 0.75rem;
+
+    &:hover {
+      color: v.$color-black;
+    }
+  }
+}
+
+// Address text block.
+.woocommerce-Address address {
+  font-style: normal;
+  font-size: 0.875rem;
+  color: v.$neutral-700;
+  line-height: 1.7;
+}
+
+// ─── My Account: section headings ─────────────────────────────────────────────
+
+.woocommerce-MyAccount-content {
+  width: 100%;
+
+  > p:first-child {
+    font-size: 0.875rem;
+    color: v.$neutral-600;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// ─── WooCommerce Blocks: cart & checkout page container ───────────────────────
+// The cart and checkout pages use WC Block content (wp:woocommerce/cart and
+// wp:woocommerce/checkout). These render a bare full-width block wrapper with
+// no horizontal padding. Apply the same container logic as .lenvy-container.
+
+.wp-block-woocommerce-cart,
+.wp-block-woocommerce-checkout {
+  box-sizing: border-box;
+  width: 100%;
+  max-width: var(--container-width);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  padding-block: 3rem;
+
+  @media (min-width: 640px) {
+    padding-inline: 1.5rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 2rem;
+    padding-block: 4rem;
   }
 }
 

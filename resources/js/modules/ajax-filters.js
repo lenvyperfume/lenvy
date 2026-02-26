@@ -69,6 +69,7 @@ function fetchFiltered(params) {
   body.set('taxonomy', taxonomy);
   body.set('term', term);
   body.set('paged', getPagedFromParams(params));
+  body.set('page_url', window.location.pathname);
 
   fetch(window.lenvyAjax.url, {
     method: 'POST',
@@ -150,6 +151,12 @@ function updateResultsCount(count, params) {
   const paged = parseInt(params.get('paged') ?? '1', 10);
   const from = (paged - 1) * perPage + 1;
   const to = Math.min(paged * perPage, count);
+  const strings = window.lenvyAjax?.strings ?? {};
 
-  el.textContent = count > 0 ? `Showing ${from}–${to} of ${count} products` : 'No products found';
+  if (count > 0) {
+    const tpl = strings.results_showing ?? `Showing ${from}\u2013${to} of ${count} products`;
+    el.textContent = tpl.replace('%1$s', from).replace('%2$s', to).replace('%3$s', count);
+  } else {
+    el.textContent = strings.results_none ?? 'No products found';
+  }
 }

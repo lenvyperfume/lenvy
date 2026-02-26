@@ -33,7 +33,7 @@ $base_url = esc_url( strtok( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), '?' )
 
 		<a
 			href="<?php echo $base_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — escaped above. ?>"
-			class="inline-block text-xs font-medium uppercase tracking-widest border border-neutral-900 text-neutral-900 px-7 py-3 hover:bg-neutral-900 hover:text-white transition-colors duration-150"
+			class="inline-block text-sm font-medium tracking-wide border border-neutral-900 text-neutral-900 px-6 py-2.5 hover:bg-neutral-900 hover:text-white transition-colors duration-150"
 		>
 			<?php esc_html_e( 'Clear all filters', 'lenvy' ); ?>
 		</a>
@@ -42,7 +42,7 @@ $base_url = esc_url( strtok( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), '?' )
 
 		<a
 			href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ); ?>"
-			class="inline-block text-xs font-medium uppercase tracking-widest border border-neutral-900 text-neutral-900 px-7 py-3 hover:bg-neutral-900 hover:text-white transition-colors duration-150"
+			class="inline-block text-sm font-medium tracking-wide border border-neutral-900 text-neutral-900 px-6 py-2.5 hover:bg-neutral-900 hover:text-white transition-colors duration-150"
 		>
 			<?php esc_html_e( 'Back to shop', 'lenvy' ); ?>
 		</a>

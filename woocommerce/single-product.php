@@ -38,7 +38,7 @@ while (have_posts()):
 			<div class="mt-8 grid grid-cols-1 lg:grid-cols-[55fr_45fr] gap-10 xl:gap-20">
 
 				<!-- ── Gallery ───────────────────────────────────────────── -->
-				<div data-product-gallery>
+				<div data-product-gallery class="lg:sticky lg:top-[calc(var(--header-height,68px)+2rem)] lg:self-start">
 					<?php wc_get_template_part('single-product/product', 'image'); ?>
 				</div>
 

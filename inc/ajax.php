@@ -217,10 +217,29 @@ function lenvy_ajax_filter_products(): void {
 	$pagination_html = '';
 
 	if ($total_pages > 1) {
-		$base_url = strtok((string) $_SERVER['REQUEST_URI'], '?'); // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-		$query_str = isset($_SERVER['QUERY_STRING'])
-			? '?' . sanitize_text_field(wp_unslash($_SERVER['QUERY_STRING']))
-			: '';
+		// $_SERVER['REQUEST_URI'] in AJAX context is admin-ajax.php — use page_url sent by JS instead.
+		$raw_page_url = isset($_POST['page_url']) ? sanitize_text_field(wp_unslash((string) $_POST['page_url'])) : '/';
+		$base_url = strtok($raw_page_url, '?');
+
+		// Rebuild the filter query string from active POST params so pagination links preserve filters.
+		$filter_keys = ['filter_brand', 'filter_cat', 'filter_gender', 'filter_family', 'filter_conc', 'filter_volume', 'min_price', 'max_price', 'filter_available', 'filter_onsale', 'orderby'];
+		$parts = [];
+
+		foreach ($filter_keys as $k) {
+			if (empty($_POST[$k])) {
+				continue;
+			}
+			$val = $_POST[$k];
+			if (is_array($val)) {
+				foreach ($val as $v) {
+					$parts[] = rawurlencode($k . '[]') . '=' . rawurlencode(sanitize_text_field((string) $v));
+				}
+			} else {
+				$parts[] = rawurlencode($k) . '=' . rawurlencode(sanitize_text_field((string) $val));
+			}
+		}
+
+		$query_str = !empty($parts) ? '?' . implode('&', $parts) : '';
 		$current_url = esc_url($base_url . $query_str);
 
 		$pagination_html = (string) paginate_links([

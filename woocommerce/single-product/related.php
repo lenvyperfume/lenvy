@@ -24,7 +24,7 @@ if (empty($related_products)) {
 		<?php esc_html_e('You may also like', 'lenvy'); ?>
 	</h2>
 
-	<div class="grid grid-cols-2 md:grid-cols-4 gap-x-4 gap-y-10">
+	<div class="grid grid-cols-2 md:grid-cols-4 gap-x-6 gap-y-8">
 		<?php foreach ($related_products as $related_product): ?>
 			<?php get_template_part('template-parts/components/product-card', null, [
    	'product_id' => $related_product->get_id(),

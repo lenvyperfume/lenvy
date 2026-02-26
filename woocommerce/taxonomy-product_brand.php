@@ -216,11 +216,7 @@ endif; ?>
 
 				<?php else: ?>
 
-					<div class="mt-16 text-center py-20">
-						<p class="text-sm text-neutral-500">
-							<?php esc_html_e('No products found for this brand.', 'lenvy'); ?>
-						</p>
-					</div>
+					<?php get_template_part('woocommerce/loop/no-products-found'); ?>
 
 				<?php endif; ?>
 

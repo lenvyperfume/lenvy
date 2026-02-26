@@ -43,7 +43,7 @@ ob_start();
 		<!-- Min thumb -->
 		<button
 			type="button"
-			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 cursor-grab active:cursor-grabbing"
+			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1 cursor-grab active:cursor-grabbing"
 			data-slider-thumb="min"
 			aria-label="<?php esc_attr_e('Minimum price', 'lenvy'); ?>"
 			aria-valuemin="<?php echo esc_attr($global_min); ?>"
@@ -54,7 +54,7 @@ ob_start();
 		<!-- Max thumb -->
 		<button
 			type="button"
-			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-1 cursor-grab active:cursor-grabbing"
+			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1 cursor-grab active:cursor-grabbing"
 			data-slider-thumb="max"
 			aria-label="<?php esc_attr_e('Maximum price', 'lenvy'); ?>"
 			aria-valuemin="<?php echo esc_attr($global_min); ?>"

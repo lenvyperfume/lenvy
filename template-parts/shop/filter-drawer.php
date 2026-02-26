@@ -48,7 +48,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 
 	<!-- Filter form (same as sidebar, scrollable) -->
 	<div class="flex-1 overflow-y-auto px-6">
-		<form method="GET" action="" data-filter-form>
+		<form method="GET" action="" id="lenvy-filter-drawer-form" data-filter-form>
 
 			<?php if (isset($_GET['orderby'])):// phpcs:ignore WordPress.Security.NonceVerification
    	 ?>
@@ -117,13 +117,13 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
     ?>
 				<label class="flex items-center justify-between cursor-pointer">
 					<span class="text-sm text-neutral-700"><?php esc_html_e('In stock only', 'lenvy'); ?></span>
-					<input type="checkbox" name="filter_available" value="1" class="w-3.5 h-3.5 accent-primary" data-filter-checkbox <?php checked(
+					<input type="checkbox" name="filter_available" value="1" class="w-3.5 h-3.5 accent-black" data-filter-checkbox <?php checked(
      	$available,
      ); ?>>
 				</label>
 				<label class="flex items-center justify-between cursor-pointer">
 					<span class="text-sm text-neutral-700"><?php esc_html_e('On sale', 'lenvy'); ?></span>
-					<input type="checkbox" name="filter_onsale" value="1" class="w-3.5 h-3.5 accent-primary" data-filter-checkbox <?php checked(
+					<input type="checkbox" name="filter_onsale" value="1" class="w-3.5 h-3.5 accent-black" data-filter-checkbox <?php checked(
      	$onsale,
      ); ?>>
 				</label>
@@ -146,8 +146,8 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 		<?php endif; ?>
 		<button
 			type="submit"
-			form="lenvy-filter-form"
-			class="flex-1 bg-primary text-black text-xs font-medium uppercase tracking-widest py-3 hover:bg-primary-hover transition-colors duration-150"
+			form="lenvy-filter-drawer-form"
+			class="flex-1 bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-150"
 		>
 			<?php esc_html_e('Apply', 'lenvy'); ?>
 		</button>

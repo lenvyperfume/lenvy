@@ -116,8 +116,13 @@ add_action(
 		printf(
 			'<script>window.lenvyAjax=%s;</script>' . "\n",
 			wp_json_encode([
-				'url' => admin_url('admin-ajax.php'),
-				'nonce' => wp_create_nonce('lenvy_ajax'),
+				'url'    => admin_url('admin-ajax.php'),
+				'nonce'  => wp_create_nonce('lenvy_ajax'),
+				'strings' => [
+					/* translators: 1: first result number, 2: last result number, 3: total count */
+					'results_showing' => __('Showing %1$s–%2$s of %3$s products', 'lenvy'),
+					'results_none'    => __('No products found', 'lenvy'),
+				],
 			]),
 		);
 	},

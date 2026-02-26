@@ -17,6 +17,9 @@ get_header();
 	<div class="lenvy-container">
 
 		<?php
+  // ── Breadcrumb ────────────────────────────────────────────────────────
+  get_template_part('template-parts/components/breadcrumb');
+
   // ── Page heading ──────────────────────────────────────────────────────
   $heading = lenvy_archive_title();
   if ($heading): ?>
@@ -25,9 +28,6 @@ get_header();
     echo $heading; ?>
 			</h1>
 			<?php endif;
-
-  // ── Breadcrumb ────────────────────────────────────────────────────────
-  get_template_part('template-parts/components/breadcrumb');
   ?>
 
 		<div class="flex gap-8 mt-6">
@@ -62,19 +62,7 @@ get_header();
 
 				<?php else: ?>
 
-					<div class="mt-16 text-center py-20">
-						<p class="text-sm text-neutral-500">
-							<?php esc_html_e('No products were found matching your selection.', 'lenvy'); ?>
-						</p>
-						<?php if (lenvy_is_filtered()): ?>
-							<a
-								href="<?php echo esc_url(strtok((string) $_SERVER['REQUEST_URI'], '?')); ?>"
-								class="inline-block mt-4 text-xs font-medium underline underline-offset-4 hover:text-neutral-600 transition-colors duration-150"
-							>
-								<?php esc_html_e('Clear all filters', 'lenvy'); ?>
-							</a>
-						<?php endif; ?>
-					</div>
+					<?php get_template_part('woocommerce/loop/no-products-found'); ?>
 
 				<?php endif; ?>
 
