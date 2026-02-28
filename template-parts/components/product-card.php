@@ -122,7 +122,7 @@ $atc_text       = $product->add_to_cart_text();
 		<?php if ($is_simple && $is_purchasable): ?>
 		<button
 			type="button"
-			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
+			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
 			data-quick-add
 			data-product-id="<?php echo esc_attr($product_id); ?>"
 			data-add-to-cart-url="<?php echo esc_url($atc_url); ?>"
@@ -133,7 +133,7 @@ $atc_text       = $product->add_to_cart_text();
 		<?php elseif (!$is_simple && $is_purchasable): ?>
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
+			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
 			aria-label="<?php echo esc_attr(sprintf(__('View options for %s', 'lenvy'), $title)); ?>"
 		>
 			<?php lenvy_icon('arrow-right', '', 'sm'); ?>
