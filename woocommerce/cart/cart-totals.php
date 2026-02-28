@@ -15,6 +15,45 @@ defined('ABSPATH') || exit();
 
 	<?php do_action('woocommerce_before_cart_totals'); ?>
 
+	<?php
+	// Free shipping progress bar.
+	$free_shipping_min = 0;
+	$shipping_zones = WC_Shipping_Zones::get_zones();
+	foreach ($shipping_zones as $zone) {
+		foreach ($zone['shipping_methods'] as $method) {
+			if ('free_shipping' === $method->id && 'yes' === $method->enabled) {
+				$free_shipping_min = (float) $method->get_option('min_amount', 0);
+				break 2;
+			}
+		}
+	}
+
+	if ($free_shipping_min > 0):
+		$cart_total  = (float) WC()->cart->get_displayed_subtotal();
+		$remaining   = max(0, $free_shipping_min - $cart_total);
+		$progress    = min(100, ($cart_total / $free_shipping_min) * 100);
+	?>
+	<div class="mb-5">
+		<?php if ($remaining > 0): ?>
+		<p class="text-xs text-neutral-600 mb-2">
+			<?php printf(
+				/* translators: %s: remaining amount for free shipping */
+				esc_html__('Nog %s voor gratis verzending', 'lenvy'),
+				wp_kses_post(wc_price($remaining))
+			); ?>
+		</p>
+		<?php else: ?>
+		<p class="text-xs text-neutral-600 mb-2">
+			<?php lenvy_icon('check', 'inline text-green-600 -mt-0.5', 'xs'); ?>
+			<?php esc_html_e('Je komt in aanmerking voor gratis verzending!', 'lenvy'); ?>
+		</p>
+		<?php endif; ?>
+		<div class="w-full h-1.5 bg-neutral-100 rounded-full overflow-hidden">
+			<div class="h-full bg-primary rounded-full transition-all duration-500" style="width:<?php echo esc_attr($progress); ?>%"></div>
+		</div>
+	</div>
+	<?php endif; ?>
+
 	<h2><?php esc_html_e('Overzicht', 'lenvy'); ?></h2>
 
 	<div class="lenvy-cart-summary-rows">
