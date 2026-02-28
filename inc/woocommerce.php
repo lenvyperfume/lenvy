@@ -137,6 +137,15 @@ add_filter(
 	1,
 );
 
+// ─── "Incl. BTW" price suffix ────────────────────────────────────────────────
+
+add_filter('woocommerce_get_price_suffix', function (string $suffix, $product): string {
+	if (wc_tax_enabled() && 'incl' === get_option('woocommerce_tax_display_shop')) {
+		return ' <span class="text-[11px] text-neutral-400">' . esc_html__('Incl. BTW', 'lenvy') . '</span>';
+	}
+	return $suffix;
+}, 10, 2);
+
 // ─── Checkout: remove order notes (additional information) ───────────────────
 
 add_filter('woocommerce_enable_order_notes_field', '__return_false');
