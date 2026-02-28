@@ -141,10 +141,44 @@ add_filter(
 
 add_filter('woocommerce_enable_order_notes_field', '__return_false');
 
-// ─── Remove privacy policy text (checkout + registration) ────────────────────
+// ─── Replace default privacy policy text with custom Dutch copy ──────────────
 
 remove_action('woocommerce_checkout_terms_and_conditions', 'wc_checkout_privacy_policy_text', 20);
 remove_action('woocommerce_register_form', 'wc_registration_privacy_policy_text', 20);
+
+add_action('woocommerce_checkout_terms_and_conditions', function () {
+	$terms_url   = wc_get_page_permalink('terms');
+	$privacy_url = get_privacy_policy_url();
+
+	printf(
+		'<p class="text-[11px] leading-relaxed text-neutral-400 mt-4">%s</p>',
+		wp_kses_post(sprintf(
+			/* translators: 1: terms link open, 2: terms link close, 3: privacy link open, 4: privacy link close */
+			__('Door een account aan te maken of een bestelling te plaatsen, accepteert u de %1$sAlgemene Voorwaarden%2$s en stemt u in met de verwerking van uw gegevens, in overeenstemming met het %3$sPrivacybeleid%4$s van Lenvy.', 'lenvy'),
+			'<a href="' . esc_url($terms_url) . '" target="_blank" class="underline underline-offset-2 hover:text-neutral-600 transition-colors">',
+			'</a>',
+			'<a href="' . esc_url($privacy_url) . '" target="_blank" class="underline underline-offset-2 hover:text-neutral-600 transition-colors">',
+			'</a>'
+		))
+	);
+}, 20);
+
+add_action('woocommerce_register_form', function () {
+	$terms_url   = wc_get_page_permalink('terms');
+	$privacy_url = get_privacy_policy_url();
+
+	printf(
+		'<p class="text-[11px] leading-relaxed text-neutral-400 mt-4">%s</p>',
+		wp_kses_post(sprintf(
+			/* translators: 1: terms link open, 2: terms link close, 3: privacy link open, 4: privacy link close */
+			__('Door een account aan te maken of een bestelling te plaatsen, accepteert u de %1$sAlgemene Voorwaarden%2$s en stemt u in met de verwerking van uw gegevens, in overeenstemming met het %3$sPrivacybeleid%4$s van Gkazas.', 'lenvy'),
+			'<a href="' . esc_url($terms_url) . '" target="_blank" class="underline underline-offset-2 hover:text-neutral-600 transition-colors">',
+			'</a>',
+			'<a href="' . esc_url($privacy_url) . '" target="_blank" class="underline underline-offset-2 hover:text-neutral-600 transition-colors">',
+			'</a>'
+		))
+	);
+}, 20);
 
 // ─── Checkout: remove coupon notice at top (coupon is in cart sidebar) ───────
 
