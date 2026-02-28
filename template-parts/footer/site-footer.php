@@ -39,6 +39,8 @@ $social_links = lenvy_field('lenvy_footer_social_links', 'options') ?: [];
 $contact_email = lenvy_field('lenvy_contact_email', 'options');
 $contact_phone = lenvy_field('lenvy_contact_phone', 'options');
 $contact_address = lenvy_field('lenvy_contact_address', 'options');
+$kvk_number = lenvy_field('lenvy_kvk_number', 'options');
+$btw_number = lenvy_field('lenvy_btw_number', 'options');
 
 $social_labels = [
 	'instagram' => __('Instagram', 'lenvy'),
@@ -94,6 +96,12 @@ $social_labels = [
 					>
 						<?php echo esc_html($contact_phone); ?>
 					</a>
+					<?php endif; ?>
+					<?php if ($kvk_number): ?>
+					<p class="text-xs text-neutral-400"><?php echo esc_html('KVK: ' . $kvk_number); ?></p>
+					<?php endif; ?>
+					<?php if ($btw_number): ?>
+					<p class="text-xs text-neutral-400"><?php echo esc_html('BTW: ' . $btw_number); ?></p>
 					<?php endif; ?>
 				</div>
 
