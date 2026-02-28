@@ -110,6 +110,8 @@ while (have_posts()):
 						<?php do_action('woocommerce_after_add_to_cart_form'); ?>
 					</div>
 
+					<?php get_template_part('template-parts/components/trust-block'); ?>
+
 					<!-- ── Accordion details ─────────────────────────── -->
 					<div class="mt-8">
 
