@@ -228,6 +228,11 @@ $social_labels = [
 			</nav>
 
 		</div>
+
+		<!-- Payment methods -->
+		<div class="flex items-center justify-center border-t border-neutral-200 pt-6 mt-3">
+			<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/icons/payments/payment-methods.svg'); ?>" alt="<?php esc_attr_e('iDEAL, Maestro, Mastercard, Visa', 'lenvy'); ?>" width="168" height="26" loading="lazy">
+		</div>
 	</div>
 
 </footer>

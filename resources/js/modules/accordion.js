@@ -33,16 +33,43 @@ export function initAccordion() {
     });
   });
 
-  // ── Filter accordions (display:none toggle) ────────────────────────────────
+  // ── Filter accordions (animated height) ───────────────────────────────────
   document.querySelectorAll('[data-filter-accordion-toggle]').forEach((btn) => {
     const panelId = btn.getAttribute('aria-controls');
     const panel = panelId ? document.getElementById(panelId) : null;
     if (!panel) return;
 
+    // Set up initial collapsed state with CSS instead of display:none
+    panel.style.display = '';
+    panel.style.overflow = 'hidden';
+    panel.style.height = '0';
+    panel.style.opacity = '0';
+    panel.style.transition = 'height 0.3s ease, opacity 0.2s ease';
+
     btn.addEventListener('click', () => {
       const isOpen = btn.getAttribute('aria-expanded') === 'true';
+
+      if (isOpen) {
+        // Collapse: set explicit height first, then animate to 0
+        panel.style.height = panel.scrollHeight + 'px';
+        requestAnimationFrame(() => {
+          panel.style.height = '0';
+          panel.style.opacity = '0';
+        });
+      } else {
+        // Expand: animate to scrollHeight, then clear for flexible content
+        panel.style.height = panel.scrollHeight + 'px';
+        panel.style.opacity = '1';
+        const onEnd = () => {
+          panel.removeEventListener('transitionend', onEnd);
+          if (btn.getAttribute('aria-expanded') === 'true') {
+            panel.style.height = 'auto';
+          }
+        };
+        panel.addEventListener('transitionend', onEnd);
+      }
+
       btn.setAttribute('aria-expanded', String(!isOpen));
-      panel.style.display = isOpen ? 'none' : '';
       btn.querySelector('svg')?.classList.toggle('rotate-180', !isOpen);
     });
   });

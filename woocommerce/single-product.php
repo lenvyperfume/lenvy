@@ -101,8 +101,6 @@ while (have_posts()):
 					</div>
 					<?php endif; ?>
 
-					<div class="border-t border-neutral-100 mt-6"></div>
-
 					<!-- Add to cart form -->
 					<div class="mt-6 lenvy-atc-form">
 						<?php do_action('woocommerce_before_add_to_cart_form'); ?>
@@ -124,7 +122,7 @@ while (have_posts()):
 						);
 
 						if ($has_notes): ?>
-						<div class="border-t border-neutral-100" data-filter-accordion>
+						<div data-filter-accordion>
 							<button
 								id="toggle-scent-notes"
 								type="button"
@@ -136,7 +134,7 @@ while (have_posts()):
 								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Geurprofiel', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
-							<div id="panel-scent-notes" role="region" aria-labelledby="toggle-scent-notes" data-filter-accordion-panel style="display:none;">
+							<div id="panel-scent-notes" role="region" aria-labelledby="toggle-scent-notes" data-filter-accordion-panel>
 								<div class="pb-5 grid grid-cols-3 gap-4">
 									<?php
 									$note_groups = [
@@ -164,7 +162,7 @@ while (have_posts()):
 
 						<?php // ── Usage tips ─────────────────────────────────────────
 						if ($usage_tips): ?>
-						<div class="border-t border-neutral-100" data-filter-accordion>
+						<div class="border-t border-primary" data-filter-accordion>
 							<button
 								id="toggle-usage-tips"
 								type="button"
@@ -176,7 +174,7 @@ while (have_posts()):
 								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Gebruikstips', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
-							<div id="panel-usage-tips" role="region" aria-labelledby="toggle-usage-tips" data-filter-accordion-panel style="display:none;">
+							<div id="panel-usage-tips" role="region" aria-labelledby="toggle-usage-tips" data-filter-accordion-panel>
 								<div class="pb-5">
 									<p class="text-sm text-neutral-600 leading-relaxed">
 										<?php echo esc_html($usage_tips); ?>
@@ -188,7 +186,7 @@ while (have_posts()):
 
 						<?php // ── Description ────────────────────────────────────────
 						if ($long_desc): ?>
-						<div class="border-t border-neutral-100" data-filter-accordion>
+						<div class="border-t border-primary" data-filter-accordion>
 							<button
 								id="toggle-description"
 								type="button"
@@ -200,7 +198,7 @@ while (have_posts()):
 								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Beschrijving', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
-							<div id="panel-description" role="region" aria-labelledby="toggle-description" data-filter-accordion-panel style="display:none;">
+							<div id="panel-description" role="region" aria-labelledby="toggle-description" data-filter-accordion-panel>
 								<div class="pb-5 text-sm text-neutral-600 leading-relaxed max-w-prose">
 									<?php echo wp_kses_post($long_desc); ?>
 								</div>
@@ -215,7 +213,7 @@ while (have_posts()):
 						$has_meta = $sku || ($categories && !is_wp_error($categories)) || ($tags && !is_wp_error($tags));
 
 						if ($has_meta): ?>
-						<div class="border-t border-neutral-100" data-filter-accordion>
+						<div class="border-t border-primary" data-filter-accordion>
 							<button
 								id="toggle-product-details"
 								type="button"
@@ -227,7 +225,7 @@ while (have_posts()):
 								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Productdetails', 'lenvy'); ?></span>
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
-							<div id="panel-product-details" role="region" aria-labelledby="toggle-product-details" data-filter-accordion-panel style="display:none;">
+							<div id="panel-product-details" role="region" aria-labelledby="toggle-product-details" data-filter-accordion-panel>
 								<div class="pb-5 text-sm text-neutral-600 space-y-1.5">
 									<?php if ($sku): ?>
 									<p>
@@ -268,7 +266,7 @@ while (have_posts()):
 						</div>
 						<?php endif; ?>
 
-						<div class="border-t border-neutral-100"></div>
+						<div class="border-t border-primary"></div>
 
 					</div><!-- accordion wrapper -->
 

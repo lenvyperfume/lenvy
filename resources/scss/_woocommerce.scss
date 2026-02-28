@@ -346,7 +346,7 @@
 
     // Active state — selected tile.
     &.is-active {
-      border-color: v.$color-black;
+      border-color: v.$color-primary;
       background-color: v.$neutral-50;
     }
 
