@@ -62,10 +62,26 @@ defined('ABSPATH') || exit();
 		</div>
 	<?php endforeach; ?>
 
-	<?php if (WC()->cart->needs_shipping() && WC()->cart->show_shipping()): ?>
-		<?php do_action('woocommerce_review_order_before_shipping'); ?>
-		<?php wc_cart_totals_shipping_html(); ?>
-		<?php do_action('woocommerce_review_order_after_shipping'); ?>
+	<?php if (WC()->cart->needs_shipping()): ?>
+		<?php
+		$packages       = WC()->shipping()->get_packages();
+		$chosen_methods = WC()->session->get('chosen_shipping_methods', []);
+		$shipping_cost = false;
+		foreach ($packages as $i => $package) {
+			if (!empty($package['rates']) && !empty($chosen_methods[$i]) && isset($package['rates'][$chosen_methods[$i]])) {
+				$shipping_cost = $package['rates'][$chosen_methods[$i]]->cost;
+				break;
+			}
+		}
+		?>
+		<div class="lenvy-review-totals__row">
+			<span><?php esc_html_e('Verzending', 'lenvy'); ?></span>
+			<?php if (false !== $shipping_cost): ?>
+				<span><?php echo (float) $shipping_cost > 0 ? wp_kses_post(wc_price($shipping_cost)) : esc_html__('Gratis', 'lenvy'); ?></span>
+			<?php else: ?>
+				<span class="text-xs text-neutral-400"><?php esc_html_e('Vul je adres in', 'lenvy'); ?></span>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 
 	<?php foreach (WC()->cart->get_fees() as $fee): ?>

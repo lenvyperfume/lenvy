@@ -347,7 +347,7 @@
     // Active state — selected tile.
     &.is-active {
       border-color: v.$color-primary;
-      background-color: v.$neutral-50;
+      background-color: v.$color-primary;
     }
 
     // Out of stock.

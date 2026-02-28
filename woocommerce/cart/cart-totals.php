@@ -70,14 +70,10 @@ defined('ABSPATH') || exit();
 			</div>
 		<?php endforeach; ?>
 
-		<?php if (WC()->cart->needs_shipping() && WC()->cart->show_shipping()): ?>
-			<?php do_action('woocommerce_cart_totals_before_shipping'); ?>
-			<?php wc_cart_totals_shipping_html(); ?>
-			<?php do_action('woocommerce_cart_totals_after_shipping'); ?>
-		<?php elseif (WC()->cart->needs_shipping() && 'yes' === get_option('woocommerce_enable_shipping_calc')): ?>
+		<?php if (WC()->cart->needs_shipping()): ?>
 			<div class="lenvy-summary-row">
 				<span><?php esc_html_e('Verzending', 'lenvy'); ?></span>
-				<span><?php woocommerce_shipping_calculator(); ?></span>
+				<span class="text-xs text-neutral-400"><?php esc_html_e('Berekend bij afrekenen', 'lenvy'); ?></span>
 			</div>
 		<?php endif; ?>
 
