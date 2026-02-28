@@ -43,6 +43,53 @@ add_filter('query_vars', function (array $vars): array {
 	return array_merge($vars, $custom);
 });
 
+// ─── Canonical URL on filtered shop/archive pages ────────────────────────────
+// Strips filter query params so search engines see the base archive as canonical,
+// preventing duplicate-content indexation from every filter combination.
+
+add_action('wp_head', function (): void {
+	if (is_admin() || wp_doing_ajax()) {
+		return;
+	}
+
+	$is_shop = is_post_type_archive('product') || is_tax([
+		'product_cat',
+		'product_brand',
+		'product_tag',
+		'pa_gender',
+		'pa_fragrance_family',
+		'pa_concentration',
+		'pa_volume_ml',
+	]);
+
+	if (!$is_shop) {
+		return;
+	}
+
+	// Build a clean canonical from the current archive URL without filter params.
+	$filter_params = [
+		'filter_brand',
+		'filter_cat',
+		'filter_gender',
+		'filter_family',
+		'filter_conc',
+		'filter_volume',
+		'filter_available',
+		'filter_onsale',
+		'min_price',
+		'max_price',
+		'orderby',
+	];
+
+	$canonical = home_url(add_query_arg(null, null));
+
+	foreach ($filter_params as $param) {
+		$canonical = remove_query_arg($param, $canonical);
+	}
+
+	echo '<link rel="canonical" href="' . esc_url($canonical) . '" />' . "\n";
+}, 1);
+
 // ─── Modify main query on shop / archive pages ────────────────────────────────
 
 add_action('pre_get_posts', function (WP_Query $query): void {

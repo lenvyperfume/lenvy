@@ -55,6 +55,84 @@ if (function_exists('acf_add_options_page')) {
 	]);
 }
 
+// ─── USP bar fields ──────────────────────────────────────────────────────────
+
+add_action('acf/include_fields', function (): void {
+	if (!function_exists('acf_add_local_field_group')) {
+		return;
+	}
+
+	acf_add_local_field_group([
+		'key'      => 'group_lenvy_usp_bar',
+		'title'    => 'USP / Trust Bar',
+		'fields'   => [
+			[
+				'key'           => 'field_lenvy_usp_bar_enabled',
+				'label'         => 'Enable USP bar',
+				'name'          => 'lenvy_usp_bar_enabled',
+				'type'          => 'true_false',
+				'default_value' => 1,
+				'ui'            => 1,
+				'instructions'  => 'Show the trust-signal strip below the header on every page.',
+			],
+			[
+				'key'               => 'field_lenvy_usp_items',
+				'label'             => 'USP items',
+				'name'              => 'lenvy_usp_items',
+				'type'              => 'repeater',
+				'max'               => 5,
+				'layout'            => 'table',
+				'button_label'      => 'Add USP',
+				'instructions'      => 'Leave empty to use the built-in defaults (shipping, originality, returns, payment).',
+				'conditional_logic' => [
+					[
+						[
+							'field'    => 'field_lenvy_usp_bar_enabled',
+							'operator' => '==',
+							'value'    => '1',
+						],
+					],
+				],
+				'sub_fields'        => [
+					[
+						'key'           => 'field_lenvy_usp_icon',
+						'label'         => 'Icon',
+						'name'          => 'usp_icon',
+						'type'          => 'select',
+						'choices'       => [
+							'truck'   => 'Truck (shipping)',
+							'shield'  => 'Shield (authenticity)',
+							'refresh' => 'Refresh (returns)',
+							'check'   => 'Check (security)',
+							'heart'   => 'Heart',
+							'star'    => 'Star',
+						],
+						'default_value' => 'check',
+						'return_format' => 'value',
+					],
+					[
+						'key'         => 'field_lenvy_usp_text',
+						'label'       => 'Text',
+						'name'        => 'usp_text',
+						'type'        => 'text',
+						'placeholder' => 'e.g. Gratis verzending vanaf €50',
+					],
+				],
+			],
+		],
+		'location' => [
+			[
+				[
+					'param'    => 'options_page',
+					'operator' => '==',
+					'value'    => 'lenvy-theme-settings',
+				],
+			],
+		],
+		'menu_order' => 3,
+	]);
+});
+
 // ─── Editorial moment fields (homepage brand statement) ───────────────────────
 
 add_action('acf/include_fields', function (): void {

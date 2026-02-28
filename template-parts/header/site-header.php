@@ -48,6 +48,8 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 </div>
 <?php endif; ?>
 
+<?php get_template_part('template-parts/components/usp-bar'); ?>
+
 <header
 	data-header
 	class="sticky z-[40] bg-white border-b border-neutral-200 transition-shadow duration-200"

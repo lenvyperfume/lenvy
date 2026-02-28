@@ -18,6 +18,7 @@ import { initAjaxFilters } from './modules/ajax-filters.js';
 import { initBrandScroller } from './modules/brand-scroller.js';
 import { initProductCarousel } from './modules/product-carousel.js';
 import { initBrandsFilter } from './modules/brands-filter.js';
+import { initVariationTiles } from './modules/variation-tiles.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -36,6 +37,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBrandScroller();
   initProductCarousel();
   initBrandsFilter();
+  initVariationTiles();
 
   // Custom sort dropdown.
   document.querySelectorAll('[data-sort-dropdown]').forEach((dropdown) => {

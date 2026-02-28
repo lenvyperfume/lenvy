@@ -6,7 +6,7 @@
  *   1. Hero              — cinematic banner (image / video only, no text overlay)
  *   2. Brand scroller    — infinite auto-scroll strip of brand logos
  *   3. Bestsellers       — product carousel (WC query: popularity)
- *   4. Editorial moment  — brand typography statement
+ *   4. Promo Banners     — editorial image banners (ACF repeater, max 4)
  *   5. Featured cats     — portrait image grid of selected product_cat terms
  *   6. New Arrivals      — product carousel (WC query: date, alternating bg)
  *   7. Sale              — product carousel (conditional — only if sale products exist)
@@ -24,6 +24,8 @@ $shop_url = $shop_url ?: home_url('/shop/');
 ?>
 
 <main id="primary" class="site-main">
+
+	<h1 class="sr-only"><?php echo esc_html(get_bloginfo('name') . ' — ' . get_bloginfo('description')); ?></h1>
 
 	<?php get_template_part('template-parts/homepage/hero'); ?>
 
@@ -43,7 +45,25 @@ $shop_url = $shop_url ?: home_url('/shop/');
 	}
 	?>
 
-	<?php get_template_part('template-parts/homepage/editorial-moment'); ?>
+	<?php
+	// ── Promo Banners (ACF repeater) ─────────────────────────────────────
+	$promo_banners = lenvy_field('lenvy_promo_banners');
+	if ($promo_banners):
+	?>
+	<section class="space-y-6">
+		<?php foreach ($promo_banners as $banner): ?>
+			<?php
+			get_template_part('template-parts/components/promo-banner', null, [
+				'image'       => $banner['banner_image'] ?? null,
+				'title'       => $banner['banner_title'] ?? '',
+				'description' => $banner['banner_description'] ?? '',
+				'link_label'  => $banner['banner_link_label'] ?? '',
+				'link_url'    => $banner['banner_link_url'] ?? '',
+			]);
+			?>
+		<?php endforeach; ?>
+	</section>
+	<?php endif; ?>
 
 	<?php get_template_part('template-parts/homepage/featured-categories'); ?>
 

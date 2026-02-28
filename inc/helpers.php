@@ -52,9 +52,10 @@ function lenvy_the_field(string $key, int|string|null $post_id = null): void {
  * @param  int|array|false $attachment_id WordPress attachment ID or ACF image array.
  * @param  string          $size          Image size name or [width, height] array.
  * @param  string          $class         Additional class attribute value.
+ * @param  string          $alt           Alt text override. When empty, falls back to the attachment's alt field.
  * @return string
  */
-function lenvy_get_image(int|array|false $attachment_id, string $size = 'thumbnail', string $class = ''): string {
+function lenvy_get_image(int|array|false $attachment_id, string $size = 'thumbnail', string $class = '', string $alt = ''): string {
 	if (is_array($attachment_id)) {
 		$attachment_id = (int) ($attachment_id['ID'] ?? 0);
 	}
@@ -63,7 +64,15 @@ function lenvy_get_image(int|array|false $attachment_id, string $size = 'thumbna
 		return '';
 	}
 
-	$attrs = $class ? ['class' => $class] : [];
+	$attrs = [];
+
+	if ($class) {
+		$attrs['class'] = $class;
+	}
+
+	if ('' !== $alt) {
+		$attrs['alt'] = $alt;
+	}
 
 	return wp_get_attachment_image($attachment_id, $size, false, $attrs) ?: '';
 }

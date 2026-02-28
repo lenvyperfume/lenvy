@@ -143,6 +143,111 @@
       "load_terms": 0,
       "return_format": "id",
       "multiple": 0
+    },
+    {
+      "key": "field_lenvy_hp_tab_promo",
+      "label": "Promo Banners",
+      "name": "",
+      "aria-label": "",
+      "type": "tab",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_lenvy_hp_promo_banners",
+      "label": "Promo Banners",
+      "name": "lenvy_promo_banners",
+      "aria-label": "",
+      "type": "repeater",
+      "instructions": "Editorial image banners with title and link. Displayed between Featured Categories and New Arrivals. Max 4.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "layout": "block",
+      "button_label": "Add Banner",
+      "min": 0,
+      "max": 4,
+      "sub_fields": [
+        {
+          "key": "field_lenvy_hp_promo_image",
+          "label": "Banner Image",
+          "name": "banner_image",
+          "aria-label": "",
+          "type": "image",
+          "instructions": "Full-width background image. Recommended minimum: 1920\u00d7800px.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": { "width": "", "class": "", "id": "" },
+          "return_format": "array",
+          "preview_size": "medium",
+          "library": "all",
+          "min_width": "",
+          "min_height": "",
+          "min_size": "",
+          "max_width": "",
+          "max_height": "",
+          "max_size": "",
+          "mime_types": "jpg,jpeg,png,webp"
+        },
+        {
+          "key": "field_lenvy_hp_promo_title",
+          "label": "Title",
+          "name": "banner_title",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "Large serif display text, positioned top-left.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "50", "class": "", "id": "" },
+          "default_value": "",
+          "placeholder": "The art of giving"
+        },
+        {
+          "key": "field_lenvy_hp_promo_description",
+          "label": "Description",
+          "name": "banner_description",
+          "aria-label": "",
+          "type": "textarea",
+          "instructions": "Short body text, positioned bottom-right above the link.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "50", "class": "", "id": "" },
+          "default_value": "",
+          "placeholder": "",
+          "rows": 2,
+          "new_lines": "br"
+        },
+        {
+          "key": "field_lenvy_hp_promo_link_label",
+          "label": "Link Label",
+          "name": "banner_link_label",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "Underlined text link label.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "50", "class": "", "id": "" },
+          "default_value": "",
+          "placeholder": "Shop gift sets"
+        },
+        {
+          "key": "field_lenvy_hp_promo_link_url",
+          "label": "Link URL",
+          "name": "banner_link_url",
+          "aria-label": "",
+          "type": "url",
+          "instructions": "Destination URL. The entire banner becomes clickable when set.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "50", "class": "", "id": "" },
+          "default_value": "",
+          "placeholder": "https://"
+        }
+      ]
     }
   ],
   "location": [
@@ -161,7 +266,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Homepage content \u2014 hero, brand scroller, featured categories. Product carousels (bestsellers, new arrivals, sale) are powered by WooCommerce queries.",
+  "description": "Homepage content \u2014 hero, brand scroller, featured categories, promo banners. Product carousels (bestsellers, new arrivals, sale) are powered by WooCommerce queries.",
   "show_in_rest": 0,
-  "modified": 1772035200
+  "modified": 1772208000
 }

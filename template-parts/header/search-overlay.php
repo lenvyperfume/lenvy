@@ -71,19 +71,11 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 						autocomplete="off"
 						spellcheck="false"
 						placeholder="<?php esc_attr_e('Zoek naar parfums, merken…', 'lenvy'); ?>"
-						class="flex-1 min-w-0 bg-transparent text-[15px] text-neutral-900 placeholder:text-neutral-400 outline-none"
+						class="flex-1 min-w-0 bg-transparent text-[15px] text-neutral-900 placeholder:text-neutral-300 outline-none appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-decoration]:appearance-none"
 						value=""
 					/>
 
 					<input type="hidden" name="post_type" value="product" />
-
-					<button
-						type="submit"
-						class="shrink-0 px-4 py-1.5 bg-primary text-black text-xs font-medium tracking-wide hover:bg-primary-hover transition-colors duration-200 hidden sm:block"
-						aria-label="<?php esc_attr_e('Zoeken', 'lenvy'); ?>"
-					>
-						<?php esc_html_e('Zoeken', 'lenvy'); ?>
-					</button>
 				</form>
 
 			</div>

@@ -70,7 +70,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 					<div class="relative overflow-hidden bg-white aspect-[3/4] mb-4">
 						<?php if ($image_id): ?>
 							<?php echo wp_get_attachment_image($image_id, 'woocommerce_thumbnail', false, [
-       	'class' => 'w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105',
+       	'class' => 'w-full h-full object-cover',
        	'loading' => 'lazy',
        	'alt' => esc_attr($product->get_name()),
        ]); ?>

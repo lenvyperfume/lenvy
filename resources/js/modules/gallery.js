@@ -1,78 +1,97 @@
 /**
- * Product image gallery — thumbnail click swaps main image with cross-fade.
- * Clicking the main image opens a lightweight full-screen lightbox.
+ * Product gallery — Embla Carousel powered slider.
  *
- * Targets [data-product-gallery] wrappers rendered by
- * woocommerce/single-product/product-image.php
+ * - Drag/swipe to navigate
+ * - Thumbnail + dot sync
+ * - Keyboard arrow navigation
+ * - Lightbox on click
  */
+
+import EmblaCarousel from 'embla-carousel';
+
 export function initGallery() {
-  document.querySelectorAll('[data-product-gallery]').forEach(initSingle);
+  document.querySelectorAll('[data-gallery-slider]').forEach(initSlider);
 }
 
-function initSingle(gallery) {
-  const mainImg = gallery.querySelector('[data-gallery-main]');
-  const thumbs = Array.from(gallery.querySelectorAll('[data-gallery-thumb]'));
+function initSlider(slider) {
+  const viewport = slider.querySelector('[data-gallery-viewport]');
+  if (!viewport) return;
 
-  if (!mainImg) return;
+  const wrapper = slider.closest('[data-product-gallery]') || slider.parentElement;
+  const thumbs = Array.from(wrapper.querySelectorAll('[data-gallery-thumb]'));
+  const dots = Array.from(slider.querySelectorAll('[data-gallery-dot]'));
 
-  function activate(thumb) {
-    const src = thumb.dataset.src;
-    if (!src || mainImg.src === src) return;
-
-    // Cross-fade.
-    mainImg.style.opacity = '0';
-    mainImg.style.transition = 'opacity 200ms ease';
-
-    const preload = new Image();
-    preload.onload = () => {
-      mainImg.src = src;
-      mainImg.style.opacity = '1';
-    };
-    preload.src = src;
-
-    // Update active thumb border (border-b-2 bottom accent).
-    thumbs.forEach((t) => {
-      t.classList.remove('border-black');
-      t.classList.add('border-transparent');
-    });
-    thumb.classList.remove('border-transparent');
-    thumb.classList.add('border-black');
-  }
-
-  thumbs.forEach((thumb) => {
-    thumb.addEventListener('click', () => activate(thumb));
+  // ── Init Embla ────────────────────────────────────────────────────────────
+  const embla = EmblaCarousel(viewport, {
+    loop: false,
+    dragFree: false,
+    containScroll: 'trimSnaps',
   });
 
-  // Keyboard: left/right arrows navigate thumbnails when a thumb is focused.
-  gallery.addEventListener('keydown', (e) => {
-    const focused = document.activeElement;
-    const idx = thumbs.indexOf(focused);
-    if (idx === -1) return;
+  // ── Sync indicators on slide change ───────────────────────────────────────
+  function onSelect() {
+    const index = embla.selectedScrollSnap();
 
-    if (e.key === 'ArrowRight' && idx < thumbs.length - 1) {
+    thumbs.forEach((t, i) => {
+      const isActive = i === index;
+      t.classList.toggle('border-primary', isActive);
+      t.classList.toggle('border-transparent', !isActive);
+      t.classList.toggle('hover:border-neutral-300', !isActive);
+    });
+
+    dots.forEach((d, i) => {
+      d.classList.toggle('is-active', i === index);
+    });
+  }
+
+  embla.on('select', onSelect);
+  onSelect(); // sync on init
+
+  // ── Thumbnail clicks ──────────────────────────────────────────────────────
+  thumbs.forEach((thumb) => {
+    thumb.addEventListener('click', () => {
+      const idx = parseInt(thumb.dataset.galleryThumb, 10);
+      embla.scrollTo(idx);
+    });
+  });
+
+  // ── Dot clicks ────────────────────────────────────────────────────────────
+  dots.forEach((dot) => {
+    dot.addEventListener('click', () => {
+      const idx = parseInt(dot.dataset.galleryDot, 10);
+      embla.scrollTo(idx);
+    });
+  });
+
+  // ── Keyboard navigation ───────────────────────────────────────────────────
+  slider.setAttribute('tabindex', '0');
+  slider.style.outline = 'none';
+  slider.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') {
       e.preventDefault();
-      thumbs[idx + 1].focus();
-      activate(thumbs[idx + 1]);
-    } else if (e.key === 'ArrowLeft' && idx > 0) {
+      embla.scrollNext();
+    } else if (e.key === 'ArrowLeft') {
       e.preventDefault();
-      thumbs[idx - 1].focus();
-      activate(thumbs[idx - 1]);
+      embla.scrollPrev();
     }
   });
 
-  // Lightbox — clicking the main image wrapper opens a full-screen overlay.
-  initLightbox(mainImg);
+  // ── Lightbox ──────────────────────────────────────────────────────────────
+  initLightbox(slider, embla);
 }
 
 // ── Lightbox ─────────────────────────────────────────────────────────────────
 
-function initLightbox(mainImg) {
-  const wrapper = mainImg.parentElement;
-  if (!wrapper) return;
-
-  wrapper.style.cursor = 'zoom-in';
+function initLightbox(slider, embla) {
+  const slides = Array.from(slider.querySelectorAll('[data-gallery-slide] img'));
+  if (!slides.length) return;
 
   let overlay = null;
+  let lbIndex = 0;
+
+  function getImages() {
+    return slides.map((img) => ({ src: img.src, alt: img.alt }));
+  }
 
   function getOverlay() {
     if (overlay) return overlay;
@@ -100,34 +119,32 @@ function initLightbox(mainImg) {
 
     document.body.appendChild(overlay);
 
-    overlay.querySelector('[data-lb-close]').addEventListener('mouseenter', (e) => {
-      e.currentTarget.style.color = '#fff';
-    });
-    overlay.querySelector('[data-lb-close]').addEventListener('mouseleave', (e) => {
-      e.currentTarget.style.color = 'rgba(255,255,255,0.7)';
-    });
+    const closeBtn = overlay.querySelector('[data-lb-close]');
+    closeBtn.addEventListener('mouseenter', (e) => (e.currentTarget.style.color = '#fff'));
+    closeBtn.addEventListener('mouseleave', (e) => (e.currentTarget.style.color = 'rgba(255,255,255,0.7)'));
 
     overlay.addEventListener('click', (e) => {
-      if (e.target === overlay || e.target.closest('[data-lb-close]')) {
-        closeLightbox();
-      }
+      if (e.target === overlay || e.target.closest('[data-lb-close]')) closeLightbox();
     });
 
     return overlay;
   }
 
-  function openLightbox() {
+  function showImage(index) {
+    const images = getImages();
+    if (index < 0 || index >= images.length) return;
+    lbIndex = index;
     const el = getOverlay();
     const img = el.querySelector('[data-lb-img]');
-    img.src = mainImg.src;
-    img.alt = mainImg.alt;
+    img.src = images[index].src;
+    img.alt = images[index].alt;
+  }
 
+  function openLightbox() {
+    showImage(embla.selectedScrollSnap());
+    const el = getOverlay();
     el.style.display = 'flex';
-    // Allow display to take effect before fading in.
-    requestAnimationFrame(() => {
-      el.style.opacity = '1';
-    });
-
+    requestAnimationFrame(() => (el.style.opacity = '1'));
     document.addEventListener('keydown', onKeydown);
     document.body.style.overflow = 'hidden';
   }
@@ -135,16 +152,23 @@ function initLightbox(mainImg) {
   function closeLightbox() {
     if (!overlay) return;
     overlay.style.opacity = '0';
-    setTimeout(() => {
-      overlay.style.display = 'none';
-    }, 200);
+    setTimeout(() => (overlay.style.display = 'none'), 200);
     document.removeEventListener('keydown', onKeydown);
     document.body.style.overflow = '';
   }
 
   function onKeydown(e) {
+    const images = getImages();
     if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight' && lbIndex < images.length - 1) showImage(lbIndex + 1);
+    if (e.key === 'ArrowLeft' && lbIndex > 0) showImage(lbIndex - 1);
   }
 
-  wrapper.addEventListener('click', openLightbox);
+  // Only open lightbox on click (not drag). Embla sets pointer-events
+  // during drag, so a click that fires means it was a real tap/click.
+  slider.addEventListener('click', (e) => {
+    if (e.target.closest('[data-gallery-slide]') && !e.target.closest('button')) {
+      openLightbox();
+    }
+  });
 }

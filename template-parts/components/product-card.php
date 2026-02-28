@@ -56,12 +56,30 @@ if ($show_brand) {
 	}
 }
 
+// ── Concentration ───────────────────────────────────────────────────────────
+$concentration = $product->get_attribute('concentration');
+
+// ── Variable product: "Vanaf" price + cheapest size ─────────────────────────
+$cheapest_size = '';
+if ($product->is_type('variable')) {
+	$prices = $product->get_variation_prices(true);
+	if (!empty($prices['price'])) {
+		$min_var_id = array_keys($prices['price'])[0];
+		$min_price  = $prices['price'][$min_var_id];
+		$price_html = wc_price($min_price);
+		$min_var    = wc_get_product($min_var_id);
+		if ($min_var) {
+			$cheapest_size = $min_var->get_attribute('size');
+		}
+	}
+}
+
 // ── Image ────────────────────────────────────────────────────────────────────
 $image_id = (int) $product->get_image_id();
 
 $image_html = $image_id
 	? wp_get_attachment_image($image_id, $image_size, false, [
-		'class'   => 'w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]',
+		'class'   => 'w-full h-full object-cover',
 		'loading' => 'lazy',
 		'alt'     => esc_attr($title),
 	])
@@ -127,7 +145,7 @@ $atc_text       = $product->add_to_cart_text();
 	<div class="pt-5 flex flex-col">
 
 		<?php if ($brand_name): ?>
-		<span class="text-[11px] uppercase tracking-[0.12em] text-neutral-400 line-clamp-1">
+		<span class="text-[11px] uppercase tracking-[0.12em] text-neutral-600 line-clamp-1">
 			<?php echo esc_html($brand_name); ?>
 		</span>
 		<?php endif; ?>
@@ -139,11 +157,22 @@ $atc_text       = $product->add_to_cart_text();
 			<?php echo esc_html($title); ?>
 		</a>
 
+		<?php if ($concentration): ?>
+		<span class="text-[11px] text-neutral-400 mt-0.5">
+			<?php echo esc_html($concentration); ?>
+		</span>
+		<?php endif; ?>
+
 		<?php if ($price_html): ?>
-		<div class="mt-2 text-[13px] text-neutral-500 lenvy-card-price">
+		<div class="mt-2 text-[13px] text-neutral-800 font-medium lenvy-card-price">
 			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — WC returns safe price HTML
 			echo $price_html; ?>
 		</div>
+		<?php if ($cheapest_size): ?>
+		<span class="text-[11px] text-neutral-400 mt-0.5">
+			<?php echo esc_html($cheapest_size); ?>
+		</span>
+		<?php endif; ?>
 		<?php endif; ?>
 
 	</div>

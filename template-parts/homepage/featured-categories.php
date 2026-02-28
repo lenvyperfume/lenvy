@@ -92,7 +92,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 				<?php if ($image_id): ?>
 					<?php echo wp_get_attachment_image($image_id, 'medium_large', false, [
 					'class' =>
-						'absolute inset-0 w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-[1.03]',
+						'absolute inset-0 w-full h-full object-cover',
 					'loading' => 'lazy',
 					'alt' => esc_attr($term->name),
 				]); ?>

@@ -57,3 +57,25 @@ if (count($crumbs) <= 1) {
 
 	</ol>
 </nav>
+<?php
+// ── BreadcrumbList JSON-LD ────────────────────────────────────────────────
+$json_ld_items = [];
+foreach ($crumbs as $position => $crumb) {
+	$item = [
+		'@type'    => 'ListItem',
+		'position' => $position + 1,
+		'name'     => $crumb[0] ?? '',
+	];
+
+	if (!empty($crumb[1])) {
+		$item['item'] = $crumb[1];
+	}
+
+	$json_ld_items[] = $item;
+}
+?>
+<script type="application/ld+json"><?php echo wp_json_encode([
+	'@context'        => 'https://schema.org',
+	'@type'           => 'BreadcrumbList',
+	'itemListElement' => $json_ld_items,
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>

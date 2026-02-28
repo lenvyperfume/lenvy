@@ -166,6 +166,32 @@ add_action(
 	200,
 );
 
+// ─── Fix false-positive active nav items on front page ───────────────────────
+// WooCommerce marks product category menu items as current-menu-item on the
+// static front page. Strip those classes so nothing appears active on the homepage.
+
+add_filter('wp_nav_menu_objects', function (array $items): array {
+	if (!is_front_page()) {
+		return $items;
+	}
+
+	$strip = [
+		'current-menu-item',
+		'current-menu-ancestor',
+		'current-menu-parent',
+		'current_page_item',
+		'current_page_parent',
+		'current_page_ancestor',
+	];
+
+	foreach ($items as $item) {
+		$item->classes = array_diff($item->classes, $strip);
+		$item->current = false;
+	}
+
+	return $items;
+}, 20);
+
 // ─── Custom wrappers (add_action to match the removed hooks) ─────────────────
 
 add_action(

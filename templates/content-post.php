@@ -16,7 +16,7 @@ $categories = get_the_category();
 	<?php if ( has_post_thumbnail() ) : ?>
 		<a href="<?php the_permalink(); ?>" class="block overflow-hidden mb-5" tabindex="-1" aria-hidden="true">
 			<?php the_post_thumbnail( 'medium_large', [
-				'class' => 'w-full aspect-[4/3] object-cover transition-transform duration-500 group-hover:scale-[1.03]',
+				'class' => 'w-full aspect-[4/3] object-cover',
 			] ); ?>
 		</a>
 	<?php endif; ?>

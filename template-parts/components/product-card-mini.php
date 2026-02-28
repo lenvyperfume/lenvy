@@ -28,6 +28,24 @@ $price_html = $product->get_price_html();
 $brands     = get_the_terms($product_id, 'product_brand');
 $brand_name = ($brands && !is_wp_error($brands)) ? $brands[0]->name : '';
 
+// Concentration.
+$concentration = $product->get_attribute('concentration');
+
+// Variable product: "Vanaf" price + cheapest size.
+$cheapest_size = '';
+if ($product->is_type('variable')) {
+	$prices = $product->get_variation_prices(true);
+	if (!empty($prices['price'])) {
+		$min_var_id = array_keys($prices['price'])[0];
+		$min_price  = $prices['price'][$min_var_id];
+		$price_html = wc_price($min_price);
+		$min_var    = wc_get_product($min_var_id);
+		if ($min_var) {
+			$cheapest_size = $min_var->get_attribute('size');
+		}
+	}
+}
+
 // Image — portrait thumbnail.
 $image_id   = (int) $product->get_image_id();
 $image_html = $image_id
@@ -64,11 +82,22 @@ $image_html = $image_id
 			<?php echo esc_html($title); ?>
 		</a>
 
+		<?php if ($concentration): ?>
+		<span class="text-[10px] text-neutral-400">
+			<?php echo esc_html($concentration); ?>
+		</span>
+		<?php endif; ?>
+
 		<?php if ($price_html): ?>
 		<div class="mt-1 lenvy-card-price">
 			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo $price_html; ?>
 		</div>
+		<?php if ($cheapest_size): ?>
+		<span class="text-[10px] text-neutral-400">
+			<?php echo esc_html($cheapest_size); ?>
+		</span>
+		<?php endif; ?>
 		<?php endif; ?>
 	</div>
 </article>

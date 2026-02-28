@@ -68,24 +68,57 @@ $filter_count = count(lenvy_get_active_filters());
 		<?php endif; ?>
 	</p>
 
-	<!-- Sort dropdown -->
-	<div class="ml-auto">
-		<select
-			id="lenvy-sort"
-			name="orderby"
-			class="text-[13px] border border-neutral-200 bg-white text-neutral-600 pl-3 pr-8 py-2 focus:outline-none focus:border-neutral-900 cursor-pointer appearance-none"
-			style="background-image: url(&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%23737373' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E&quot;); background-repeat: no-repeat; background-position: right 0.75rem center;"
-			data-sort-select
+	<!-- Sort dropdown (custom) -->
+	<div class="ml-auto relative" data-sort-dropdown>
+		<button
+			type="button"
+			data-sort-trigger
+			class="inline-flex items-center gap-2 text-[13px] text-neutral-500 hover:text-black transition-colors duration-200"
+			aria-expanded="false"
+			aria-haspopup="listbox"
 		>
-			<?php foreach ($orderby_options as $value => $label): ?>
-				<option
-					value="<?php echo esc_attr($value); ?>"
-					<?php selected($current_orderby, $value); ?>
-				>
-					<?php echo esc_html($label); ?>
-				</option>
+			<span data-sort-label><?php echo esc_html($orderby_options[$current_orderby] ?? __('Sorteer', 'lenvy')); ?></span>
+			<?php lenvy_icon('chevron-down', 'transition-transform duration-200', 'xs'); ?>
+		</button>
+		<div
+			data-sort-options
+			class="absolute right-0 top-full mt-2 min-w-[220px] bg-white border border-neutral-200 shadow-lg py-1.5 z-30 opacity-0 invisible translate-y-1 transition-all duration-200"
+			role="listbox"
+			aria-label="<?php esc_attr_e('Sort by', 'lenvy'); ?>"
+		>
+			<?php foreach ($orderby_options as $value => $label):
+				$is_active = $current_orderby === $value;
+			?>
+			<button
+				type="button"
+				data-sort-value="<?php echo esc_attr($value); ?>"
+				class="flex items-center w-full text-left px-4 py-2.5 text-[13px] hover:bg-neutral-50 transition-colors duration-200 <?php echo $is_active
+					? 'text-black font-medium'
+					: 'text-neutral-600 hover:text-black'; ?>"
+				role="option"
+				<?php if ($is_active): ?>aria-selected="true"<?php endif; ?>
+			>
+				<?php echo esc_html($label); ?>
+			</button>
 			<?php endforeach; ?>
-		</select>
+		</div>
 	</div>
+
+	<!-- Fallback select for no-JS -->
+	<noscript>
+		<div class="ml-auto">
+			<select
+				name="orderby"
+				class="text-[13px] border border-neutral-200 bg-white text-neutral-600 pl-3 pr-8 py-2 appearance-none"
+				onchange="window.location.href=this.options[this.selectedIndex].dataset.url"
+			>
+				<?php foreach ($orderby_options as $value => $label): ?>
+					<option value="<?php echo esc_attr($value); ?>" <?php selected($current_orderby, $value); ?>>
+						<?php echo esc_html($label); ?>
+					</option>
+				<?php endforeach; ?>
+			</select>
+		</div>
+	</noscript>
 
 </div>

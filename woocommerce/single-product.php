@@ -22,9 +22,10 @@ while (have_posts()):
 		continue;
 	}
 
-	$brand_terms = get_the_terms(get_the_ID(), 'product_brand');
-	$brand       = $brand_terms && !is_wp_error($brand_terms) ? $brand_terms[0] : null;
-	$subtitle    = lenvy_field('lenvy_product_subtitle');
+	$brand_terms   = get_the_terms(get_the_ID(), 'product_brand');
+	$brand         = $brand_terms && !is_wp_error($brand_terms) ? $brand_terms[0] : null;
+	$concentration = $product->get_attribute('concentration');
+	$subtitle      = lenvy_field('lenvy_product_subtitle');
 	$badge_text  = lenvy_field('lenvy_product_badge_text');
 	$scent_notes = lenvy_field('lenvy_product_scent_notes');
 	$usage_tips  = lenvy_field('lenvy_product_usage_tips');
@@ -69,10 +70,19 @@ while (have_posts()):
 					</p>
 					<?php endif; ?>
 
-					<!-- Price -->
+					<!-- Concentration -->
+					<?php if ($concentration): ?>
+					<p class="text-xs text-neutral-400 mt-1">
+						<?php echo esc_html($concentration); ?>
+					</p>
+					<?php endif; ?>
+
+					<!-- Price — hidden for variable products (tiles show per-option prices) -->
+					<?php if (!$product->is_type('variable')): ?>
 					<div class="mt-6 text-2xl font-medium text-neutral-900 lenvy-product-price">
 						<?php woocommerce_template_single_price(); ?>
 					</div>
+					<?php endif; ?>
 
 					<!-- Short description -->
 					<?php if ($product->get_short_description()): ?>
@@ -270,6 +280,57 @@ while (have_posts()):
 		<div class="lenvy-section">
 			<?php woocommerce_output_related_products(); ?>
 		</div>
+
+		<?php
+		// ── Product JSON-LD structured data ───────────────────────────────────
+		$schema = [
+			'@context'    => 'https://schema.org',
+			'@type'       => 'Product',
+			'name'        => $product->get_name(),
+			'url'         => get_permalink(),
+			'description' => wp_strip_all_tags($product->get_short_description() ?: $product->get_description()),
+		];
+
+		$schema_image_id = $product->get_image_id();
+		if ($schema_image_id) {
+			$schema['image'] = wp_get_attachment_url($schema_image_id);
+		}
+
+		$schema_sku = $product->get_sku();
+		if ($schema_sku) {
+			$schema['sku'] = $schema_sku;
+		}
+
+		if ($brand) {
+			$schema['brand'] = [
+				'@type' => 'Brand',
+				'name'  => $brand->name,
+			];
+		}
+
+		$schema['offers'] = [
+			'@type'           => 'Offer',
+			'url'             => get_permalink(),
+			'priceCurrency'   => get_woocommerce_currency(),
+			'price'           => $product->get_price(),
+			'availability'    => $product->is_in_stock()
+				? 'https://schema.org/InStock'
+				: 'https://schema.org/OutOfStock',
+			'itemCondition'   => 'https://schema.org/NewCondition',
+		];
+
+		if ($product->is_type('variable')) {
+			$prices = $product->get_variation_prices(true);
+			if (!empty($prices['price'])) {
+				$schema['offers']['lowPrice']  = min($prices['price']);
+				$schema['offers']['highPrice'] = max($prices['price']);
+				$schema['offers']['@type']     = 'AggregateOffer';
+				$schema['offers']['offerCount'] = count($prices['price']);
+				unset($schema['offers']['price']);
+			}
+		}
+		?>
+		<script type="application/ld+json"><?php echo wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE); ?></script>
 
 	</main>
 
