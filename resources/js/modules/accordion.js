@@ -39,11 +39,12 @@ export function initAccordion() {
     const panel = panelId ? document.getElementById(panelId) : null;
     if (!panel) return;
 
-    // Set up initial collapsed state with CSS instead of display:none
+    // Set up initial state based on aria-expanded
+    const startOpen = btn.getAttribute('aria-expanded') === 'true';
     panel.style.display = '';
     panel.style.overflow = 'hidden';
-    panel.style.height = '0';
-    panel.style.opacity = '0';
+    panel.style.height = startOpen ? 'auto' : '0';
+    panel.style.opacity = startOpen ? '1' : '0';
     panel.style.transition = 'height 0.3s ease, opacity 0.2s ease';
 
     btn.addEventListener('click', () => {

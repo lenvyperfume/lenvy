@@ -128,11 +128,11 @@ while (have_posts()):
 								type="button"
 								class="flex items-center justify-between w-full py-5 text-left"
 								data-filter-accordion-toggle
-								aria-expanded="false"
+								aria-expanded="true"
 								aria-controls="panel-scent-notes"
 							>
 								<span class="text-[13px] font-medium text-neutral-700"><?php esc_html_e('Geurprofiel', 'lenvy'); ?></span>
-								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
+								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200 rotate-180', 'xs'); ?>
 							</button>
 							<div id="panel-scent-notes" role="region" aria-labelledby="toggle-scent-notes" data-filter-accordion-panel>
 								<div class="pb-5 grid grid-cols-3 gap-4">
