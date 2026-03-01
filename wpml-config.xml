@@ -34,14 +34,12 @@
     <!-- group_theme_settings — Options page -->
     <custom-field action="copy">lenvy_site_logo</custom-field>
     <custom-field action="copy">lenvy_site_logo_light</custom-field>
-    <custom-field action="copy">lenvy_announcement_bar_enabled</custom-field>
-    <custom-field action="translate">lenvy_announcement_bar_text</custom-field>
-    <custom-field action="translate">lenvy_announcement_bar_link</custom-field>
     <custom-field action="copy">lenvy_header_sticky</custom-field>
     <custom-field action="translate">lenvy_footer_copyright_text</custom-field>
     <custom-field action="copy">lenvy_footer_social_links</custom-field>
     <custom-field action="copy-once">lenvy_contact_email</custom-field>
     <custom-field action="copy-once">lenvy_contact_phone</custom-field>
+    <custom-field action="copy">lenvy_brand_scroller_logos</custom-field>
 
     <!-- group_homepage — Front page -->
     <custom-field action="copy">lenvy_hero_image</custom-field>
@@ -54,6 +52,9 @@
     <custom-field action="translate">lenvy_featured_categories</custom-field>
     <custom-field action="translate">lenvy_featured_products</custom-field>
     <custom-field action="translate">lenvy_promo_section</custom-field>
+
+    <!-- group_shop_page — WooCommerce shop page -->
+    <custom-field action="copy">lenvy_shop_banner_image</custom-field>
 
     <!-- group_product_cat_enhancements — Taxonomy: product_cat -->
     <custom-field action="copy">lenvy_cat_banner_image</custom-field>

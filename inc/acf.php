@@ -55,137 +55,44 @@ if (function_exists('acf_add_options_page')) {
 	]);
 }
 
-// ─── USP bar fields ──────────────────────────────────────────────────────────
+// ─── Shop page fields (targets WC shop page dynamically) ────────────────────
 
 add_action('acf/include_fields', function (): void {
-	if (!function_exists('acf_add_local_field_group')) {
+	if (!function_exists('acf_add_local_field_group') || !function_exists('wc_get_page_id')) {
+		return;
+	}
+
+	$shop_page_id = wc_get_page_id('shop');
+	if ($shop_page_id <= 0) {
 		return;
 	}
 
 	acf_add_local_field_group([
-		'key'      => 'group_lenvy_usp_bar',
-		'title'    => 'USP / Trust Bar',
+		'key'      => 'group_lenvy_shop_page',
+		'title'    => 'Shop Page',
 		'fields'   => [
 			[
-				'key'           => 'field_lenvy_usp_bar_enabled',
-				'label'         => 'Enable USP bar',
-				'name'          => 'lenvy_usp_bar_enabled',
-				'type'          => 'true_false',
-				'default_value' => 1,
-				'ui'            => 1,
-				'instructions'  => 'Show the trust-signal strip below the header on every page.',
-			],
-			[
-				'key'               => 'field_lenvy_usp_items',
-				'label'             => 'USP items',
-				'name'              => 'lenvy_usp_items',
-				'type'              => 'repeater',
-				'max'               => 5,
-				'layout'            => 'table',
-				'button_label'      => 'Add USP',
-				'instructions'      => 'Leave empty to use the built-in defaults (shipping, originality, returns, payment).',
-				'conditional_logic' => [
-					[
-						[
-							'field'    => 'field_lenvy_usp_bar_enabled',
-							'operator' => '==',
-							'value'    => '1',
-						],
-					],
-				],
-				'sub_fields'        => [
-					[
-						'key'           => 'field_lenvy_usp_icon',
-						'label'         => 'Icon',
-						'name'          => 'usp_icon',
-						'type'          => 'select',
-						'choices'       => [
-							'truck'   => 'Truck (shipping)',
-							'shield'  => 'Shield (authenticity)',
-							'refresh' => 'Refresh (returns)',
-							'check'   => 'Check (security)',
-							'heart'   => 'Heart',
-							'star'    => 'Star',
-						],
-						'default_value' => 'check',
-						'return_format' => 'value',
-					],
-					[
-						'key'         => 'field_lenvy_usp_text',
-						'label'       => 'Text',
-						'name'        => 'usp_text',
-						'type'        => 'text',
-						'placeholder' => 'e.g. Gratis verzending vanaf €50',
-					],
-				],
+				'key'          => 'field_lenvy_sp_banner_image',
+				'label'        => 'Banner Image',
+				'name'         => 'lenvy_shop_banner_image',
+				'type'         => 'image',
+				'instructions' => 'Full-width banner for the shop page. Recommended: 1920×400px.',
+				'return_format' => 'array',
+				'preview_size' => 'medium',
+				'library'      => 'all',
+				'mime_types'   => 'jpg,jpeg,png,webp',
 			],
 		],
 		'location' => [
 			[
 				[
-					'param'    => 'options_page',
+					'param'    => 'page',
 					'operator' => '==',
-					'value'    => 'lenvy-theme-settings',
+					'value'    => (string) $shop_page_id,
 				],
 			],
 		],
-		'menu_order' => 3,
+		'menu_order' => 0,
 	]);
 });
 
-// ─── Editorial moment fields (homepage brand statement) ───────────────────────
-
-add_action('acf/include_fields', function (): void {
-	if (!function_exists('acf_add_local_field_group')) {
-		return;
-	}
-
-	acf_add_local_field_group([
-		'key'      => 'group_lenvy_editorial_moment',
-		'title'    => 'Homepage — Editorial Moment',
-		'fields'   => [
-			[
-				'key'          => 'field_lenvy_editorial_heading',
-				'label'        => 'Heading',
-				'name'         => 'lenvy_editorial_heading',
-				'type'         => 'text',
-				'placeholder'  => 'De Kunst van Geur',
-				'instructions' => 'Large display heading shown on the homepage.',
-			],
-			[
-				'key'          => 'field_lenvy_editorial_subheading',
-				'label'        => 'Subheading',
-				'name'         => 'lenvy_editorial_subheading',
-				'type'         => 'textarea',
-				'rows'         => 3,
-				'placeholder'  => 'Zorgvuldig samengestelde parfums…',
-				'instructions' => 'Body text below the heading.',
-			],
-			[
-				'key'          => 'field_lenvy_editorial_cta_label',
-				'label'        => 'CTA Label',
-				'name'         => 'lenvy_editorial_cta_label',
-				'type'         => 'text',
-				'placeholder'  => 'Ontdek de Collectie',
-				'instructions' => 'Optional link text. Leave empty to hide the CTA.',
-			],
-			[
-				'key'          => 'field_lenvy_editorial_cta_url',
-				'label'        => 'CTA URL',
-				'name'         => 'lenvy_editorial_cta_url',
-				'type'         => 'url',
-				'instructions' => 'Destination for the CTA link.',
-			],
-		],
-		'location' => [
-			[
-				[
-					'param'    => 'options_page',
-					'operator' => '==',
-					'value'    => 'lenvy-theme-settings',
-				],
-			],
-		],
-		'menu_order' => 5,
-	]);
-});

@@ -40,55 +40,6 @@
       "append": ""
     },
     {
-      "key": "field_lenvy_cat_layout",
-      "label": "Grid Layout",
-      "name": "lenvy_cat_layout",
-      "aria-label": "",
-      "type": "select",
-      "instructions": "\"Featured First\" shows a selected product in a large tile at the start of the grid.",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "choices": {
-        "grid": "Standard Grid",
-        "featured-first": "Featured Product First"
-      },
-      "default_value": "grid",
-      "return_format": "value",
-      "allow_null": 0,
-      "allow_custom": 0,
-      "search_placeholder": "",
-      "multiple": 0,
-      "ui": 0
-    },
-    {
-      "key": "field_lenvy_cat_featured_product",
-      "label": "Featured Product",
-      "name": "lenvy_cat_featured_product",
-      "aria-label": "",
-      "type": "post_object",
-      "instructions": "Only shown when Grid Layout is set to \"Featured Product First\".",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_lenvy_cat_layout",
-            "operator": "==",
-            "value": "featured-first"
-          }
-        ]
-      ],
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "post_type": ["product"],
-      "taxonomy": "",
-      "return_format": "id",
-      "multiple": 0,
-      "allow_null": 1,
-      "ui": 1,
-      "allow_custom": 0,
-      "search_placeholder": "Search products..."
-    },
-    {
       "key": "field_lenvy_cat_seo_text",
       "label": "SEO Text",
       "name": "lenvy_cat_seo_text",

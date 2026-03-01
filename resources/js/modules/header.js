@@ -1,5 +1,5 @@
 /**
- * Header — scroll shadow + announcement bar dismiss.
+ * Header — scroll shadow on scroll.
  */
 export function initHeader() {
   // Add shadow-sm to [data-header] when page is scrolled past 8px
@@ -9,9 +9,4 @@ export function initHeader() {
     window.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
-
-  // Dismiss announcement bar
-  document.querySelector('[data-dismiss-announcement]')?.addEventListener('click', function () {
-    this.closest('[data-announcement]')?.remove();
-  });
 }

@@ -3,7 +3,7 @@
  * Brand logo auto-scroller — pure CSS infinite marquee.
  *
  * Reads logos from the ACF repeater `lenvy_brand_scroller_logos` on the
- * Homepage field group (WP Admin → Homepage → "Brand Scroller" tab).
+ * Theme Settings options page (WP Admin → Theme Settings → "Brand Scroller" tab).
  *
  * Logos are rendered twice so the CSS translateX(-50%) animation creates
  * a perfectly seamless loop without any JavaScript.
@@ -15,7 +15,7 @@
 
 defined('ABSPATH') || exit();
 
-$rows = lenvy_field( 'lenvy_brand_scroller_logos' );
+$rows = lenvy_field( 'lenvy_brand_scroller_logos', 'options' );
 
 if ( empty( $rows ) || ! is_array( $rows ) ) {
 	return;

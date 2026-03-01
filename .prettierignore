@@ -2,3 +2,4 @@ node_modules/
 assets/build/
 *.min.js
 *.min.css
+*.php

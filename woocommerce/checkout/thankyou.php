@@ -95,6 +95,92 @@ defined('ABSPATH') || exit();
 
 				</div>
 
+				<!-- Order items -->
+				<?php $items = $order->get_items(); ?>
+				<?php if ($items): ?>
+				<div class="mt-10">
+					<h2 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400 mb-4">
+						<?php esc_html_e('Bestelde producten', 'lenvy'); ?>
+					</h2>
+					<div class="border border-neutral-200 divide-y divide-neutral-100">
+						<?php foreach ($items as $item):
+							$product = $item->get_product();
+							$qty     = $item->get_quantity();
+							$total   = $item->get_total();
+							$image   = '';
+							if ($product) {
+								$image_id = (int) $product->get_image_id();
+								if ($image_id) {
+									$image = wp_get_attachment_image($image_id, 'woocommerce_thumbnail', false, [
+										'class' => 'w-full h-full object-cover',
+										'alt'   => esc_attr($item->get_name()),
+									]);
+								}
+							}
+						?>
+						<div class="flex items-center gap-4 p-4">
+							<?php if ($image): ?>
+							<div class="shrink-0 w-14 aspect-product overflow-hidden bg-neutral-50">
+								<?php echo $image; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+							</div>
+							<?php endif; ?>
+							<div class="flex-1 min-w-0">
+								<span class="text-sm font-medium text-neutral-800 line-clamp-2 leading-snug block">
+									<?php echo esc_html($item->get_name()); ?>
+								</span>
+								<?php
+								$meta = $item->get_formatted_meta_data('_');
+								if ($meta): ?>
+								<span class="text-[11px] text-neutral-400 block mt-0.5">
+									<?php
+									$parts = [];
+									foreach ($meta as $m) {
+										$parts[] = wp_strip_all_tags($m->display_value);
+									}
+									echo esc_html(implode(' / ', $parts));
+									?>
+								</span>
+								<?php endif; ?>
+								<span class="text-xs text-neutral-400 mt-1 block">
+									<?php
+									/* translators: %d: quantity */
+									printf(esc_html__('Aantal: %d', 'lenvy'), $qty);
+									?>
+								</span>
+							</div>
+							<span class="text-sm font-medium text-neutral-900 shrink-0">
+								<?php echo wp_kses_post(wc_price($total)); ?>
+							</span>
+						</div>
+						<?php endforeach; ?>
+					</div>
+
+					<!-- Totals -->
+					<div class="border border-neutral-200 border-t-0 divide-y divide-neutral-100">
+						<div class="flex justify-between items-baseline px-4 py-3 text-sm">
+							<span class="text-neutral-500"><?php esc_html_e('Subtotaal', 'lenvy'); ?></span>
+							<span class="text-neutral-900"><?php echo wp_kses_post(wc_price($order->get_subtotal())); ?></span>
+						</div>
+						<?php if ((float) $order->get_shipping_total() > 0): ?>
+						<div class="flex justify-between items-baseline px-4 py-3 text-sm">
+							<span class="text-neutral-500"><?php esc_html_e('Verzending', 'lenvy'); ?></span>
+							<span class="text-neutral-900"><?php echo wp_kses_post(wc_price($order->get_shipping_total())); ?></span>
+						</div>
+						<?php endif; ?>
+						<?php if ((float) $order->get_total_discount() > 0): ?>
+						<div class="flex justify-between items-baseline px-4 py-3 text-sm">
+							<span class="text-neutral-500"><?php esc_html_e('Korting', 'lenvy'); ?></span>
+							<span class="text-neutral-900">-<?php echo wp_kses_post(wc_price($order->get_total_discount())); ?></span>
+						</div>
+						<?php endif; ?>
+						<div class="flex justify-between items-baseline px-4 py-3 text-sm font-medium">
+							<span class="text-neutral-900"><?php esc_html_e('Totaal', 'lenvy'); ?></span>
+							<span class="text-neutral-900"><?php echo wp_kses_post($order->get_formatted_order_total()); ?></span>
+						</div>
+					</div>
+				</div>
+				<?php endif; ?>
+
 				<!-- Continue shopping -->
 				<div class="text-center mt-10">
 					<?php if (wc_get_page_id('shop') > 0): ?>
@@ -109,8 +195,6 @@ defined('ABSPATH') || exit();
 
 			<?php endif; ?>
 
-			<?php do_action('woocommerce_thankyou_' . $order->get_payment_method(), $order->get_id()); ?>
-			<?php do_action('woocommerce_thankyou', $order->get_id()); ?>
 
 		<?php else: ?>
 

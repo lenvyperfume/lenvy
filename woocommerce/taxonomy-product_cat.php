@@ -28,24 +28,9 @@ if ($banner_image_id):
 		'loading'       => 'eager',
 		'alt'           => esc_attr($banner_heading),
 	]); ?>
-	<div class="relative h-40 md:h-56 overflow-hidden bg-neutral-900">
+	<div class="relative h-64 md:h-96 overflow-hidden">
 		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $banner_img; ?>
-		<div class="absolute inset-0 bg-neutral-900/50 flex items-end">
-			<div class="lenvy-container pb-8">
-				<h1 class="text-3xl md:text-4xl font-serif italic text-white">
-					<?php echo esc_html($banner_heading); ?>
-				</h1>
-			</div>
-		</div>
-	</div>
-<?php else: ?>
-	<div class="py-10 border-b border-neutral-100">
-		<div class="lenvy-container">
-			<h1 class="text-3xl font-serif italic text-neutral-900">
-				<?php echo esc_html($banner_heading); ?>
-			</h1>
-		</div>
 	</div>
 <?php endif; ?>
 
@@ -53,6 +38,10 @@ if ($banner_image_id):
 	<div class="lenvy-container">
 
 		<?php get_template_part('template-parts/components/breadcrumb'); ?>
+
+		<h1 class="text-3xl lg:text-4xl font-serif italic text-neutral-900 mt-3 mb-10">
+			<?php echo esc_html($banner_heading); ?>
+		</h1>
 
 		<?php get_template_part('template-parts/shop/sort-bar'); ?>
 

@@ -3,6 +3,19 @@
   "title": "Theme Settings",
   "fields": [
     {
+      "key": "field_lenvy_ts_tab_general",
+      "label": "General",
+      "name": "",
+      "aria-label": "",
+      "type": "tab",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
       "key": "field_lenvy_ts_logo",
       "label": "Site Logo",
       "name": "lenvy_site_logo",
@@ -24,105 +37,21 @@
       "mime_types": ""
     },
     {
-      "key": "field_lenvy_ts_logo_light",
-      "label": "Site Logo — Light",
-      "name": "lenvy_site_logo_light",
+      "key": "field_lenvy_ts_tab_footer",
+      "label": "Footer",
+      "name": "",
       "aria-label": "",
-      "type": "image",
-      "instructions": "Logo version for use on dark backgrounds (e.g. transparent header over hero images).",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "return_format": "array",
-      "preview_size": "thumbnail",
-      "library": "all",
-      "min_width": "",
-      "min_height": "",
-      "min_size": "",
-      "max_width": "",
-      "max_height": "",
-      "max_size": "",
-      "mime_types": ""
-    },
-    {
-      "key": "field_lenvy_ts_ann_enabled",
-      "label": "Announcement Bar — Enabled",
-      "name": "lenvy_announcement_bar_enabled",
-      "aria-label": "",
-      "type": "true_false",
+      "type": "tab",
       "instructions": "",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": { "width": "", "class": "", "id": "" },
-      "message": "Show announcement bar at the top of every page",
-      "default_value": 0,
-      "ui": 1,
-      "ui_on_text": "Visible",
-      "ui_off_text": "Hidden"
-    },
-    {
-      "key": "field_lenvy_ts_ann_text",
-      "label": "Announcement Bar — Text",
-      "name": "lenvy_announcement_bar_text",
-      "aria-label": "",
-      "type": "text",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_lenvy_ts_ann_enabled",
-            "operator": "==",
-            "value": "1"
-          }
-        ]
-      ],
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "default_value": "",
-      "maxlength": 160,
-      "placeholder": "Free shipping on orders over €50",
-      "prepend": "",
-      "append": ""
-    },
-    {
-      "key": "field_lenvy_ts_ann_link",
-      "label": "Announcement Bar — Link",
-      "name": "lenvy_announcement_bar_link",
-      "aria-label": "",
-      "type": "link",
-      "instructions": "Optional. Makes the announcement bar a clickable link.",
-      "required": 0,
-      "conditional_logic": [
-        [
-          {
-            "field": "field_lenvy_ts_ann_enabled",
-            "operator": "==",
-            "value": "1"
-          }
-        ]
-      ],
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "return_format": "array"
-    },
-    {
-      "key": "field_lenvy_ts_header_sticky",
-      "label": "Sticky Header",
-      "name": "lenvy_header_sticky",
-      "aria-label": "",
-      "type": "true_false",
-      "instructions": "",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "message": "Keep the header visible when scrolling",
-      "default_value": 1,
-      "ui": 1,
-      "ui_on_text": "Sticky",
-      "ui_off_text": "Static"
+      "placement": "top",
+      "endpoint": 0
     },
     {
       "key": "field_lenvy_ts_footer_copyright",
-      "label": "Footer — Copyright Text",
+      "label": "Copyright Text",
       "name": "lenvy_footer_copyright_text",
       "aria-label": "",
       "type": "text",
@@ -138,7 +67,7 @@
     },
     {
       "key": "field_lenvy_ts_social_links",
-      "label": "Footer — Social Links",
+      "label": "Social Links",
       "name": "lenvy_footer_social_links",
       "aria-label": "",
       "type": "repeater",
@@ -196,8 +125,21 @@
       ]
     },
     {
+      "key": "field_lenvy_ts_tab_contact",
+      "label": "Contact",
+      "name": "",
+      "aria-label": "",
+      "type": "tab",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
       "key": "field_lenvy_ts_contact_email",
-      "label": "Contact — Email",
+      "label": "Email",
       "name": "lenvy_contact_email",
       "aria-label": "",
       "type": "email",
@@ -212,7 +154,7 @@
     },
     {
       "key": "field_lenvy_ts_contact_phone",
-      "label": "Contact — Phone",
+      "label": "Phone",
       "name": "lenvy_contact_phone",
       "aria-label": "",
       "type": "text",
@@ -225,6 +167,168 @@
       "placeholder": "+31 20 123 4567",
       "prepend": "",
       "append": ""
+    },
+    {
+      "key": "field_lenvy_ts_tab_usp",
+      "label": "USP Bar",
+      "name": "",
+      "aria-label": "",
+      "type": "tab",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_lenvy_usp_bar_enabled",
+      "label": "Enable USP bar",
+      "name": "lenvy_usp_bar_enabled",
+      "aria-label": "",
+      "type": "true_false",
+      "instructions": "Show the trust-signal strip below the header on every page.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "default_value": 1,
+      "ui": 1,
+      "ui_on_text": "",
+      "ui_off_text": ""
+    },
+    {
+      "key": "field_lenvy_usp_items",
+      "label": "USP items",
+      "name": "lenvy_usp_items",
+      "aria-label": "",
+      "type": "repeater",
+      "instructions": "Leave empty to use the built-in defaults (shipping, originality, returns, payment).",
+      "required": 0,
+      "conditional_logic": [
+        [
+          {
+            "field": "field_lenvy_usp_bar_enabled",
+            "operator": "==",
+            "value": "1"
+          }
+        ]
+      ],
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "layout": "table",
+      "pagination": 0,
+      "min": 0,
+      "max": 5,
+      "collapsed": "",
+      "button_label": "Add USP",
+      "rows_per_page": 20,
+      "sub_fields": [
+        {
+          "key": "field_lenvy_usp_icon",
+          "label": "Icon",
+          "name": "usp_icon",
+          "aria-label": "",
+          "type": "select",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "30", "class": "", "id": "" },
+          "choices": {
+            "truck": "Truck (shipping)",
+            "shield": "Shield (authenticity)",
+            "refresh": "Refresh (returns)",
+            "check": "Check (security)",
+            "heart": "Heart",
+            "star": "Star"
+          },
+          "default_value": "check",
+          "return_format": "value",
+          "allow_null": 0,
+          "allow_custom": 0,
+          "search_placeholder": "",
+          "multiple": 0,
+          "ui": 0
+        },
+        {
+          "key": "field_lenvy_usp_text",
+          "label": "Text",
+          "name": "usp_text",
+          "aria-label": "",
+          "type": "text",
+          "instructions": "",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "70", "class": "", "id": "" },
+          "default_value": "",
+          "maxlength": "",
+          "placeholder": "e.g. Gratis verzending vanaf €50",
+          "prepend": "",
+          "append": ""
+        }
+      ]
+    },
+    {
+      "key": "field_lenvy_ts_tab_scroller",
+      "label": "Brand Scroller",
+      "name": "",
+      "aria-label": "",
+      "type": "tab",
+      "instructions": "",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "placement": "top",
+      "endpoint": 0
+    },
+    {
+      "key": "field_lenvy_ts_brand_scroller",
+      "label": "Brand Logos",
+      "name": "lenvy_brand_scroller_logos",
+      "aria-label": "",
+      "type": "repeater",
+      "instructions": "Upload brand logos for the auto-scroll strip. Transparent PNG or SVG recommended. Used on homepage and shop page.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "layout": "block",
+      "button_label": "Add Logo",
+      "min": 0,
+      "max": 0,
+      "sub_fields": [
+        {
+          "key": "field_lenvy_ts_scroller_image",
+          "label": "Logo Image",
+          "name": "logo_image",
+          "aria-label": "",
+          "type": "image",
+          "instructions": "Transparent PNG or SVG. Will be displayed at 40px height.",
+          "required": 1,
+          "conditional_logic": 0,
+          "wrapper": { "width": "70", "class": "", "id": "" },
+          "return_format": "array",
+          "preview_size": "medium",
+          "library": "all",
+          "min_width": "",
+          "min_height": "",
+          "min_size": "",
+          "max_width": "",
+          "max_height": "",
+          "max_size": "",
+          "mime_types": "jpg,jpeg,png,webp,svg"
+        },
+        {
+          "key": "field_lenvy_ts_scroller_url",
+          "label": "Link URL",
+          "name": "logo_url",
+          "aria-label": "",
+          "type": "url",
+          "instructions": "Optional. Where clicking the logo leads.",
+          "required": 0,
+          "conditional_logic": 0,
+          "wrapper": { "width": "30", "class": "", "id": "" },
+          "default_value": "",
+          "placeholder": "https://"
+        }
+      ]
     }
   ],
   "location": [
@@ -243,7 +347,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Global theme settings — logo, announcement bar, header, footer, contact.",
+  "description": "Global theme settings — logo, footer, contact, brand scroller.",
   "show_in_rest": 0,
-  "modified": 1771891200
+  "modified": 1772528400
 }

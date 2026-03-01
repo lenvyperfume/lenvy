@@ -10,7 +10,6 @@
     "format:check": "prettier --check ."
   },
   "devDependencies": {
-    "@prettier/plugin-php": "^0.24.0",
     "@tailwindcss/vite": "^4.0.0",
     "prettier": "^3.8.1",
     "sass": "^1.80.0",

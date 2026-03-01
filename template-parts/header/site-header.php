@@ -1,9 +1,8 @@
 <?php
 /**
- * Site header — announcement bar + sticky header + mobile drawer + search overlay.
+ * Site header — sticky header + mobile drawer + search overlay.
  *
  * Structure:
- *   [data-announcement]  — optional, dismissible, scrolls away
  *   <header data-header> — sticky bar; top offset for admin bar via _header.scss
  *     .lenvy-container
  *       logo | primary-nav (desktop) | actions (search + cart + hamburger)
@@ -15,38 +14,10 @@
 
 defined('ABSPATH') || exit();
 
-$announcement_enabled = lenvy_field('lenvy_announcement_bar_enabled', 'options');
-$announcement_text = lenvy_field('lenvy_announcement_bar_text', 'options');
-$announcement_link = lenvy_field('lenvy_announcement_bar_link', 'options');
 $logo_id = lenvy_field('lenvy_site_logo', 'options');
 $cart_count = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
 ?>
-
-<?php if ($announcement_enabled && $announcement_text): ?>
-<div
-	data-announcement
-	class="bg-black text-white text-center text-sm font-medium py-2 px-10 relative"
->
-	<?php if (!empty($announcement_link['url'])): ?>
-		<a
-			href="<?php echo esc_url($announcement_link['url']); ?>"
-			<?php if (($announcement_link['target'] ?? '') === '_blank'): ?>target="_blank" rel="noopener"<?php endif; ?>
-			class="hover:underline underline-offset-2"
-		><?php echo esc_html($announcement_text); ?></a>
-	<?php else: ?>
-		<span><?php echo esc_html($announcement_text); ?></span>
-	<?php endif; ?>
-	<button
-		type="button"
-		data-dismiss-announcement
-		class="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 hover:text-white transition-colors duration-200"
-		aria-label="<?php esc_attr_e('Dismiss announcement', 'lenvy'); ?>"
-	>
-		<?php lenvy_icon('close', '', 'xs'); ?>
-	</button>
-</div>
-<?php endif; ?>
 
 <?php get_template_part('template-parts/components/usp-bar'); ?>
 

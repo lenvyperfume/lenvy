@@ -30,7 +30,6 @@ function lenvy_setup(): void {
 		'primary' => __('Primary Navigation', 'lenvy'),
 		'mobile' => __('Mobile Navigation', 'lenvy'),
 		'footer' => __('Footer Navigation', 'lenvy'),
-		'footer-secondary' => __('Footer Secondary Navigation', 'lenvy'),
 	]);
 }
 add_action('after_setup_theme', 'lenvy_setup');

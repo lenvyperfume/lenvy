@@ -50,8 +50,8 @@
       "placeholder": "https://"
     },
     {
-      "key": "field_lenvy_hp_tab_scroller",
-      "label": "Brand Scroller",
+      "key": "field_lenvy_hp_tab_curated",
+      "label": "Curated Products",
       "name": "",
       "aria-label": "",
       "type": "tab",
@@ -63,55 +63,36 @@
       "endpoint": 0
     },
     {
-      "key": "field_lenvy_hp_brand_scroller",
-      "label": "Brand Logos",
-      "name": "lenvy_brand_scroller_logos",
+      "key": "field_lenvy_hp_curated_heading",
+      "label": "Heading",
+      "name": "lenvy_curated_products_heading",
       "aria-label": "",
-      "type": "repeater",
-      "instructions": "Upload brand logos for the auto-scroll strip below the hero. Transparent PNG or SVG recommended.",
+      "type": "text",
+      "instructions": "Optional heading override. Defaults to \"Onze Selectie\" if left empty.",
       "required": 0,
       "conditional_logic": 0,
       "wrapper": { "width": "", "class": "", "id": "" },
-      "layout": "block",
-      "button_label": "Add Logo",
+      "default_value": "",
+      "placeholder": "Onze Selectie"
+    },
+    {
+      "key": "field_lenvy_hp_curated_products",
+      "label": "Products",
+      "name": "lenvy_curated_products",
+      "aria-label": "",
+      "type": "relationship",
+      "instructions": "Hand-pick up to 12 products for the curated carousel. Drag to reorder.",
+      "required": 0,
+      "conditional_logic": 0,
+      "wrapper": { "width": "", "class": "", "id": "" },
+      "post_type": ["product"],
+      "post_status": ["publish"],
+      "taxonomy": [],
+      "filters": ["search", "taxonomy"],
+      "return_format": "object",
       "min": 0,
-      "max": 0,
-      "sub_fields": [
-        {
-          "key": "field_lenvy_hp_scroller_image",
-          "label": "Logo Image",
-          "name": "logo_image",
-          "aria-label": "",
-          "type": "image",
-          "instructions": "Transparent PNG or SVG. Will be displayed at 40px height.",
-          "required": 1,
-          "conditional_logic": 0,
-          "wrapper": { "width": "70", "class": "", "id": "" },
-          "return_format": "array",
-          "preview_size": "medium",
-          "library": "all",
-          "min_width": "",
-          "min_height": "",
-          "min_size": "",
-          "max_width": "",
-          "max_height": "",
-          "max_size": "",
-          "mime_types": "jpg,jpeg,png,webp,svg"
-        },
-        {
-          "key": "field_lenvy_hp_scroller_url",
-          "label": "Link URL",
-          "name": "logo_url",
-          "aria-label": "",
-          "type": "url",
-          "instructions": "Optional. Where clicking the logo leads.",
-          "required": 0,
-          "conditional_logic": 0,
-          "wrapper": { "width": "30", "class": "", "id": "" },
-          "default_value": "",
-          "placeholder": "https://"
-        }
-      ]
+      "max": 12,
+      "elements": ""
     },
     {
       "key": "field_lenvy_hp_tab_featured",
@@ -266,7 +247,7 @@
   "instruction_placement": "label",
   "hide_on_screen": "",
   "active": true,
-  "description": "Homepage content \u2014 hero, brand scroller, featured categories, promo banners. Product carousels (bestsellers, new arrivals, sale) are powered by WooCommerce queries.",
+  "description": "Homepage content \u2014 hero, featured categories, promo banners. Brand scroller moved to Theme Settings. Product carousels (bestsellers, new arrivals, sale) are powered by WooCommerce queries.",
   "show_in_rest": 0,
-  "modified": 1772208000
+  "modified": 1772528400
 }

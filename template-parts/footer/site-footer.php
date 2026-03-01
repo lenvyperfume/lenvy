@@ -3,7 +3,7 @@
  * Site footer — primary-color background, editorial layout.
  *
  * Structure:
- *   Grid (4 col)     — brand+contact | shop nav | info nav | social
+ *   Grid (3 col)     — brand+contact | shop nav | social
  *   ─────────────────────────────────────────────────────────────────
  *   Bottom bar       — copyright | legal nav
  *
@@ -56,7 +56,7 @@ $social_labels = [
 
 	<!-- ── Main grid ─────────────────────────────────────────────────────── -->
 	<div class="lenvy-container py-16 lg:py-20">
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-8">
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
 
 			<!-- Col 1: Brand + contact info ───────────────────────────── -->
 			<div class="space-y-5">
@@ -126,49 +126,7 @@ $social_labels = [
 				<?php endif; ?>
 			</div>
 
-			<!-- Col 3: Info nav ───────────────────────────────────────── -->
-			<div class="space-y-5">
-				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
-					<?php esc_html_e('Information', 'lenvy'); ?>
-				</h3>
-				<?php if (has_nav_menu('footer-secondary')): ?>
-				<nav aria-label="<?php esc_attr_e('Information Navigation', 'lenvy'); ?>">
-					<?php wp_nav_menu([
-     	'theme_location' => 'footer-secondary',
-     	'container' => false,
-     	'menu_class' => 'space-y-3',
-     	'walker' => new Lenvy_Footer_Nav_Walker(),
-     	'fallback_cb' => false,
-     	'depth' => 1,
-     ]); ?>
-				</nav>
-				<?php else: ?>
-				<!-- Static fallback until footer-secondary menu is assigned in WP admin -->
-				<ul class="space-y-3">
-					<?php
-     $fallback = [
-     	__('About Us', 'lenvy') => home_url('/about/'),
-     	__('FAQ', 'lenvy') => home_url('/faq/'),
-     	__('Contact', 'lenvy') => home_url('/contact/'),
-     	__('Shipping', 'lenvy') => home_url('/shipping/'),
-     	__('Returns', 'lenvy') => home_url('/returns/'),
-     ];
-     foreach ($fallback as $label => $href): ?>
-					<li>
-						<a
-							href="<?php echo esc_url($href); ?>"
-							class="text-sm font-light text-neutral-700 hover:text-black transition-colors duration-200"
-						>
-							<?php echo esc_html($label); ?>
-						</a>
-					</li>
-					<?php endforeach;
-     ?>
-				</ul>
-				<?php endif; ?>
-			</div>
-
-			<!-- Col 4: Social media ───────────────────────────────────── -->
+			<!-- Col 3: Social media ───────────────────────────────────── -->
 			<div class="space-y-5">
 				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
 					<?php esc_html_e('Follow Us', 'lenvy'); ?>
@@ -207,13 +165,16 @@ $social_labels = [
 
 	<!-- ── Bottom bar ────────────────────────────────────────────────────── -->
 	<div class="lenvy-container border-t border-neutral-200 py-8">
-		<div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+		<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
 
-			<p class="text-xs text-neutral-600">
+			<p class="text-xs text-neutral-400">
 				<?php echo wp_kses_post($copyright); ?>
 			</p>
 
-			<!-- Legal quick-links (hardcoded; client creates these pages) -->
+			<!-- Payment methods -->
+			<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/icons/payments/payment-methods.svg'); ?>" alt="<?php esc_attr_e('iDEAL, Maestro, Mastercard, Visa', 'lenvy'); ?>" width="168" height="26" loading="lazy">
+
+			<!-- Legal quick-links -->
 			<nav
 				class="flex items-center flex-wrap gap-x-5 gap-y-1"
 				aria-label="<?php esc_attr_e('Legal', 'lenvy'); ?>"
@@ -227,7 +188,7 @@ $social_labels = [
     foreach ($legal as $label => $href): ?>
 				<a
 					href="<?php echo esc_url($href); ?>"
-					class="text-xs text-neutral-600 hover:text-black transition-colors duration-200"
+					class="text-xs text-neutral-400 hover:text-black transition-colors duration-200"
 				>
 					<?php echo esc_html($label); ?>
 				</a>
@@ -235,11 +196,6 @@ $social_labels = [
     ?>
 			</nav>
 
-		</div>
-
-		<!-- Payment methods -->
-		<div class="flex items-center justify-center border-t border-neutral-200 pt-6 mt-3">
-			<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/icons/payments/payment-methods.svg'); ?>" alt="<?php esc_attr_e('iDEAL, Maestro, Mastercard, Visa', 'lenvy'); ?>" width="168" height="26" loading="lazy">
 		</div>
 	</div>
 

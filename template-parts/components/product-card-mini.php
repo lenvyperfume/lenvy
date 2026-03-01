@@ -57,16 +57,11 @@ $image_html = $image_id
 	: wc_placeholder_img('woocommerce_thumbnail', ['class' => 'w-full h-full object-cover']);
 ?>
 
-<article class="flex items-center gap-4">
-	<a
-		href="<?php echo esc_url($permalink); ?>"
-		class="shrink-0 w-16 aspect-product overflow-hidden bg-neutral-50"
-		tabindex="-1"
-		aria-hidden="true"
-	>
+<a href="<?php echo esc_url($permalink); ?>" class="flex items-center gap-4 group">
+	<div class="shrink-0 w-16 aspect-product overflow-hidden bg-neutral-50">
 		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $image_html; ?>
-	</a>
+	</div>
 
 	<div class="flex-1 min-w-0">
 		<?php if ($brand_name): ?>
@@ -75,12 +70,9 @@ $image_html = $image_id
 		</span>
 		<?php endif; ?>
 
-		<a
-			href="<?php echo esc_url($permalink); ?>"
-			class="text-sm font-medium text-neutral-800 hover:text-neutral-900 transition-colors duration-200 line-clamp-2 leading-snug"
-		>
+		<span class="text-sm font-medium text-neutral-800 group-hover:text-neutral-900 transition-colors duration-200 line-clamp-2 leading-snug block">
 			<?php echo esc_html($title); ?>
-		</a>
+		</span>
 
 		<?php if ($concentration): ?>
 		<span class="text-[10px] text-neutral-400">
@@ -100,4 +92,4 @@ $image_html = $image_id
 		<?php endif; ?>
 		<?php endif; ?>
 	</div>
-</article>
+</a>

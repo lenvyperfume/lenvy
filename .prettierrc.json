@@ -3,20 +3,5 @@
   "singleQuote": true,
   "printWidth": 120,
   "trailingComma": "es5",
-  "plugins": ["@prettier/plugin-php"],
-  "overrides": [
-    {
-      "files": "*.php",
-      "options": {
-        "parser": "php",
-        "phpVersion": "8.0",
-        "printWidth": 120,
-        "tabWidth": 4,
-        "useTabs": true,
-        "singleQuote": true,
-        "trailingCommaPHP": true,
-        "braceStyle": "1tbs"
-      }
-    }
-  ]
+  "plugins": []
 }

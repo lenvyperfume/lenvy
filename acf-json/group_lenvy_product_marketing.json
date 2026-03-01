@@ -81,22 +81,6 @@
       ]
     },
     {
-      "key": "field_lenvy_prod_inspiration",
-      "label": "Inspiration Text",
-      "name": "lenvy_product_inspiration_text",
-      "aria-label": "",
-      "type": "text",
-      "instructions": "One-line evocative description shown near the product name (e.g. \"Inspired by the forests of Kyoto at dusk\").",
-      "required": 0,
-      "conditional_logic": 0,
-      "wrapper": { "width": "", "class": "", "id": "" },
-      "default_value": "",
-      "maxlength": 120,
-      "placeholder": "",
-      "prepend": "",
-      "append": ""
-    },
-    {
       "key": "field_lenvy_prod_usage_tips",
       "label": "Usage Tips",
       "name": "lenvy_product_usage_tips",
