@@ -32,13 +32,13 @@ $shop_url = function_exists('wc_get_page_permalink')
 		<!-- Section header -->
 		<div class="flex items-center justify-between mb-8 lg:mb-12">
 			<h2 class="text-xs font-medium uppercase tracking-widest text-neutral-500">
-				<?php esc_html_e('Featured', 'lenvy'); ?>
+				<?php esc_html_e('Uitgelicht', 'lenvy'); ?>
 			</h2>
 			<a
 				href="<?php echo esc_url($shop_url ?: home_url('/shop/')); ?>"
 				class="flex items-center gap-1.5 text-xs font-medium uppercase tracking-widest text-neutral-400 hover:text-black transition-colors duration-200"
 			>
-				<?php esc_html_e('View all', 'lenvy'); ?>
+				<?php esc_html_e('Alles bekijken', 'lenvy'); ?>
 				<?php lenvy_icon('arrow-right', '', 'xs'); ?>
 			</a>
 		</div>

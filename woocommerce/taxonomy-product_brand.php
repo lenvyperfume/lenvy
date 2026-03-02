@@ -144,7 +144,7 @@ if ($website_url || ($country && !$banner_id)):
 				rel="noopener noreferrer"
 				class="inline-flex items-center gap-1 hover:text-black transition-colors duration-200"
 			>
-				<?php esc_html_e('Website', 'lenvy'); ?>
+				<?php esc_html_e('Bezoek website', 'lenvy'); ?>
 				<svg class="w-3 h-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
 					<path d="M2.5 9.5l7-7M9.5 9.5V2.5H2.5"/>
 				</svg>

@@ -30,7 +30,7 @@ $copyright = $copyright_raw
 	? str_replace('{year}', date('Y'), $copyright_raw)
 	: sprintf(
 		/* translators: 1: year, 2: site name */
-		__('&copy; %1$s %2$s. All rights reserved.', 'lenvy'),
+		__('&copy; %1$s %2$s. Alle rechten voorbehouden.', 'lenvy'),
 		date('Y'),
 		get_bloginfo('name'),
 	);
@@ -113,7 +113,7 @@ $social_labels = [
 					<?php esc_html_e('Shop', 'lenvy'); ?>
 				</h3>
 				<?php if (has_nav_menu('footer')): ?>
-				<nav aria-label="<?php esc_attr_e('Shop Navigation', 'lenvy'); ?>">
+				<nav aria-label="<?php esc_attr_e('Winkelnavigatie', 'lenvy'); ?>">
 					<?php wp_nav_menu([
      	'theme_location' => 'footer',
      	'container' => false,
@@ -129,7 +129,7 @@ $social_labels = [
 			<!-- Col 3: Social media ───────────────────────────────────── -->
 			<div class="space-y-5">
 				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
-					<?php esc_html_e('Follow Us', 'lenvy'); ?>
+					<?php esc_html_e('Volg ons', 'lenvy'); ?>
 				</h3>
 				<?php if (!empty($social_links)): ?>
 				<div class="flex flex-wrap gap-5">
@@ -155,7 +155,7 @@ $social_labels = [
 				</div>
 				<?php else: ?>
 				<p class="text-sm text-neutral-500 italic">
-					<?php esc_html_e('Coming soon.', 'lenvy'); ?>
+					<?php esc_html_e('Binnenkort beschikbaar.', 'lenvy'); ?>
 				</p>
 				<?php endif; ?>
 			</div>
@@ -177,13 +177,13 @@ $social_labels = [
 			<!-- Legal quick-links -->
 			<nav
 				class="flex items-center flex-wrap gap-x-5 gap-y-1"
-				aria-label="<?php esc_attr_e('Legal', 'lenvy'); ?>"
+				aria-label="<?php esc_attr_e('Juridisch', 'lenvy'); ?>"
 			>
 				<?php
     $legal = [
-    	__('Privacy Policy', 'lenvy') => home_url('/privacy-policy/'),
-    	__('Terms & Conditions', 'lenvy') => home_url('/terms-conditions/'),
-    	__('Cookie Policy', 'lenvy') => home_url('/cookie-policy/'),
+    	__('Privacybeleid', 'lenvy') => home_url('/privacy-policy/'),
+    	__('Algemene voorwaarden', 'lenvy') => home_url('/terms-conditions/'),
+    	__('Cookiebeleid', 'lenvy') => home_url('/cookie-policy/'),
     ];
     foreach ($legal as $label => $href): ?>
 				<a

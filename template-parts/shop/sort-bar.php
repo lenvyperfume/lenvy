@@ -84,7 +84,7 @@ $filter_count = count(lenvy_get_active_filters());
 			data-sort-options
 			class="absolute right-0 top-full mt-2 min-w-[220px] bg-white border border-neutral-200 shadow-lg py-1.5 z-30 opacity-0 invisible translate-y-1 transition-all duration-200"
 			role="listbox"
-			aria-label="<?php esc_attr_e('Sort by', 'lenvy'); ?>"
+			aria-label="<?php esc_attr_e('Sorteer op', 'lenvy'); ?>"
 		>
 			<?php foreach ($orderby_options as $value => $label):
 				$is_active = $current_orderby === $value;

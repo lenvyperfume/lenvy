@@ -10,7 +10,7 @@
 
 defined('ABSPATH') || exit();
 
-$label = $args['label'] ?? __('Price', 'lenvy');
+$label = $args['label'] ?? __('Prijs', 'lenvy');
 $open = $args['open'] ?? true;
 
 [$global_min, $global_max] = lenvy_get_min_max_price();
@@ -45,7 +45,7 @@ ob_start();
 			type="button"
 			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1 cursor-grab active:cursor-grabbing"
 			data-slider-thumb="min"
-			aria-label="<?php esc_attr_e('Minimum price', 'lenvy'); ?>"
+			aria-label="<?php esc_attr_e('Minimale prijs', 'lenvy'); ?>"
 			aria-valuemin="<?php echo esc_attr($global_min); ?>"
 			aria-valuemax="<?php echo esc_attr($global_max); ?>"
 			aria-valuenow="<?php echo esc_attr($current_min); ?>"
@@ -56,7 +56,7 @@ ob_start();
 			type="button"
 			class="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-2 border-white shadow focus:outline-none focus:ring-2 focus:ring-neutral-900 focus:ring-offset-1 cursor-grab active:cursor-grabbing"
 			data-slider-thumb="max"
-			aria-label="<?php esc_attr_e('Maximum price', 'lenvy'); ?>"
+			aria-label="<?php esc_attr_e('Maximale prijs', 'lenvy'); ?>"
 			aria-valuemin="<?php echo esc_attr($global_min); ?>"
 			aria-valuemax="<?php echo esc_attr($global_max); ?>"
 			aria-valuenow="<?php echo esc_attr($current_max); ?>"

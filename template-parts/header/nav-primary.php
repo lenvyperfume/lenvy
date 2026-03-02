@@ -16,7 +16,7 @@ if (!has_nav_menu('primary')) {
 ?>
 <nav
 	class="hidden lg:flex items-center"
-	aria-label="<?php esc_attr_e('Primary Navigation', 'lenvy'); ?>"
+	aria-label="<?php esc_attr_e('Hoofdnavigatie', 'lenvy'); ?>"
 >
 	<?php wp_nav_menu([
  	'theme_location' => 'primary',

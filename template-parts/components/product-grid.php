@@ -79,7 +79,7 @@ $card_args = [
 
 	<?php else: ?>
 		<div class="col-span-full py-20 text-center">
-			<p class="text-sm text-neutral-500"><?php esc_html_e('No products found.', 'lenvy'); ?></p>
+			<p class="text-sm text-neutral-500"><?php esc_html_e('Geen producten gevonden.', 'lenvy'); ?></p>
 		</div>
 	<?php endif; ?>
 </div>

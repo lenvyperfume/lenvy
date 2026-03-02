@@ -22,11 +22,11 @@ $base_url = esc_url( strtok( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), '?' )
 <div class="lenvy-no-products py-24 text-center">
 
 	<p class="text-xs font-medium uppercase tracking-[0.15em] text-neutral-400 mb-3">
-		<?php esc_html_e( 'No results', 'lenvy' ); ?>
+		<?php esc_html_e( 'Geen resultaten', 'lenvy' ); ?>
 	</p>
 
 	<p class="text-sm text-neutral-500 mb-10 max-w-xs mx-auto leading-relaxed">
-		<?php esc_html_e( 'No products were found matching your selection.', 'lenvy' ); ?>
+		<?php esc_html_e( 'Er zijn geen producten gevonden die aan je selectie voldoen.', 'lenvy' ); ?>
 	</p>
 
 	<?php if ( $is_filtered ) : ?>
@@ -35,7 +35,7 @@ $base_url = esc_url( strtok( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), '?' )
 			href="<?php echo $base_url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — escaped above. ?>"
 			class="inline-block text-sm font-medium tracking-wide border border-neutral-900 text-neutral-900 px-6 py-2.5 hover:bg-neutral-900 hover:text-white transition-colors duration-200"
 		>
-			<?php esc_html_e( 'Clear all filters', 'lenvy' ); ?>
+			<?php esc_html_e( 'Wis alle filters', 'lenvy' ); ?>
 		</a>
 
 	<?php else : ?>
@@ -44,7 +44,7 @@ $base_url = esc_url( strtok( wp_unslash( $_SERVER['REQUEST_URI'] ?? '/' ), '?' )
 			href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ); ?>"
 			class="inline-block text-sm font-medium tracking-wide border border-neutral-900 text-neutral-900 px-6 py-2.5 hover:bg-neutral-900 hover:text-white transition-colors duration-200"
 		>
-			<?php esc_html_e( 'Back to shop', 'lenvy' ); ?>
+			<?php esc_html_e( 'Terug naar shop', 'lenvy' ); ?>
 		</a>
 
 	<?php endif; ?>

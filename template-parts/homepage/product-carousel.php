@@ -62,7 +62,7 @@ if (empty($products)) {
 						type="button"
 						class="lenvy-product-carousel__arrow"
 						data-carousel-prev
-						aria-label="<?php esc_attr_e('Previous', 'lenvy'); ?>"
+						aria-label="<?php esc_attr_e('Vorige', 'lenvy'); ?>"
 						disabled
 					>
 						<?php lenvy_icon('chevron-left', '', 'sm'); ?>
@@ -71,7 +71,7 @@ if (empty($products)) {
 						type="button"
 						class="lenvy-product-carousel__arrow"
 						data-carousel-next
-						aria-label="<?php esc_attr_e('Next', 'lenvy'); ?>"
+						aria-label="<?php esc_attr_e('Volgende', 'lenvy'); ?>"
 					>
 						<?php lenvy_icon('chevron-right', '', 'sm'); ?>
 					</button>

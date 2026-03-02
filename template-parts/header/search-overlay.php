@@ -29,7 +29,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 	class="fixed inset-0 z-[45] flex flex-col opacity-0 pointer-events-none transition-opacity duration-200"
 	aria-hidden="true"
 	role="dialog"
-	aria-label="<?php esc_attr_e('Search', 'lenvy'); ?>"
+	aria-label="<?php esc_attr_e('Zoeken', 'lenvy'); ?>"
 >
 
 	<!-- ── Search band ─────────────────────────────────────────────────────── -->
@@ -46,7 +46,7 @@ $trending_products = lenvy_get_homepage_products('bestsellers', 4);
 					type="button"
 					data-search-close
 					class="shrink-0 flex items-center gap-1.5 text-xs font-medium text-neutral-500 hover:text-black transition-colors duration-200 pr-3 border-r border-neutral-200"
-					aria-label="<?php esc_attr_e('Close search', 'lenvy'); ?>"
+					aria-label="<?php esc_attr_e('Zoeken sluiten', 'lenvy'); ?>"
 				>
 					<?php lenvy_icon('close', '', 'sm'); ?>
 					<span class="hidden sm:inline"><?php esc_html_e('Sluiten', 'lenvy'); ?></span>

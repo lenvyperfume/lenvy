@@ -29,7 +29,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 	class="fixed inset-y-0 left-0 z-[50] w-[400px] max-w-[calc(100vw-3rem)] bg-white overflow-y-auto -translate-x-full transition-transform duration-300 flex flex-col"
 	aria-hidden="true"
 	role="dialog"
-	aria-label="<?php esc_attr_e('Product filters', 'lenvy'); ?>"
+	aria-label="<?php esc_attr_e('Productfilters', 'lenvy'); ?>"
 >
 	<!-- Header -->
 	<div class="flex items-center justify-between px-7 h-16 border-b border-neutral-100 shrink-0">
@@ -40,7 +40,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 			type="button"
 			data-filter-drawer-close
 			class="p-2 -mr-2 text-neutral-400 hover:text-black transition-colors duration-200"
-			aria-label="<?php esc_attr_e('Close filters', 'lenvy'); ?>"
+			aria-label="<?php esc_attr_e('Filters sluiten', 'lenvy'); ?>"
 		>
 			<?php lenvy_icon('close', '', 'sm'); ?>
 		</button>

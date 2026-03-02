@@ -63,7 +63,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 					type="button"
 					data-search-toggle
 					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
-					aria-label="<?php esc_attr_e('Open search', 'lenvy'); ?>"
+					aria-label="<?php esc_attr_e('Zoeken', 'lenvy'); ?>"
 					aria-expanded="false"
 				>
 					<?php lenvy_icon('search', '', 'md'); ?>
@@ -73,7 +73,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 				<a
 					href="<?php echo is_user_logged_in() ? esc_url( wc_get_account_endpoint_url( 'dashboard' ) ) : esc_url( wc_get_page_permalink( 'myaccount' ) ); ?>"
 					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
-					aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'My account', 'lenvy' ) : esc_attr__( 'Log in', 'lenvy' ); ?>"
+					aria-label="<?php echo is_user_logged_in() ? esc_attr__( 'Mijn account', 'lenvy' ) : esc_attr__( 'Inloggen', 'lenvy' ); ?>"
 				>
 					<?php lenvy_icon( 'user', '', 'md' ); ?>
 				</a>
@@ -83,7 +83,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 					href="<?php echo esc_url($cart_url); ?>"
 					data-cart-link
 					class="relative p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded"
-					aria-label="<?php echo esc_attr(sprintf(_n('Cart, %d item', 'Cart, %d items', $cart_count, 'lenvy'), $cart_count)); ?>"
+					aria-label="<?php echo esc_attr(sprintf(_n('Winkelwagen, %d artikel', 'Winkelwagen, %d artikelen', $cart_count, 'lenvy'), $cart_count)); ?>"
 				>
 					<?php lenvy_icon('cart', '', 'md'); ?>
 					<span
@@ -101,7 +101,7 @@ $cart_url = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/
 					type="button"
 					data-drawer-toggle
 					class="p-2 text-neutral-500 hover:text-black transition-colors duration-200 rounded lg:hidden"
-					aria-label="<?php esc_attr_e('Open navigation menu', 'lenvy'); ?>"
+					aria-label="<?php esc_attr_e('Menu openen', 'lenvy'); ?>"
 					aria-expanded="false"
 					aria-controls="lenvy-mobile-drawer"
 				>

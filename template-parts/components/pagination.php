@@ -50,14 +50,14 @@ if (empty($links)) {
 	return;
 }
 ?>
-<nav class="lenvy-pagination" aria-label="<?php esc_attr_e('Pagination', 'lenvy'); ?>">
+<nav class="lenvy-pagination" aria-label="<?php esc_attr_e('Paginering', 'lenvy'); ?>">
 	<ol class="flex items-center justify-center gap-1">
 
 		<?php if ($current > 1): ?>
 			<li>
 				<a href="<?php echo esc_url(get_pagenum_link($current - 1)); ?>"
 				   class="flex items-center justify-center w-9 h-9 border border-neutral-200 text-neutral-600 hover:border-black hover:text-black transition-colors duration-200"
-				   aria-label="<?php esc_attr_e('Previous page', 'lenvy'); ?>">
+				   aria-label="<?php esc_attr_e('Vorige pagina', 'lenvy'); ?>">
 					<?php get_template_part('template-parts/components/icon', null, ['name' => 'chevron-left', 'size' => 'sm']); ?>
 				</a>
 			</li>
@@ -105,7 +105,7 @@ if (empty($links)) {
 			<li>
 				<a href="<?php echo esc_url(get_pagenum_link($current + 1)); ?>"
 				   class="flex items-center justify-center w-9 h-9 border border-neutral-200 text-neutral-600 hover:border-black hover:text-black transition-colors duration-200"
-				   aria-label="<?php esc_attr_e('Next page', 'lenvy'); ?>">
+				   aria-label="<?php esc_attr_e('Volgende pagina', 'lenvy'); ?>">
 					<?php get_template_part('template-parts/components/icon', null, ['name' => 'chevron-right', 'size' => 'sm']); ?>
 				</a>
 			</li>

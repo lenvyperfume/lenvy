@@ -55,7 +55,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 					<?php esc_html_e('Categorieën', 'lenvy'); ?>
 				</p>
 				<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight">
-					<?php esc_html_e('Shop by Category', 'lenvy'); ?>
+					<?php esc_html_e('Shop per categorie', 'lenvy'); ?>
 				</h2>
 			</div>
 			<a
@@ -115,7 +115,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 							<?php echo esc_html(
 							sprintf(
 								/* translators: %d: product count */
-								_n('%d product', '%d products', $term->count, 'lenvy'),
+								_n('%d product', '%d producten', $term->count, 'lenvy'),
 								$term->count,
 							),
 						); ?>

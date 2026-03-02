@@ -175,10 +175,8 @@ while (have_posts()):
 								<?php lenvy_icon('chevron-down', 'text-neutral-400 transition-transform duration-200', 'xs'); ?>
 							</button>
 							<div id="panel-usage-tips" role="region" aria-labelledby="toggle-usage-tips" data-filter-accordion-panel>
-								<div class="pb-5">
-									<p class="text-sm text-neutral-600 leading-relaxed">
-										<?php echo esc_html($usage_tips); ?>
-									</p>
+								<div class="pb-5 text-sm text-neutral-600 leading-relaxed">
+									<?php echo wp_kses_post($usage_tips); ?>
 								</div>
 							</div>
 						</div>

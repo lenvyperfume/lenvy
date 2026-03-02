@@ -19,6 +19,7 @@ import { initBrandScroller } from './modules/brand-scroller.js';
 import { initProductCarousel } from './modules/product-carousel.js';
 import { initBrandsFilter } from './modules/brands-filter.js';
 import { initVariationTiles } from './modules/variation-tiles.js';
+import { initUspSlider } from './modules/usp-slider.js';
 
 // Reveal page after CSS is injected — prevents FOUC on every page load.
 document.documentElement.style.opacity = '1';
@@ -38,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initProductCarousel();
   initBrandsFilter();
   initVariationTiles();
+  initUspSlider();
 
   // Custom sort dropdown.
   document.querySelectorAll('[data-sort-dropdown]').forEach((dropdown) => {

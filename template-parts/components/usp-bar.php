@@ -5,6 +5,9 @@
  * Reads the ACF repeater `lenvy_usp_items` from the Theme Settings options
  * page. Falls back to hardcoded Dutch defaults when ACF is empty or inactive.
  *
+ * Desktop: static flex row, centred.
+ * Mobile (<lg): Embla Carousel — 1 item at a time, autoplay.
+ *
  * @package Lenvy
  */
 
@@ -27,7 +30,9 @@ $items = lenvy_field('lenvy_usp_items', 'options') ?: $defaults;
 
 <div class="bg-primary border-primary-hover">
 	<div class="lenvy-container">
-		<ul class="flex items-center justify-center gap-8 py-2.5 max-lg:justify-start max-lg:overflow-x-auto max-lg:scrollbar-none max-lg:-mx-4 max-lg:px-4">
+
+		<!-- Desktop: static row -->
+		<ul class="hidden lg:flex items-center justify-center gap-8 py-2.5">
 			<?php foreach ($items as $item):
 				$icon = $item['usp_icon'] ?? 'check';
 				$text = $item['usp_text'] ?? '';
@@ -41,5 +46,24 @@ $items = lenvy_field('lenvy_usp_items', 'options') ?: $defaults;
 				</li>
 			<?php endforeach; ?>
 		</ul>
+
+		<!-- Mobile: Embla slider, 1 item at a time -->
+		<div class="lg:hidden overflow-hidden py-2.5" data-usp-viewport>
+			<ul class="flex">
+				<?php foreach ($items as $item):
+					$icon = $item['usp_icon'] ?? 'check';
+					$text = $item['usp_text'] ?? '';
+					if (empty($text)) {
+						continue;
+					}
+				?>
+					<li class="flex items-center justify-center gap-2 shrink-0 w-full min-w-0" style="flex: 0 0 100%;">
+						<?php lenvy_icon($icon, 'text-neutral-700 shrink-0', 'sm'); ?>
+						<span class="text-xs text-neutral-700 whitespace-nowrap"><?php echo esc_html($text); ?></span>
+					</li>
+				<?php endforeach; ?>
+			</ul>
+		</div>
+
 	</div>
 </div>

@@ -30,7 +30,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 		<div class="lenvy-account-auth__panel">
 
 			<h2 class="font-serif italic text-2xl text-neutral-900 mb-8">
-				<?php esc_html_e( 'Log in', 'lenvy' ); ?>
+				<?php esc_html_e( 'Inloggen', 'lenvy' ); ?>
 			</h2>
 
 			<?php do_action( 'woocommerce_login_form_start' ); ?>
@@ -45,7 +45,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 						for="username"
 						class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
 					>
-						<?php esc_html_e( 'Email address', 'lenvy' ); ?>
+						<?php esc_html_e( 'E-mailadres', 'lenvy' ); ?>
 						<span class="required text-neutral-400" aria-hidden="true">*</span>
 					</label>
 					<input
@@ -64,7 +64,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 						for="password"
 						class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
 					>
-						<?php esc_html_e( 'Password', 'lenvy' ); ?>
+						<?php esc_html_e( 'Wachtwoord', 'lenvy' ); ?>
 						<span class="required text-neutral-400" aria-hidden="true">*</span>
 					</label>
 					<input
@@ -88,13 +88,13 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 							id="rememberme"
 							value="forever"
 						/>
-						<?php esc_html_e( 'Remember me', 'lenvy' ); ?>
+						<?php esc_html_e( 'Onthoud mij', 'lenvy' ); ?>
 					</label>
 					<a
 						href="<?php echo esc_url( wp_lostpassword_url() ); ?>"
 						class="text-xs text-neutral-500 underline underline-offset-2 hover:text-neutral-900 transition-colors"
 					>
-						<?php esc_html_e( 'Forgot password?', 'lenvy' ); ?>
+						<?php esc_html_e( 'Wachtwoord vergeten?', 'lenvy' ); ?>
 					</a>
 				</div>
 
@@ -105,9 +105,9 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 					type="submit"
 					class="woocommerce-button button woocommerce-form-login__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
 					name="login"
-					value="<?php esc_attr_e( 'Log in', 'lenvy' ); ?>"
+					value="<?php esc_attr_e( 'Inloggen', 'lenvy' ); ?>"
 				>
-					<?php esc_html_e( 'Log in', 'lenvy' ); ?>
+					<?php esc_html_e( 'Inloggen', 'lenvy' ); ?>
 				</button>
 
 				<?php do_action( 'woocommerce_login_form_end' ); ?>
@@ -120,7 +120,7 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 		<div class="lenvy-account-auth__panel border-t border-neutral-100 pt-12 md:border-t-0 md:border-l md:pt-0 md:pl-16">
 
 			<h2 class="font-serif italic text-2xl text-neutral-900 mb-8">
-				<?php esc_html_e( 'Create account', 'lenvy' ); ?>
+				<?php esc_html_e( 'Account aanmaken', 'lenvy' ); ?>
 			</h2>
 
 			<?php do_action( 'woocommerce_register_form_start' ); ?>
@@ -130,33 +130,52 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 				class="woocommerce-form woocommerce-form-register register"
 			>
 
-				<?php if ( 'no' === get_option( 'woocommerce_registration_generate_username' ) ) : ?>
-					<div class="form-row mb-5">
+				<div class="grid grid-cols-2 gap-4 mb-5">
+					<div class="form-row">
 						<label
-							for="reg_username"
+							for="reg_billing_first_name"
 							class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
 						>
-							<?php esc_html_e( 'Username', 'lenvy' ); ?>
+							<?php esc_html_e( 'Voornaam', 'lenvy' ); ?>
 							<span class="required text-neutral-400" aria-hidden="true">*</span>
 						</label>
 						<input
 							type="text"
 							class="woocommerce-Input woocommerce-Input--text input-text"
-							name="username"
-							id="reg_username"
-							autocomplete="username"
-							value="<?php echo ( ! empty( $_POST['username'] ) ) ? esc_attr( wp_unslash( $_POST['username'] ) ) : ''; ?>"
+							name="billing_first_name"
+							id="reg_billing_first_name"
+							autocomplete="given-name"
+							value="<?php echo ( ! empty( $_POST['billing_first_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_first_name'] ) ) : ''; ?>"
 							required
 						/>
 					</div>
-				<?php endif; ?>
+
+					<div class="form-row">
+						<label
+							for="reg_billing_last_name"
+							class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
+						>
+							<?php esc_html_e( 'Achternaam', 'lenvy' ); ?>
+							<span class="required text-neutral-400" aria-hidden="true">*</span>
+						</label>
+						<input
+							type="text"
+							class="woocommerce-Input woocommerce-Input--text input-text"
+							name="billing_last_name"
+							id="reg_billing_last_name"
+							autocomplete="family-name"
+							value="<?php echo ( ! empty( $_POST['billing_last_name'] ) ) ? esc_attr( wp_unslash( $_POST['billing_last_name'] ) ) : ''; ?>"
+							required
+						/>
+					</div>
+				</div>
 
 				<div class="form-row mb-5">
 					<label
 						for="reg_email"
 						class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
 					>
-						<?php esc_html_e( 'Email address', 'lenvy' ); ?>
+						<?php esc_html_e( 'E-mailadres', 'lenvy' ); ?>
 						<span class="required text-neutral-400" aria-hidden="true">*</span>
 					</label>
 					<input
@@ -170,29 +189,23 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 					/>
 				</div>
 
-				<?php if ( 'no' === get_option( 'woocommerce_registration_generate_password' ) ) : ?>
-					<div class="form-row mb-7">
-						<label
-							for="reg_password"
-							class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
-						>
-							<?php esc_html_e( 'Password', 'lenvy' ); ?>
-							<span class="required text-neutral-400" aria-hidden="true">*</span>
-						</label>
-						<input
-							type="password"
-							class="woocommerce-Input woocommerce-Input--text input-text"
-							name="password"
-							id="reg_password"
-							autocomplete="new-password"
-							required
-						/>
-					</div>
-				<?php else : ?>
-					<p class="text-sm text-neutral-500 mb-7">
-						<?php esc_html_e( 'A password will be sent to your email address.', 'lenvy' ); ?>
-					</p>
-				<?php endif; ?>
+				<div class="form-row mb-5">
+					<label
+						for="reg_password"
+						class="block text-xs font-medium uppercase tracking-widest text-neutral-500 mb-2"
+					>
+						<?php esc_html_e( 'Wachtwoord', 'lenvy' ); ?>
+						<span class="required text-neutral-400" aria-hidden="true">*</span>
+					</label>
+					<input
+						type="password"
+						class="woocommerce-Input woocommerce-Input--text input-text"
+						name="password"
+						id="reg_password"
+						autocomplete="new-password"
+						required
+					/>
+				</div>
 
 				<?php do_action( 'woocommerce_register_form' ); ?>
 
@@ -203,9 +216,9 @@ $redirect = $redirect ?? wc_get_account_endpoint_url( 'dashboard' );
 					type="submit"
 					class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
 					name="register"
-					value="<?php esc_attr_e( 'Create account', 'lenvy' ); ?>"
+					value="<?php esc_attr_e( 'Account aanmaken', 'lenvy' ); ?>"
 				>
-					<?php esc_html_e( 'Create account', 'lenvy' ); ?>
+					<?php esc_html_e( 'Account aanmaken', 'lenvy' ); ?>
 				</button>
 
 				<?php do_action( 'woocommerce_register_form_end' ); ?>

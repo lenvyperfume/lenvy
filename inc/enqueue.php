@@ -120,8 +120,8 @@ add_action(
 				'nonce'  => wp_create_nonce('lenvy_ajax'),
 				'strings' => [
 					/* translators: 1: first result number, 2: last result number, 3: total count */
-					'results_showing' => __('Showing %1$s–%2$s of %3$s products', 'lenvy'),
-					'results_none'    => __('No products found', 'lenvy'),
+					'results_showing' => __('%1$s–%2$s van %3$s producten', 'lenvy'),
+					'results_none'    => __('Geen producten gevonden', 'lenvy'),
 				],
 			]),
 		);

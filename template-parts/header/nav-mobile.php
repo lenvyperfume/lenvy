@@ -61,7 +61,7 @@ $menu_location = has_nav_menu('mobile') ? 'mobile' : (has_nav_menu('primary') ? 
 			type="button"
 			data-drawer-close
 			class="p-2 -mr-2 text-neutral-400 hover:text-black transition-colors duration-200"
-			aria-label="<?php esc_attr_e('Close navigation', 'lenvy'); ?>"
+			aria-label="<?php esc_attr_e('Menu sluiten', 'lenvy'); ?>"
 		>
 			<?php lenvy_icon('close', '', 'md'); ?>
 		</button>

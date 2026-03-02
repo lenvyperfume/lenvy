@@ -61,7 +61,7 @@ $icon_name = $icons[$type];
 	<?php if ($dismissible): ?>
 		<button type="button"
 		        class="shrink-0 opacity-60 hover:opacity-100 transition-opacity"
-		        aria-label="<?php esc_attr_e('Dismiss', 'lenvy'); ?>"
+		        aria-label="<?php esc_attr_e('Sluiten', 'lenvy'); ?>"
 		        onclick="this.closest('[role=alert]').remove()">
 			<?php get_template_part('template-parts/components/icon', null, ['name' => 'close', 'size' => 'sm']); ?>
 		</button>

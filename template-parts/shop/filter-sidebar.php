@@ -16,7 +16,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 
 <aside
 	class="hidden lg:block w-[280px] shrink-0"
-	aria-label="<?php esc_attr_e('Product filters', 'lenvy'); ?>"
+	aria-label="<?php esc_attr_e('Productfilters', 'lenvy'); ?>"
 	data-filter-sidebar
 >
 	<div class="sticky" style="top: var(--header-height, 68px);">
@@ -32,7 +32,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
    	?>"
 					class="text-xs text-neutral-500 hover:text-black underline underline-offset-2 transition-colors duration-200"
 				>
-					<?php esc_html_e('Clear all', 'lenvy'); ?>
+					<?php esc_html_e('Wis alles', 'lenvy'); ?>
 				</a>
 			<?php endif; ?>
 		</div>
@@ -51,7 +51,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
    	get_template_part('template-parts/shop/filter-taxonomy', null, [
    		'taxonomy' => 'product_brand',
    		'query_var' => 'filter_brand',
-   		'label' => __('Brand', 'lenvy'),
+   		'label' => __('Merk', 'lenvy'),
    		'open' => true,
    	]);
    endif;
@@ -59,40 +59,40 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
    get_template_part('template-parts/shop/filter-taxonomy', null, [
    	'taxonomy' => 'product_cat',
    	'query_var' => 'filter_cat',
-   	'label' => __('Category', 'lenvy'),
+   	'label' => __('Categorie', 'lenvy'),
    	'open' => true,
    ]);
 
    get_template_part('template-parts/shop/filter-price', null, [
-   	'label' => __('Price', 'lenvy'),
+   	'label' => __('Prijs', 'lenvy'),
    	'open' => true,
    ]);
 
    get_template_part('template-parts/shop/filter-taxonomy', null, [
    	'taxonomy' => 'pa_gender',
    	'query_var' => 'filter_gender',
-   	'label' => __('Gender', 'lenvy'),
+   	'label' => __('Geslacht', 'lenvy'),
    	'open' => false,
    ]);
 
    get_template_part('template-parts/shop/filter-taxonomy', null, [
    	'taxonomy' => 'pa_fragrance_family',
    	'query_var' => 'filter_family',
-   	'label' => __('Fragrance family', 'lenvy'),
+   	'label' => __('Geurfamilie', 'lenvy'),
    	'open' => false,
    ]);
 
    get_template_part('template-parts/shop/filter-taxonomy', null, [
    	'taxonomy' => 'pa_concentration',
    	'query_var' => 'filter_conc',
-   	'label' => __('Concentration', 'lenvy'),
+   	'label' => __('Concentratie', 'lenvy'),
    	'open' => false,
    ]);
 
    get_template_part('template-parts/shop/filter-taxonomy', null, [
    	'taxonomy' => 'pa_volume_ml',
    	'query_var' => 'filter_volume',
-   	'label' => __('Volume (ml)', 'lenvy'),
+   	'label' => __('Inhoud (ml)', 'lenvy'),
    	'open' => false,
    ]);
    ?>
@@ -106,7 +106,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
     $onsale = !empty($_GET['filter_onsale']);
     ?>
 				<label class="flex items-center justify-between cursor-pointer">
-					<span class="text-sm text-neutral-700"><?php esc_html_e('In stock only', 'lenvy'); ?></span>
+					<span class="text-sm text-neutral-700"><?php esc_html_e('Alleen op voorraad', 'lenvy'); ?></span>
 					<input
 						type="checkbox"
 						name="filter_available"
@@ -117,7 +117,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 					>
 				</label>
 				<label class="flex items-center justify-between cursor-pointer">
-					<span class="text-sm text-neutral-700"><?php esc_html_e('On sale', 'lenvy'); ?></span>
+					<span class="text-sm text-neutral-700"><?php esc_html_e('Sale', 'lenvy'); ?></span>
 					<input
 						type="checkbox"
 						name="filter_onsale"
@@ -133,7 +133,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 				type="submit"
 				class="mt-5 w-full bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-200"
 			>
-				<?php esc_html_e('Apply filters', 'lenvy'); ?>
+				<?php esc_html_e('Toepassen', 'lenvy'); ?>
 			</button>
 
 		</form>

@@ -22,7 +22,7 @@ if (count($crumbs) <= 1) {
 	return; // No breadcrumb on the homepage or single-crumb contexts.
 }
 ?>
-<nav class="lenvy-breadcrumb" aria-label="<?php esc_attr_e('Breadcrumb', 'lenvy'); ?>">
+<nav class="lenvy-breadcrumb" aria-label="<?php esc_attr_e('Kruimelpad', 'lenvy'); ?>">
 	<ol class="flex flex-wrap items-center gap-1 text-xs text-neutral-500">
 
 		<?php foreach ($crumbs as $index => $crumb): ?>
