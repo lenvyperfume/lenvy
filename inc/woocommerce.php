@@ -206,7 +206,8 @@ add_filter( 'pings_open', '__return_false', 20, 2 );
 
 // ─── Checkout access control ──────────────────────────────────────────────────
 // Non-logged-in users who arrive at checkout without ?guest=1 are redirected to
-// the Account Choice page so they must explicitly pick Login / Register / Guest.
+// the login/register page (/winkelwagen/inloggen/) so they must explicitly pick
+// Login / Register / Guest.
 
 add_action(
 	'template_redirect',
@@ -258,7 +259,7 @@ add_filter(
 );
 
 // Hide the "create account" checkbox at checkout — account creation is handled
-// on the account-choice page before checkout.
+// on the login/register page before checkout.
 add_filter( 'woocommerce_checkout_registration_enabled', '__return_false' );
 
 // ─── Force classic shortcodes for cart & checkout ────────────────────────────

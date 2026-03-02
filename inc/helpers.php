@@ -425,12 +425,24 @@ function lenvy_get_homepage_products(string $type, int $limit = 12): array {
 // ─── Account helpers ──────────────────────────────────────────────────────────
 
 /**
- * Return the URL of the Account Choice page.
+ * Return the URL of the login/register page (child of cart).
  *
- * Uses home_url() so WPML can filter it correctly for the active language.
+ * Looks up the page assigned the "Account Choice" template, so the URL
+ * stays correct regardless of slug or parent-page changes. Falls back
+ * to /winkelwagen/inloggen/ when no match is found.
  *
  * @return string
  */
 function lenvy_get_account_choice_url(): string {
-	return esc_url( home_url( '/account-choice/' ) );
+	$pages = get_pages( [
+		'meta_key'   => '_wp_page_template',
+		'meta_value' => 'templates/page-account-choice.php',
+		'number'     => 1,
+	] );
+
+	if ( ! empty( $pages ) ) {
+		return esc_url( get_permalink( $pages[0] ) );
+	}
+
+	return esc_url( home_url( '/winkelwagen/inloggen/' ) );
 }
