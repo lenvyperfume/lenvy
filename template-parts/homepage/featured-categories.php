@@ -54,7 +54,7 @@ $shop_url = function_exists('wc_get_page_permalink')
 				<p class="text-[11px] uppercase tracking-widest text-neutral-400 mb-3">
 					<?php esc_html_e('Categorieën', 'lenvy'); ?>
 				</p>
-				<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight">
+				<h2 class="text-2xl md:text-3xl font-medium text-neutral-900 leading-tight">
 					<?php esc_html_e('Shop per categorie', 'lenvy'); ?>
 				</h2>
 			</div>

@@ -39,7 +39,7 @@ if (empty($products)) {
 				</p>
 				<?php endif; ?>
 				<?php if ($title): ?>
-				<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 leading-tight">
+				<h2 class="text-2xl md:text-3xl font-medium text-neutral-900 leading-tight">
 					<?php echo esc_html($title); ?>
 				</h2>
 				<?php endif; ?>

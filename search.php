@@ -20,7 +20,7 @@ global $wp_query;
 		<?php // ── Search header ──────────────────────────────────────────────────── ?>
 		<header class="mb-10">
 			<?php get_template_part( 'template-parts/components/breadcrumb' ); ?>
-			<h1 class="mt-4 text-2xl font-serif italic text-neutral-900">
+			<h1 class="mt-4 text-2xl font-medium text-neutral-900">
 				<?php
 				printf(
 					/* translators: %s: search term wrapped in <em> */

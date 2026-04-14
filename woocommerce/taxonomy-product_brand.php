@@ -61,7 +61,7 @@ if ($banner_id):
 				<?php endif; ?>
 
 				<div>
-					<h1 class="text-3xl md:text-4xl font-serif italic text-white leading-tight">
+					<h1 class="text-3xl md:text-4xl font-medium text-white leading-tight">
 						<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — already esc_html'd
 						echo $brand_name; ?>
 					</h1>
@@ -101,7 +101,7 @@ if ($banner_id):
 			<?php endif; ?>
 
 			<div>
-				<h1 class="text-3xl font-serif italic text-neutral-900">
+				<h1 class="text-3xl font-medium text-neutral-900">
 					<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $brand_name; ?>
 				</h1>

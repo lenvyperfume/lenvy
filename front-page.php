@@ -2,15 +2,17 @@
 /**
  * Front page template.
  *
- * Section order:
- *   1. Hero              — cinematic banner (image / video only, no text overlay)
- *   2. Brand scroller    — infinite auto-scroll strip of brand logos
- *   3. Curated products  — product carousel (ACF relationship, hand-picked)
- *   4. Bestsellers       — product carousel (WC query: popularity)
- *   5. Promo Banners     — editorial image banners (ACF repeater, max 4)
- *   6. Featured cats     — portrait image grid of selected product_cat terms
- *   7. New Arrivals      — product carousel (WC query: date, alternating bg)
- *   8. Sale              — product carousel (conditional — only if sale products exist)
+ * Section order — mixed types for rhythm and variety:
+ *   1. Hero              — split layout (image left, text right)
+ *   2. USP bar           — trust signals at the fold
+ *   3. Bestsellers       — STATIC GRID (4-col, 8 products)
+ *   4. Promo banner      — single editorial image (breathing room)
+ *   5. Featured cats     — category navigation mid-page
+ *   6. Brand story       — editorial split (image + text, "Waarom Lenvy")
+ *   7. New Arrivals      — product CAROUSEL
+ *   8. Brand scroller    — logo marquee
+ *   9. Sale              — product CAROUSEL (conditional)
+ *  10. SEO content       — collapsible text block for search engines
  *
  * @package Lenvy
  */
@@ -30,59 +32,44 @@ $shop_url = $shop_url ?: home_url('/shop/');
 
 	<?php get_template_part('template-parts/homepage/hero'); ?>
 
-	<?php get_template_part('template-parts/homepage/brand-scroller'); ?>
+	<?php get_template_part('template-parts/homepage/usp-bar'); ?>
 
 	<?php
-	// ── Curated Products (ACF relationship) ──────────────────────────────
-	$curated = lenvy_field('lenvy_curated_products');
-	if ($curated) {
-		$heading  = lenvy_field('lenvy_curated_products_heading') ?: __('Onze Selectie', 'lenvy');
-		$products = array_filter(array_map('wc_get_product', wp_list_pluck($curated, 'ID')));
-		if ($products) {
-			get_template_part('template-parts/homepage/product-carousel', null, [
-				'eyebrow'  => __('Uitgelicht', 'lenvy'),
-				'title'    => $heading,
-				'products' => $products,
-			]);
-		}
-	}
-	?>
-
-	<?php
-	// ── Promo Banners (ACF repeater) ─────────────────────────────────────
-	$promo_banners = lenvy_field('lenvy_promo_banners');
-	if ($promo_banners):
-	?>
-	<section class="space-y-6">
-		<?php foreach ($promo_banners as $banner): ?>
-			<?php
-			get_template_part('template-parts/components/promo-banner', null, [
-				'image'       => $banner['banner_image'] ?? null,
-				'title'       => $banner['banner_title'] ?? '',
-				'description' => $banner['banner_description'] ?? '',
-				'link_label'  => $banner['banner_link_label'] ?? '',
-				'link_url'    => $banner['banner_link_url'] ?? '',
-			]);
-			?>
-		<?php endforeach; ?>
-	</section>
-	<?php endif; ?>
-
-	<?php
-	// ── Bestsellers carousel ──────────────────────────────────────────────
-	$bestsellers = lenvy_get_homepage_products('bestsellers', 12);
+	// ── Bestsellers — static grid ────────────────────────────────────────
+	$bestsellers = lenvy_get_homepage_products('bestsellers', 8);
 	if ($bestsellers) {
-		get_template_part('template-parts/homepage/product-carousel', null, [
+		get_template_part('template-parts/homepage/product-grid', null, [
 			'eyebrow'    => __('Bestsellers', 'lenvy'),
 			'title'      => __('Meest Geliefd', 'lenvy'),
 			'products'   => $bestsellers,
 			'link_url'   => add_query_arg('orderby', 'popularity', $shop_url),
 			'link_label' => __('Alles bekijken', 'lenvy'),
+			'columns'    => 4,
 		]);
 	}
 	?>
+
 	<?php
-	// ── New Arrivals carousel ─────────────────────────────────────────────
+	// ── Promo Banner — editorial break ───────────────────────────────────
+	$promo_banners = lenvy_field('lenvy_promo_banners');
+	if ($promo_banners):
+		$banner = $promo_banners[0];
+		get_template_part('template-parts/components/promo-banner', null, [
+			'image'       => $banner['banner_image'] ?? null,
+			'title'       => $banner['banner_title'] ?? '',
+			'description' => $banner['banner_description'] ?? '',
+			'link_label'  => $banner['banner_link_label'] ?? '',
+			'link_url'    => $banner['banner_link_url'] ?? '',
+		]);
+	endif;
+	?>
+
+	<?php get_template_part('template-parts/homepage/featured-categories'); ?>
+
+	<?php get_template_part('template-parts/homepage/brand-story'); ?>
+
+	<?php
+	// ── New Arrivals — carousel ──────────────────────────────────────────
 	$new_arrivals = lenvy_get_homepage_products('new', 12);
 	if ($new_arrivals) {
 		get_template_part('template-parts/homepage/product-carousel', null, [
@@ -91,15 +78,15 @@ $shop_url = $shop_url ?: home_url('/shop/');
 			'products'   => $new_arrivals,
 			'link_url'   => add_query_arg('orderby', 'date', $shop_url),
 			'link_label' => __('Alles bekijken', 'lenvy'),
-			'bg_class'   => 'bg-neutral-50',
+			'bg_class'   => '',
 		]);
 	}
 	?>
 
-	<?php get_template_part('template-parts/homepage/featured-categories'); ?>
+	<?php get_template_part('template-parts/homepage/brand-scroller'); ?>
 
 	<?php
-	// ── Sale carousel (conditional) ───────────────────────────────────────
+	// ── Sale — carousel (conditional) ────────────────────────────────────
 	$sale_products = lenvy_get_homepage_products('sale', 12);
 	if ($sale_products) {
 		get_template_part('template-parts/homepage/product-carousel', null, [
@@ -111,6 +98,8 @@ $shop_url = $shop_url ?: home_url('/shop/');
 		]);
 	}
 	?>
+
+	<?php get_template_part('template-parts/homepage/seo-content'); ?>
 
 </main>
 

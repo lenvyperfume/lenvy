@@ -37,7 +37,7 @@ $is_wc_functional = function_exists( 'is_cart' ) && ( is_cart() || is_checkout()
 
 				<header class="mb-8 max-w-2xl">
 					<?php get_template_part( 'template-parts/components/breadcrumb' ); ?>
-					<h1 class="mt-4 text-3xl font-serif italic text-neutral-900">
+					<h1 class="mt-4 text-3xl font-medium text-neutral-900">
 						<?php the_title(); ?>
 					</h1>
 				</header>

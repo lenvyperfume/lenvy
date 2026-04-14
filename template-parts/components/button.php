@@ -44,7 +44,7 @@ $icon_only = '' === $label && '' !== $icon;
 
 // ── Variant classes ───────────────────────────────────────────────────────────
 $variants = [
-	'primary'   => 'bg-primary text-black hover:bg-primary-hover',
+	'primary'   => 'bg-black text-white hover:bg-neutral-800',
 	'secondary' => 'bg-black text-white hover:bg-neutral-800',
 	'outline'   => 'border border-neutral-300 text-neutral-700 hover:border-neutral-900 hover:text-neutral-900',
 	'ghost'     => 'text-neutral-500 underline-offset-4 hover:text-neutral-900 hover:underline',

@@ -44,6 +44,12 @@ if (count($crumbs) <= 1) {
 					<span class="text-neutral-800 font-medium" aria-current="page">
 						<?php echo esc_html($crumb_name); ?>
 					</span>
+				<?php elseif ($index === 0): ?>
+					<a href="<?php echo esc_url($crumb_url); ?>"
+					   class="hover:text-neutral-800 transition-colors duration-200"
+					   aria-label="<?php echo esc_attr($crumb_name); ?>">
+						<?php lenvy_icon('home', '', 'sm'); ?>
+					</a>
 				<?php else: ?>
 					<a href="<?php echo esc_url($crumb_url); ?>"
 					   class="hover:text-neutral-800 transition-colors duration-200">

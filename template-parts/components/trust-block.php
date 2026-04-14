@@ -1,8 +1,9 @@
 <?php
 /**
- * Trust block — renders shipping, returns, and payment trust signals.
+ * Trust block — shipping, returns, and payment trust signals.
  *
  * Placed below the ATC form on single product pages.
+ * Clean, borderless design — no rounded box.
  *
  * @package Lenvy
  */
@@ -10,22 +11,22 @@
 defined('ABSPATH') || exit();
 
 ?>
-<div class="mt-5 border border-primary rounded-lg p-4 space-y-2.5">
+<div class="mt-6 pt-5 border-t border-neutral-100 space-y-3">
 
 	<!-- Shipping -->
-	<div class="flex items-center gap-2">
+	<div class="flex items-center gap-2.5">
 		<?php lenvy_icon('truck', 'text-neutral-400 shrink-0', 'sm'); ?>
 		<span class="text-xs text-neutral-600"><?php esc_html_e('Gratis verzending vanaf €50', 'lenvy'); ?></span>
 	</div>
 
 	<!-- Returns -->
-	<div class="flex items-center gap-2">
+	<div class="flex items-center gap-2.5">
 		<?php lenvy_icon('refresh', 'text-neutral-400 shrink-0', 'sm'); ?>
 		<span class="text-xs text-neutral-600"><?php esc_html_e('30 dagen bedenktijd', 'lenvy'); ?></span>
 	</div>
 
 	<!-- Payment methods -->
-	<div class="flex items-center gap-2">
+	<div class="flex items-center gap-2.5">
 		<?php lenvy_icon('check', 'text-neutral-400 shrink-0', 'sm'); ?>
 		<span class="text-xs text-neutral-600"><?php esc_html_e('Veilig betalen', 'lenvy'); ?></span>
 	</div>

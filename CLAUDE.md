@@ -54,10 +54,11 @@ Two brand color tokens exist:
 
 ### Typography
 
-- **Body / UI:** `font-sans` → Inter
-- **Display / headings:** `font-serif` → Playfair Display italic
-- Logo text fallback: `font-serif italic text-xl tracking-tight text-neutral-900`
+- **Body / UI:** `font-sans` → DM Sans
+- **Display / headings:** `font-medium` — same family, differentiated by weight/size/tracking
+- Logo text fallback: `font-medium text-2xl tracking-tight text-neutral-900`
 - Nav links: `text-sm tracking-[0.02em]`
+- **No serif or italic fonts** — all headings use clean sans-serif with `font-medium`
 
 ### Layout tokens (CSS vars, not Tailwind)
 

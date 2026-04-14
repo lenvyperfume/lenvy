@@ -7,17 +7,27 @@
 :root {
   --header-height: #{v.$header-height};
   --container-width: #{v.$container-max};
+  --usp-bar-height: 48px;
 
   // Z-index scale — used for stacking contexts across templates
   --z-header: 40;
   --z-overlay: 45;
   --z-drawer: 50;
   --z-notice: 60;
+
+  @media (min-width: 1024px) {
+    --header-height: #{v.$header-height-desktop};
+    --usp-bar-height: 57px;
+  }
 }
 
 // WordPress admin bar adjusts the effective top offset for sticky header
 .admin-bar {
   --header-height: calc(#{v.$header-height} + 32px);
+
+  @media screen and (min-width: 1024px) {
+    --header-height: calc(#{v.$header-height-desktop} + 32px);
+  }
 
   @media screen and (max-width: 782px) {
     --header-height: calc(#{v.$header-height} + 46px);
@@ -40,7 +50,7 @@ html {
 body {
   font-family: v.$font-sans;
   color: v.$neutral-900;
-  background-color: #fafaf8;
+  background-color: #ffffff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

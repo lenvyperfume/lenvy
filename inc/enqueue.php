@@ -130,7 +130,7 @@ add_action(
 );
 
 /**
- * Enqueue Google Fonts — Inter (sans) + Playfair Display (serif).
+ * Enqueue Google Fonts — DM Sans (all-purpose: body + headings).
  * Preconnect hints are added for performance.
  */
 function lenvy_enqueue_fonts(): void {
@@ -146,7 +146,7 @@ function lenvy_enqueue_fonts(): void {
 
 	wp_enqueue_style(
 		'lenvy-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap',
+		'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700&display=swap',
 		[],
 		null,
 	);

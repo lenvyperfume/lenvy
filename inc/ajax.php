@@ -287,34 +287,6 @@ function lenvy_ajax_live_search(): void {
 		wp_send_json_error(['message' => __('Query too short.', 'lenvy')]);
 	}
 
-	// ── Products (max 6) ──────────────────────────────────────────────────────
-	$product_query = new WP_Query([
-		'post_type'      => 'product',
-		'post_status'    => 'publish',
-		's'              => $query,
-		'posts_per_page' => 6,
-		'tax_query'      => [
-			[
-				'taxonomy' => 'product_visibility',
-				'field'    => 'name',
-				'terms'    => 'exclude-from-search',
-				'operator' => 'NOT IN',
-			],
-		],
-	]);
-
-	ob_start();
-	if ($product_query->have_posts()) {
-		while ($product_query->have_posts()) {
-			$product_query->the_post();
-			get_template_part('template-parts/components/product-card-mini', null, [
-				'product_id' => get_the_ID(),
-			]);
-		}
-	}
-	$products_html = (string) ob_get_clean();
-	wp_reset_postdata();
-
 	// ── Brands (max 4) ────────────────────────────────────────────────────────
 	$brand_terms = get_terms([
 		'taxonomy'   => 'product_brand',
@@ -326,6 +298,7 @@ function lenvy_ajax_live_search(): void {
 	]);
 
 	$brands = [];
+	$matching_brand_ids = [];
 	if (!is_wp_error($brand_terms) && is_array($brand_terms)) {
 		foreach ($brand_terms as $term) {
 			$brands[] = [
@@ -333,6 +306,7 @@ function lenvy_ajax_live_search(): void {
 				'url'   => get_term_link($term),
 				'count' => (int) $term->count,
 			];
+			$matching_brand_ids[] = $term->term_id;
 		}
 	}
 
@@ -347,6 +321,7 @@ function lenvy_ajax_live_search(): void {
 	]);
 
 	$categories = [];
+	$matching_cat_ids = [];
 	if (!is_wp_error($cat_terms) && is_array($cat_terms)) {
 		foreach ($cat_terms as $term) {
 			$categories[] = [
@@ -354,8 +329,81 @@ function lenvy_ajax_live_search(): void {
 				'url'   => get_term_link($term),
 				'count' => (int) $term->count,
 			];
+			$matching_cat_ids[] = $term->term_id;
 		}
 	}
+
+	// ── Products (max 8) ──────────────────────────────────────────────────────
+	// Two queries merged: title/content search + products in matching brand/cat terms.
+	$visibility_tax = [
+		'taxonomy' => 'product_visibility',
+		'field'    => 'name',
+		'terms'    => 'exclude-from-search',
+		'operator' => 'NOT IN',
+	];
+
+	// Query 1: standard WordPress text search.
+	$text_query = new WP_Query([
+		'post_type'      => 'product',
+		'post_status'    => 'publish',
+		's'              => $query,
+		'posts_per_page' => 8,
+		'tax_query'      => [$visibility_tax],
+		'fields'         => 'ids',
+	]);
+	$product_ids = $text_query->posts;
+	wp_reset_postdata();
+
+	// Query 2: products belonging to matching brand or category terms.
+	if ($matching_brand_ids || $matching_cat_ids) {
+		$term_tax_query = ['relation' => 'OR'];
+		if ($matching_brand_ids) {
+			$term_tax_query[] = [
+				'taxonomy' => 'product_brand',
+				'field'    => 'term_id',
+				'terms'    => $matching_brand_ids,
+			];
+		}
+		if ($matching_cat_ids) {
+			$term_tax_query[] = [
+				'taxonomy' => 'product_cat',
+				'field'    => 'term_id',
+				'terms'    => $matching_cat_ids,
+			];
+		}
+
+		$term_query = new WP_Query([
+			'post_type'      => 'product',
+			'post_status'    => 'publish',
+			'posts_per_page' => 8,
+			'tax_query'      => [$visibility_tax, $term_tax_query],
+			'fields'         => 'ids',
+		]);
+		$product_ids = array_unique(array_merge($product_ids, $term_query->posts));
+		wp_reset_postdata();
+	}
+
+	// Render the merged product set (max 8).
+	$product_ids = array_slice($product_ids, 0, 8);
+	$total_found = count($product_ids);
+
+	ob_start();
+	if ($product_ids) {
+		$render_query = new WP_Query([
+			'post_type'      => 'product',
+			'post__in'       => $product_ids,
+			'orderby'        => 'post__in',
+			'posts_per_page' => 8,
+		]);
+		while ($render_query->have_posts()) {
+			$render_query->the_post();
+			get_template_part('template-parts/components/product-card-mini', null, [
+				'product_id' => get_the_ID(),
+			]);
+		}
+		wp_reset_postdata();
+	}
+	$products_html = (string) ob_get_clean();
 
 	$results_url = add_query_arg(
 		['s' => $query, 'post_type' => 'product'],
@@ -364,7 +412,7 @@ function lenvy_ajax_live_search(): void {
 
 	wp_send_json_success([
 		'products_html'  => $products_html,
-		'products_count' => (int) $product_query->found_posts,
+		'products_count' => $total_found,
 		'brands'         => $brands,
 		'categories'     => $categories,
 		'results_url'    => esc_url($results_url),

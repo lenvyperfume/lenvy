@@ -28,7 +28,7 @@ $checkout_url = wc_get_checkout_url();
 		<div class="max-w-5xl mx-auto">
 
 			<header class="mb-12 text-center">
-				<h1 class="font-serif italic text-3xl sm:text-4xl text-neutral-900 mb-3">
+				<h1 class="font-medium text-3xl sm:text-4xl text-neutral-900 mb-3">
 					<?php esc_html_e( 'Hoe wil je verder gaan?', 'lenvy' ); ?>
 				</h1>
 				<p class="text-sm text-neutral-500">
@@ -43,7 +43,7 @@ $checkout_url = wc_get_checkout_url();
 				<!-- ── Login ──────────────────────────────────────────── -->
 				<div>
 
-					<h2 class="font-serif italic text-2xl text-neutral-900 mb-8">
+					<h2 class="font-medium text-2xl text-neutral-900 mb-8">
 						<?php esc_html_e( 'Inloggen', 'lenvy' ); ?>
 					</h2>
 
@@ -117,7 +117,7 @@ $checkout_url = wc_get_checkout_url();
 
 						<button
 							type="submit"
-							class="woocommerce-button button woocommerce-form-login__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
+							class="woocommerce-button button woocommerce-form-login__submit w-full bg-black text-white text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-neutral-800 cursor-pointer"
 							name="login"
 							value="<?php esc_attr_e( 'Inloggen', 'lenvy' ); ?>"
 						>
@@ -133,7 +133,7 @@ $checkout_url = wc_get_checkout_url();
 				<!-- ── Register ───────────────────────────────────────── -->
 				<div class="border-t border-neutral-100 pt-12 md:border-t-0 md:border-l md:pt-0 md:pl-16">
 
-					<h2 class="font-serif italic text-2xl text-neutral-900 mb-8">
+					<h2 class="font-medium text-2xl text-neutral-900 mb-8">
 						<?php esc_html_e( 'Account aanmaken', 'lenvy' ); ?>
 					</h2>
 
@@ -228,7 +228,7 @@ $checkout_url = wc_get_checkout_url();
 
 						<button
 							type="submit"
-							class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit w-full bg-primary text-black text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-primary-hover cursor-pointer"
+							class="woocommerce-Button woocommerce-button button woocommerce-form-register__submit w-full bg-black text-white text-xs font-medium uppercase tracking-widest py-4 transition-colors hover:bg-neutral-800 cursor-pointer"
 							name="register"
 							value="<?php esc_attr_e( 'Account aanmaken', 'lenvy' ); ?>"
 						>

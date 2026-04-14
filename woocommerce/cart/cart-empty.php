@@ -29,7 +29,7 @@ ob_end_clean();
 			</svg>
 		</div>
 
-		<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 mb-3">
+		<h2 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
 			<?php esc_html_e('Je winkelwagen is leeg', 'lenvy'); ?>
 		</h2>
 		<p class="text-sm text-neutral-500 mb-10 leading-relaxed">
@@ -39,7 +39,7 @@ ob_end_clean();
 		<?php if (wc_get_page_id('shop') > 0): ?>
 			<a
 				href="<?php echo esc_url(apply_filters('woocommerce_return_to_shop_redirect', wc_get_page_permalink('shop'))); ?>"
-				class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200"
+				class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-black text-white hover:bg-neutral-800 transition-colors duration-200"
 			>
 				<?php esc_html_e('Bekijk onze collectie', 'lenvy'); ?>
 			</a>

@@ -35,7 +35,7 @@ get_header(); ?>
 					</div>
 
 					<?php // ── Title ────────────────────────────────────────────────────────── ?>
-					<h1 class="text-3xl lg:text-5xl font-serif italic text-neutral-900 leading-tight mb-8">
+					<h1 class="text-3xl lg:text-5xl font-medium text-neutral-900 leading-tight mb-8">
 						<?php the_title(); ?>
 					</h1>
 

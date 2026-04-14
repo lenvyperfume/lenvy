@@ -144,7 +144,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 		<button
 			type="submit"
 			form="lenvy-filter-drawer-form"
-			class="flex-1 inline-flex items-center justify-center h-11 bg-primary text-black text-[11px] font-medium uppercase tracking-widest hover:bg-primary-hover transition-colors"
+			class="flex-1 inline-flex items-center justify-center h-11 bg-black text-white text-[11px] font-medium uppercase tracking-widest hover:bg-neutral-800 transition-colors"
 		>
 			<?php esc_html_e('Toepassen', 'lenvy'); ?>
 		</button>

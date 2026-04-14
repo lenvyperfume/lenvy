@@ -36,15 +36,15 @@ $has_gallery = count($all_ids) > 1;
 		<?php foreach ($all_ids as $i => $img_id): ?>
 		<button
 			type="button"
-			class="w-20 aspect-square overflow-hidden bg-neutral-50 border-b-2 transition-colors duration-200 <?php echo 0 === $i
-				? 'border-primary'
+			class="w-20 aspect-square overflow-hidden bg-[#FAF9F8] border-b-2 transition-colors duration-200 <?php echo 0 === $i
+				? 'border-neutral-900'
 				: 'border-transparent hover:border-neutral-300'; ?>"
 			data-gallery-thumb="<?php echo (int) $i; ?>"
 			aria-label="<?php echo esc_attr(sprintf(__('View image %d', 'lenvy'), $i + 1)); ?>"
 		>
 			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 			echo wp_get_attachment_image($img_id, 'woocommerce_thumbnail', false, [
-				'class'   => 'w-full h-full object-contain',
+				'class'   => 'w-full h-full object-contain p-1',
 				'loading' => 'lazy',
 				'alt'     => '',
 			]); ?>
@@ -60,7 +60,7 @@ $has_gallery = count($all_ids) > 1;
 		<div class="overflow-hidden" data-gallery-viewport>
 			<div class="flex" data-gallery-container>
 				<?php foreach ($all_ids as $i => $img_id): ?>
-				<div class="flex-[0_0_100%] min-w-0 bg-neutral-50" data-gallery-slide>
+				<div class="flex-[0_0_100%] min-w-0 bg-[#FAF9F8]" data-gallery-slide>
 					<div class="aspect-square flex items-center justify-center">
 						<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						echo wp_get_attachment_image($img_id, 'woocommerce_single', false, [

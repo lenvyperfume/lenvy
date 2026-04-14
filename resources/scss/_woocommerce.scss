@@ -207,7 +207,7 @@
   transition: background-color v.$transition-base;
 
   &.is-active {
-    background-color: v.$color-primary;
+    background-color: v.$color-black;
   }
 }
 
@@ -225,8 +225,8 @@
   button.single_add_to_cart_button {
     height: 3.5rem; // h-14
     padding-inline: 2rem;
-    background-color: v.$color-primary;
-    color: v.$color-black;
+    background-color: v.$color-black;
+    color: v.$color-white;
     font-size: 0.6875rem; // 11px
     font-weight: 500;
     text-transform: uppercase;
@@ -238,8 +238,8 @@
       color 200ms ease;
 
     &:hover {
-      background-color: v.$color-primary-hover;
-      color: v.$color-black;
+      background-color: v.$neutral-800;
+      color: v.$color-white;
     }
     &:disabled {
       opacity: 0.5;
@@ -332,8 +332,8 @@
 
     // Active state — selected tile.
     &.is-active {
-      border-color: v.$color-primary;
-      background-color: v.$color-primary;
+      border-color: v.$color-black;
+      background-color: v.$color-white;
     }
 
     // Out of stock.
@@ -505,14 +505,14 @@ body .woocommerce-page button.button.alt,
 body .woocommerce-page input.button.alt,
 body .woocommerce .wc-proceed-to-checkout a.checkout-button,
 body .woocommerce-page .wc-proceed-to-checkout a.checkout-button {
-  background-color: v.$color-primary;
-  color: v.$color-black;
+  background-color: v.$color-black;
+  color: v.$color-white;
   border-color: transparent;
   padding: 1rem 1.5rem;
 
   &:hover {
-    background-color: v.$color-primary-hover;
-    color: v.$color-black;
+    background-color: v.$neutral-800;
+    color: v.$color-white;
     border-color: transparent;
   }
 }
@@ -578,20 +578,20 @@ body .wp-element-button {
 body .wc-block-components-button.contained,
 body .wc-block-cart__submit-button,
 body .wc-block-checkout__form-submit {
-  background-color: v.$color-primary;
-  color: v.$color-black;
+  background-color: v.$color-black;
+  color: v.$color-white;
   border: none;
   width: 100%;
   text-align: center;
   justify-content: center;
 
   &:hover {
-    background-color: v.$color-primary-hover;
-    color: v.$color-black;
+    background-color: v.$neutral-800;
+    color: v.$color-white;
   }
 
   .wc-block-components-button__text {
-    color: v.$color-black;
+    color: v.$color-white;
   }
 }
 
@@ -994,8 +994,8 @@ body .wc-block-checkout__form-submit {
   height: 3rem;
   line-height: 3rem;
   text-align: center;
-  background-color: v.$color-primary;
-  color: v.$color-black;
+  background-color: v.$color-black;
+  color: v.$color-white;
   font-family: v.$font-sans;
   font-size: 0.6875rem;
   font-weight: 500;
@@ -1006,8 +1006,8 @@ body .wc-block-checkout__form-submit {
   transition: background-color 200ms ease;
 
   &:hover {
-    background-color: v.$color-primary-hover;
-    color: v.$color-black;
+    background-color: v.$neutral-800;
+    color: v.$color-white;
   }
 }
 
@@ -1175,8 +1175,8 @@ body .wc-block-checkout__form-submit {
       display: block;
       width: 100%;
       height: 3rem;
-      background-color: v.$color-primary;
-      color: v.$color-black;
+      background-color: v.$color-black;
+      color: v.$color-white;
       font-family: v.$font-sans;
       font-size: 0.6875rem;
       font-weight: 500;
@@ -1187,7 +1187,7 @@ body .wc-block-checkout__form-submit {
       transition: background-color 200ms ease;
 
       &:hover {
-        background-color: v.$color-primary-hover;
+        background-color: v.$neutral-800;
       }
     }
   }
@@ -1647,8 +1647,8 @@ body .woocommerce-form-register {
     display: block;
     width: 100%;
     height: 3rem;
-    background-color: v.$color-primary;
-    color: v.$color-black;
+    background-color: v.$color-black;
+    color: v.$color-white;
     font-family: v.$font-sans;
     font-size: 0.6875rem;
     font-weight: 500;
@@ -1663,8 +1663,8 @@ body .woocommerce-form-register {
     padding: 0;
 
     &:hover {
-      background-color: v.$color-primary-hover;
-      color: v.$color-black;
+      background-color: v.$neutral-800;
+      color: v.$color-white;
     }
   }
 }
@@ -1912,8 +1912,8 @@ body .woocommerce-form-register {
     display: block;
     width: 100%;
     height: 3rem;
-    background-color: v.$color-primary;
-    color: v.$color-black;
+    background-color: v.$color-black;
+    color: v.$color-white;
     font-family: v.$font-sans;
     font-size: 0.6875rem;
     font-weight: 500;
@@ -1925,7 +1925,8 @@ body .woocommerce-form-register {
     transition: background-color 200ms ease;
 
     &:hover {
-      background-color: v.$color-primary-hover;
+      background-color: v.$neutral-800;
+      color: v.$color-white;
     }
   }
 }

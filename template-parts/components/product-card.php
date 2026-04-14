@@ -1,6 +1,8 @@
 <?php
 /**
- * Product card component — minimal, image-dominant card for product grids.
+ * Product card component — Skins-inspired, clear hierarchy.
+ *
+ * Visual order: Image → Brand (bold uppercase) → Title → Price
  *
  * Usage:
  *   get_template_part('template-parts/components/product-card', null, [
@@ -61,7 +63,8 @@ $concentration = $product->get_attribute('concentration');
 
 // ── Variable product: "Vanaf" price + cheapest size ─────────────────────────
 $cheapest_size = '';
-if ($product->is_type('variable')) {
+$is_variable   = $product->is_type('variable');
+if ($is_variable) {
 	$prices = $product->get_variation_prices(true);
 	if (!empty($prices['price'])) {
 		$min_var_id = array_keys($prices['price'])[0];
@@ -79,17 +82,16 @@ $image_id = (int) $product->get_image_id();
 
 $image_html = $image_id
 	? wp_get_attachment_image($image_id, $image_size, false, [
-		'class'   => 'w-full h-full object-cover',
+		'class'   => 'w-full h-full object-contain p-10 transition-transform duration-300 group-hover:scale-[1.03]',
 		'loading' => 'lazy',
 		'alt'     => esc_attr($title),
 	])
-	: wc_placeholder_img($image_size, ['class' => 'w-full h-full object-cover']);
+	: wc_placeholder_img($image_size, ['class' => 'w-full h-full object-contain p-10']);
 
 // ── Add-to-cart data ─────────────────────────────────────────────────────────
 $is_purchasable = $product->is_purchasable() && $product->is_in_stock();
 $is_simple      = 'simple' === $product->get_type();
 $atc_url        = $product->add_to_cart_url();
-$atc_text       = $product->add_to_cart_text();
 ?>
 
 <article
@@ -99,15 +101,15 @@ $atc_text       = $product->add_to_cart_text();
 	<!-- Image -->
 	<a
 		href="<?php echo esc_url($permalink); ?>"
-		class="relative block overflow-hidden bg-neutral-50 aspect-product"
+		class="relative block overflow-hidden aspect-product" style="background:#FAF9F8;"
 		tabindex="-1"
 		aria-hidden="true"
 	>
-		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — wp_get_attachment_image output
+		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $image_html; ?>
 
 		<?php if ($badge_text): ?>
-		<span class="absolute top-4 left-4 z-10">
+		<span class="absolute top-3 left-3 z-10">
 			<?php get_template_part('template-parts/components/badge', null, [
 				'text'    => $badge_text,
 				'variant' => $badge_variant,
@@ -116,13 +118,13 @@ $atc_text       = $product->add_to_cart_text();
 		<?php endif; ?>
 
 		<?php if ($is_oos): ?>
-		<span class="absolute inset-0 bg-white/40 z-[5]"></span>
+		<span class="absolute inset-0 bg-white/50 z-[5]"></span>
 		<?php endif; ?>
 
 		<?php if ($is_simple && $is_purchasable): ?>
 		<button
 			type="button"
-			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
+			class="absolute bottom-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white text-neutral-700 rounded-full opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-black hover:text-white"
 			data-quick-add
 			data-product-id="<?php echo esc_attr($product_id); ?>"
 			data-add-to-cart-url="<?php echo esc_url($atc_url); ?>"
@@ -133,7 +135,7 @@ $atc_text       = $product->add_to_cart_text();
 		<?php elseif (!$is_simple && $is_purchasable): ?>
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="absolute bottom-3 right-3 z-10 w-10 h-10 flex items-center justify-center bg-white text-neutral-800 rounded-full shadow-sm opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-primary hover:text-black"
+			class="absolute bottom-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white text-neutral-700 rounded-full opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-black hover:text-white"
 			aria-label="<?php echo esc_attr(sprintf(__('Bekijk opties voor %s', 'lenvy'), $title)); ?>"
 		>
 			<?php lenvy_icon('arrow-right', '', 'sm'); ?>
@@ -142,37 +144,39 @@ $atc_text       = $product->add_to_cart_text();
 	</a>
 
 	<!-- Details -->
-	<div class="pt-5 flex flex-col">
+	<div class="pt-4 flex flex-col gap-1">
 
 		<?php if ($brand_name): ?>
-		<span class="text-[11px] uppercase tracking-[0.12em] text-neutral-600 line-clamp-1">
+		<span class="text-xs font-semibold uppercase tracking-[0.08em] text-neutral-900 line-clamp-1">
 			<?php echo esc_html($brand_name); ?>
 		</span>
 		<?php endif; ?>
 
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="text-[13px] text-neutral-800 leading-snug line-clamp-1 mt-1 transition-colors duration-200 hover:text-black"
+			class="text-sm text-neutral-500 leading-snug line-clamp-2 transition-colors duration-200 hover:text-neutral-900"
 		>
 			<?php echo esc_html($title); ?>
+			<?php if ($concentration): ?>
+				<span class="text-neutral-400"><?php echo esc_html(' — ' . $concentration); ?></span>
+			<?php endif; ?>
 		</a>
 
-		<?php if ($concentration): ?>
-		<span class="text-[11px] text-neutral-400 mt-0.5">
-			<?php echo esc_html($concentration); ?>
-		</span>
-		<?php endif; ?>
-
 		<?php if ($price_html): ?>
-		<div class="mt-2 text-[13px] text-neutral-800 font-medium lenvy-card-price">
-			<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped — WC returns safe price HTML
-			echo $price_html; ?>
+		<div class="mt-1 flex items-baseline gap-2 lenvy-card-price">
+			<span class="text-sm font-semibold text-neutral-900">
+				<?php if ($is_variable): ?>
+					<?php esc_html_e('Vanaf', 'lenvy'); ?>
+				<?php endif; ?>
+				<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				echo $price_html; ?>
+			</span>
+			<?php if ($cheapest_size): ?>
+			<span class="text-xs text-neutral-400">
+				<?php echo esc_html($cheapest_size); ?>
+			</span>
+			<?php endif; ?>
 		</div>
-		<?php if ($cheapest_size): ?>
-		<span class="text-[11px] text-neutral-400 mt-0.5">
-			<?php echo esc_html($cheapest_size); ?>
-		</span>
-		<?php endif; ?>
 		<?php endif; ?>
 
 	</div>

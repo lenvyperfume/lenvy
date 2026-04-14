@@ -15,7 +15,7 @@ get_header(); ?>
 				<?php esc_html_e( '404', 'lenvy' ); ?>
 			</p>
 
-			<h1 class="text-3xl lg:text-4xl font-serif italic text-neutral-900 mb-5">
+			<h1 class="text-3xl lg:text-4xl font-medium text-neutral-900 mb-5">
 				<?php esc_html_e( 'Pagina niet gevonden', 'lenvy' ); ?>
 			</h1>
 
@@ -26,7 +26,7 @@ get_header(); ?>
 			<div class="flex flex-col sm:flex-row gap-3 justify-center">
 				<a
 					href="<?php echo esc_url( get_post_type_archive_link( 'product' ) ); ?>"
-					class="inline-block bg-primary text-black text-xs font-medium uppercase tracking-widest px-8 py-4 hover:bg-primary-hover transition-colors duration-200"
+					class="inline-block bg-black text-white text-xs font-medium uppercase tracking-widest px-8 py-4 hover:bg-neutral-800 transition-colors duration-200"
 				>
 					<?php esc_html_e( 'Naar de winkel', 'lenvy' ); ?>
 				</a>

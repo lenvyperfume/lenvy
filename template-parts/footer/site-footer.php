@@ -70,7 +70,7 @@ $social_labels = [
 					<?php if ($logo_id): ?>
 						<?php echo lenvy_get_image($logo_id, 'medium', 'max-h-9 w-auto object-contain brightness-0 opacity-70'); ?>
 					<?php else: ?>
-						<span class="font-serif italic text-xl text-neutral-900 tracking-tight">
+						<span class="font-medium text-xl text-neutral-900 tracking-tight">
 							<?php bloginfo('name'); ?>
 						</span>
 					<?php endif; ?>

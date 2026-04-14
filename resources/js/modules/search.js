@@ -1,8 +1,8 @@
 /**
- * Search — inline header band with live search results.
+ * Search — Skins-style header takeover with live results.
  *
- * Open:  overlay fades in, band slides down with suggestions panel.
- * Close: band slides back up, overlay fades out, input cleared.
+ * Open:  overlay shown instantly (no animation), input focused.
+ * Close: overlay hidden, input cleared.
  *
  * States: empty → loading → results | no-results
  * Debounced AJAX (300ms) with AbortController for race-condition safety.
@@ -32,9 +32,8 @@ const chevronSvg =
 export function initSearch() {
   const toggle = document.querySelector('[data-search-toggle]');
   const overlay = document.querySelector('[data-search-overlay]');
-  const band = document.querySelector('[data-search-band]');
   const input = overlay?.querySelector('[data-search-input]');
-  const panel = overlay?.querySelector('[data-search-panel]');
+  const clearBtn = overlay?.querySelector('[data-search-clear]');
 
   // State containers.
   const states = {};
@@ -44,6 +43,7 @@ export function initSearch() {
 
   // Result containers.
   const productsContainer = overlay?.querySelector('[data-search-products]');
+  const productCount = overlay?.querySelector('[data-search-product-count]');
   const brandsSection = overlay?.querySelector('[data-search-brands-section]');
   const brandsContainer = overlay?.querySelector('[data-search-brands]');
   const categoriesSection = overlay?.querySelector('[data-search-categories-section]');
@@ -61,9 +61,14 @@ export function initSearch() {
     });
   }
 
+  /** Toggle clear button visibility based on input value. */
+  function updateClearBtn() {
+    if (!clearBtn) return;
+    clearBtn.classList.toggle('hidden', !input?.value.trim());
+  }
+
   /** Fetch live search results. */
   async function fetchResults(query) {
-    // Abort any in-flight request.
     if (abortController) {
       abortController.abort();
     }
@@ -90,25 +95,27 @@ export function initSearch() {
 
       const { products_html, products_count, brands, categories, results_url, query: q } = json.data;
 
-      // No results at all?
       if (!products_count && !brands.length && !categories.length) {
         showState('no-results');
         return;
       }
 
-      // Populate products.
+      // Products.
       if (productsContainer) {
         productsContainer.innerHTML = products_html;
       }
+      if (productCount) {
+        productCount.textContent = `${products_count} producten gevonden`;
+      }
 
-      // Populate brands.
+      // Brands.
       if (brandsContainer && brandsSection) {
         if (brands.length) {
           brandsSection.classList.remove('hidden');
           brandsContainer.innerHTML = brands
             .map(
               (b) =>
-                `<li><a href="${escAttr(b.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-200"><span>${escHtml(b.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${b.count}</span>${chevronSvg}</span></a></li>`,
+                `<li><a href="${escAttr(b.url)}" class="flex items-center justify-between gap-2 py-1 text-sm text-neutral-600 hover:text-black transition-colors"><span>${escHtml(b.name)}</span>${chevronSvg}</a></li>`,
             )
             .join('');
         } else {
@@ -116,14 +123,14 @@ export function initSearch() {
         }
       }
 
-      // Populate categories.
+      // Categories.
       if (categoriesContainer && categoriesSection) {
         if (categories.length) {
           categoriesSection.classList.remove('hidden');
           categoriesContainer.innerHTML = categories
             .map(
               (c) =>
-                `<li><a href="${escAttr(c.url)}" class="flex items-center justify-between gap-2 py-1.5 text-sm text-neutral-700 hover:text-black transition-colors duration-200"><span>${escHtml(c.name)}</span><span class="flex items-center gap-1 text-xs text-neutral-400"><span>${c.count}</span>${chevronSvg}</span></a></li>`,
+                `<li><a href="${escAttr(c.url)}" class="flex items-center justify-between gap-2 py-1 text-sm text-neutral-600 hover:text-black transition-colors"><span>${escHtml(c.name)}</span>${chevronSvg}</a></li>`,
             )
             .join('');
         } else {
@@ -134,12 +141,12 @@ export function initSearch() {
       // "All results" link.
       if (allResultsLink && allResultsText) {
         allResultsLink.href = results_url;
-        allResultsText.textContent = `Alle resultaten voor '${q}'`;
+        allResultsText.textContent = `Bekijk alle resultaten voor "${q}"`;
       }
 
       showState('results');
     } catch (err) {
-      if (err.name === 'AbortError') return; // Expected — new request superseded this one.
+      if (err.name === 'AbortError') return;
       showState('no-results');
     }
   }
@@ -148,6 +155,7 @@ export function initSearch() {
   function onInput() {
     const query = (input?.value || '').trim();
 
+    updateClearBtn();
     clearTimeout(debounceTimer);
 
     if (query.length < 2) {
@@ -164,33 +172,30 @@ export function initSearch() {
 
   function openSearch() {
     if (!overlay) return;
-    overlay.classList.remove('opacity-0', 'pointer-events-none');
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
     overlay.setAttribute('aria-hidden', 'false');
-    band?.classList.remove('-translate-y-full');
     document.body.style.overflow = 'hidden';
-    setTimeout(() => input?.focus(), 60);
+    input?.focus();
   }
 
   function closeSearch() {
     if (!overlay) return;
-    band?.classList.add('-translate-y-full');
-    setTimeout(() => {
-      overlay.classList.add('opacity-0', 'pointer-events-none');
-      overlay.setAttribute('aria-hidden', 'true');
-    }, 150);
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    overlay.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
 
-    // Clear input and reset to empty state.
     if (input) {
       input.value = '';
     }
+    updateClearBtn();
     clearTimeout(debounceTimer);
     if (abortController) {
       abortController.abort();
       abortController = null;
     }
     showState('empty');
-
     toggle?.focus();
   }
 
@@ -198,6 +203,17 @@ export function initSearch() {
   toggle?.addEventListener('click', openSearch);
   input?.addEventListener('input', onInput);
 
+  // Clear button.
+  clearBtn?.addEventListener('click', () => {
+    if (input) {
+      input.value = '';
+      input.focus();
+    }
+    updateClearBtn();
+    showState('empty');
+  });
+
+  // Close buttons.
   overlay?.querySelectorAll('[data-search-close]').forEach((el) => {
     el.addEventListener('click', closeSearch);
   });

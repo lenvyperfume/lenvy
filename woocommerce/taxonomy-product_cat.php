@@ -39,7 +39,7 @@ if ($banner_image_id):
 
 		<?php get_template_part('template-parts/components/breadcrumb'); ?>
 
-		<h1 class="text-3xl lg:text-4xl font-serif italic text-neutral-900 mt-3 mb-10">
+		<h1 class="text-3xl lg:text-4xl font-medium text-neutral-900 mt-3 mb-10">
 			<?php echo esc_html($banner_heading); ?>
 		</h1>
 

@@ -26,7 +26,7 @@ if (!$checkout->is_registration_enabled() && $checkout->is_registration_required
 	<!-- Page heading -->
 	<div class="mb-8 lg:mb-12">
 		<?php get_template_part('template-parts/components/breadcrumb'); ?>
-		<h1 class="mt-3 text-2xl md:text-3xl font-serif italic text-neutral-900">
+		<h1 class="mt-3 text-2xl md:text-3xl font-medium text-neutral-900">
 			<?php esc_html_e('Afrekenen', 'lenvy'); ?>
 		</h1>
 	</div>

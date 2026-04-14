@@ -72,7 +72,7 @@ class Lenvy_Primary_Nav_Walker extends Walker_Nav_Menu {
 			$li_class = $has_children ? 'relative group' : 'relative';
 			$output .= '<li class="' . esc_attr($li_class) . '">';
 
-			$link_class = 'flex items-center gap-1.5 py-2 text-sm tracking-[0.02em] transition-colors duration-200';
+			$link_class = 'flex items-center gap-1.5 py-3 text-[0.8125rem] tracking-[0.02em] transition-colors duration-200';
 			$link_class .= $is_current
 				? ' text-black underline underline-offset-[5px] decoration-neutral-300'
 				: ' text-neutral-600 hover:text-black';

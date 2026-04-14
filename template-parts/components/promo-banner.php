@@ -58,7 +58,7 @@ if (!$image && !$title) {
 
 	<?php if ($title): ?>
 		<!-- Title — top-left, constrained to force line breaks -->
-		<span class="absolute top-6 left-6 md:top-10 md:left-10 font-serif italic text-white text-[clamp(2rem,5vw,4rem)] leading-[1.1] max-w-[40%] drop-shadow-md">
+		<span class="absolute top-6 left-6 md:top-10 md:left-10 font-medium text-white text-[clamp(2rem,5vw,4rem)] leading-[1.1] max-w-[40%] drop-shadow-md">
 			<?php echo esc_html($title); ?>
 		</span>
 	<?php endif; ?>

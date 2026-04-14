@@ -23,7 +23,7 @@ $product_ids = array_map(function ($p) {
 
 <section class="mt-24 lg:mt-32 pt-14 border-t border-neutral-100">
 
-	<h2 class="text-2xl md:text-3xl font-serif italic text-neutral-900 mb-10">
+	<h2 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-10">
 		<?php esc_html_e('Misschien vind je dit ook leuk', 'lenvy'); ?>
 	</h2>
 

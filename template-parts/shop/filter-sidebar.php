@@ -19,7 +19,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 	aria-label="<?php esc_attr_e('Productfilters', 'lenvy'); ?>"
 	data-filter-sidebar
 >
-	<div class="sticky" style="top: var(--header-height, 68px);">
+	<div class="sticky overflow-y-auto" style="top: var(--header-height, 68px); max-height: calc(100vh - var(--header-height, 68px) - 2rem);">
 
 		<div class="flex items-center justify-between pb-4 border-b border-neutral-100">
 			<h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-800">
@@ -131,7 +131,7 @@ $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
 
 			<button
 				type="submit"
-				class="mt-5 w-full bg-primary text-black text-sm font-medium tracking-wide py-2.5 hover:bg-primary-hover transition-colors duration-200"
+				class="mt-5 w-full bg-black text-white text-sm font-medium tracking-wide py-2.5 hover:bg-neutral-800 transition-colors duration-200"
 			>
 				<?php esc_html_e('Toepassen', 'lenvy'); ?>
 			</button>

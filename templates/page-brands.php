@@ -74,7 +74,7 @@ $all_letters = array_merge( range( 'A', 'Z' ), [ '#' ] );
 			<span class="block text-[11px] uppercase tracking-widest text-neutral-400 mb-2">
 				<?php esc_html_e( 'Merken', 'lenvy' ); ?>
 			</span>
-			<h1 class="text-2xl md:text-3xl font-serif italic text-neutral-900">
+			<h1 class="text-2xl md:text-3xl font-medium text-neutral-900">
 				<?php esc_html_e( 'Alle Merken', 'lenvy' ); ?>
 			</h1>
 			<?php if ( get_the_content() ): ?>
@@ -177,7 +177,7 @@ $all_letters = array_merge( range( 'A', 'Z' ), [ '#' ] );
 
 		<?php foreach ( $grouped as $letter => $terms ): ?>
 		<div class="mb-12" id="letter-<?php echo esc_attr( $letter ); ?>" data-letter-group="<?php echo esc_attr( $letter ); ?>">
-			<h2 class="text-2xl font-serif italic text-neutral-900 border-b border-neutral-100 pb-3 mb-6">
+			<h2 class="text-2xl font-medium text-neutral-900 border-b border-neutral-100 pb-3 mb-6">
 				<?php echo esc_html( $letter ); ?>
 			</h2>
 			<ul class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-3">

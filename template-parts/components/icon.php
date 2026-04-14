@@ -45,6 +45,7 @@ $allowed = [
 	'star-filled',
 	'trash',
 	'user',
+	'home',
 	'truck',
 	'shield',
 	'refresh',

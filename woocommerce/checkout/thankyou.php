@@ -24,7 +24,7 @@ defined('ABSPATH') || exit();
 			<?php if ($order->has_status('failed')): ?>
 
 				<div class="text-center mb-10">
-					<h1 class="text-2xl md:text-3xl font-serif italic text-neutral-900 mb-3">
+					<h1 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
 						<?php esc_html_e('Betaling mislukt', 'lenvy'); ?>
 					</h1>
 					<p class="text-sm text-neutral-600 leading-relaxed max-w-md mx-auto">
@@ -33,7 +33,7 @@ defined('ABSPATH') || exit();
 				</div>
 
 				<div class="flex justify-center gap-3">
-					<a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200">
+					<a href="<?php echo esc_url($order->get_checkout_payment_url()); ?>" class="inline-flex items-center justify-center h-12 px-8 text-[11px] font-medium uppercase tracking-widest bg-black text-white hover:bg-neutral-800 transition-colors duration-200">
 						<?php esc_html_e('Opnieuw betalen', 'lenvy'); ?>
 					</a>
 					<?php if (is_user_logged_in()): ?>
@@ -53,7 +53,7 @@ defined('ABSPATH') || exit();
 							<path d="M16 24l5 5 11-11" stroke-linecap="round" stroke-linejoin="round"/>
 						</svg>
 					</div>
-					<h1 class="text-2xl md:text-3xl font-serif italic text-neutral-900 mb-3">
+					<h1 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
 						<?php esc_html_e('Bedankt voor je bestelling', 'lenvy'); ?>
 					</h1>
 					<p class="text-sm text-neutral-500">
@@ -186,7 +186,7 @@ defined('ABSPATH') || exit();
 					<?php if (wc_get_page_id('shop') > 0): ?>
 						<a
 							href="<?php echo esc_url(wc_get_page_permalink('shop')); ?>"
-							class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-primary text-black hover:bg-primary-hover transition-colors duration-200"
+							class="inline-flex items-center justify-center h-12 px-10 text-[11px] font-medium uppercase tracking-widest bg-black text-white hover:bg-neutral-800 transition-colors duration-200"
 						>
 							<?php esc_html_e('Verder winkelen', 'lenvy'); ?>
 						</a>
@@ -199,7 +199,7 @@ defined('ABSPATH') || exit();
 		<?php else: ?>
 
 			<div class="text-center">
-				<h1 class="text-2xl md:text-3xl font-serif italic text-neutral-900 mb-3">
+				<h1 class="text-2xl md:text-3xl font-medium text-neutral-900 mb-3">
 					<?php esc_html_e('Bestelling ontvangen', 'lenvy'); ?>
 				</h1>
 				<p class="text-sm text-neutral-500">

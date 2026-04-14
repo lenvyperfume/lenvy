@@ -52,7 +52,7 @@ $menu_location = has_nav_menu('mobile') ? 'mobile' : (has_nav_menu('primary') ? 
 				// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				?>
 			<?php else: ?>
-				<span class="font-serif italic text-2xl tracking-tight text-neutral-900">
+				<span class="font-medium text-2xl tracking-tight text-neutral-900">
 					<?php bloginfo('name'); ?>
 				</span>
 			<?php endif; ?>

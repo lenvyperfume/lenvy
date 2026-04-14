@@ -28,7 +28,7 @@ if (empty($text)) {
 
 $variants = [
 	'sale'   => 'bg-black text-white px-2 py-0.5',
-	'new'    => 'bg-primary text-black px-2 py-0.5',
+	'new'    => 'bg-black text-white px-2 py-0.5',
 	'oos'    => 'text-neutral-400',
 	'custom' => 'bg-neutral-100 text-neutral-700 px-2 py-0.5',
 ];

@@ -58,7 +58,7 @@ foreach ($sections as $section):
 
 					<?php if ($heading): ?>
 						<h2
-							class="font-serif italic text-white leading-tight"
+							class="font-medium text-white leading-tight"
 							style="font-size: clamp(2.25rem, 5vw, 4rem);"
 						>
 							<?php echo esc_html($heading); ?>

@@ -34,7 +34,7 @@ $categories = get_the_category();
 		</time>
 	</div>
 
-	<h2 class="text-lg font-serif italic text-neutral-900 leading-snug mb-3 group-hover:text-neutral-600 transition-colors duration-200">
+	<h2 class="text-lg font-medium text-neutral-900 leading-snug mb-3 group-hover:text-neutral-600 transition-colors duration-200">
 		<a href="<?php the_permalink(); ?>">
 			<?php the_title(); ?>
 		</a>

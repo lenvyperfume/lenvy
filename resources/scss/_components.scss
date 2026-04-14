@@ -115,6 +115,24 @@
   }
 }
 
+// ─── Search bar reset ────────────────────────────────────────────────────────
+// Override WooCommerce's global input/button styles inside the header search.
+
+[data-search-overlay] form {
+  * {
+    border: none !important;
+    box-shadow: none !important;
+    outline: none !important;
+    background: transparent !important;
+  }
+
+  // Re-apply the form border itself.
+  &[class] {
+    border: 1px solid v.$neutral-300 !important;
+    background: transparent !important;
+  }
+}
+
 // ─── Search panel ────────────────────────────────────────────────────────────
 
 [data-search-panel] {
@@ -308,8 +326,7 @@
   h4,
   h5,
   h6 {
-    font-family: v.$font-serif;
-    font-style: italic;
+    font-weight: 500;
     color: v.$color-black;
     margin-top: 2em;
     margin-bottom: 0.75em;

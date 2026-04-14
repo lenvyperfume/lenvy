@@ -19,6 +19,11 @@ if ($enabled === false) {
 	return;
 }
 
+// On the homepage the USP bar renders below the hero — skip the sitewide one.
+if (is_front_page()) {
+	return;
+}
+
 $defaults = [
 	['usp_icon' => 'truck',   'usp_text' => __('Gratis verzending vanaf €50', 'lenvy')],
 	['usp_icon' => 'refresh', 'usp_text' => __('30 dagen retour', 'lenvy')],
