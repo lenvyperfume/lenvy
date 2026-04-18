@@ -22,9 +22,31 @@ class Lenvy_Footer_Nav_Walker extends Walker_Nav_Menu {
 			$url .
 			'"' .
 			$target .
-			' class="text-sm font-light text-neutral-700 hover:text-black transition-colors duration-200">' .
+			' class="text-sm text-white/70 hover:text-white transition-colors duration-200">' .
 			esc_html($title) .
 			'</a>';
+	}
+
+	public function end_el(&$output, $data_object, $depth = 0, $args = null) {
+		$output .= '</li>';
+	}
+}
+
+// ─── Footer legal walker ──────────────────────────────────────────────────────
+// Tiny inline list in the bottom bar — privacy, terms, cookies.
+
+class Lenvy_Footer_Legal_Walker extends Walker_Nav_Menu {
+	public function start_el(&$output, $data_object, $depth = 0, $args = null, $current_object_id = 0) {
+		$item   = $data_object;
+		$url    = esc_url($item->url);
+		$title  = apply_filters('nav_menu_item_title', $item->title, $item, $args, $depth);
+		$target = $item->target ? ' target="' . esc_attr($item->target) . '" rel="noopener"' : '';
+
+		$output .= '<li class="inline-block">';
+		$output .=
+			'<a href="' . $url . '"' . $target .
+			' class="text-[12px] text-white/50 hover:text-white transition-colors duration-200">' .
+			esc_html($title) . '</a>';
 	}
 
 	public function end_el(&$output, $data_object, $depth = 0, $args = null) {
@@ -63,25 +85,30 @@ class Lenvy_Primary_Nav_Walker extends Walker_Nav_Menu {
 		$url = esc_url($item->url);
 		$title = apply_filters('nav_menu_item_title', $item->title, $item, $args, $depth);
 		$target = $item->target ? ' target="' . esc_attr($item->target) . '" rel="noopener"' : '';
+		$classes = array_map('strtolower', (array) $item->classes);
 		$is_current =
-			in_array('current-menu-item', $item->classes, true) ||
-			in_array('current-menu-ancestor', $item->classes, true);
-		$has_children = in_array('menu-item-has-children', $item->classes, true);
+			in_array('current-menu-item', $classes, true) ||
+			in_array('current-menu-ancestor', $classes, true);
+		$has_children = in_array('menu-item-has-children', $classes, true);
+		$is_sale      = in_array('sale', $classes, true) || 0 === strcasecmp(trim((string) $title), 'sale');
 
 		if ($depth === 0) {
 			$li_class = $has_children ? 'relative group' : 'relative';
 			$output .= '<li class="' . esc_attr($li_class) . '">';
 
-			$link_class = 'flex items-center gap-1.5 py-3 text-[0.8125rem] tracking-[0.02em] transition-colors duration-200';
-			$link_class .= $is_current
-				? ' text-black underline underline-offset-[5px] decoration-neutral-300'
-				: ' text-neutral-600 hover:text-black';
+			$link_class = 'lenvy-nav-link';
+			if ($is_sale) {
+				$link_class .= ' is-sale';
+			}
+			if ($is_current) {
+				$link_class .= ' is-active';
+			}
 			$output .= '<a href="' . $url . '"' . $target . ' class="' . esc_attr($link_class) . '">';
 			$output .= esc_html($title);
 
 			if ($has_children) {
 				$output .=
-					'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 shrink-0 opacity-50 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>';
+					'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3 ml-1.5 shrink-0 opacity-50 transition-transform duration-200 group-hover:rotate-180 group-focus-within:rotate-180" aria-hidden="true" focusable="false"><polyline points="6 9 12 15 18 9"/></svg>';
 			}
 			$output .= '</a>';
 		} else {

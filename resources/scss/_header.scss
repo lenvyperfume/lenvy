@@ -18,3 +18,39 @@
     top: 46px;
   }
 }
+
+// ─── Primary nav link ─────────────────────────────────────────────────────────
+// 13px text · 0.04em tracking · 16px vertical padding · 2px lavender underline
+// on hover & active, painted 10px from the bottom (matches Homepage.html).
+
+.lenvy-nav-link {
+  position: relative;
+  display: inline-block;
+  padding-block: 16px;
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: v.$color-black;
+  transition: color 160ms ease;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 10px;
+    height: 2px;
+    background: v.$color-primary;
+    opacity: 0;
+    transition: opacity 160ms ease;
+  }
+
+  &:hover::after,
+  &:focus-visible::after,
+  &.is-active::after {
+    opacity: 1;
+  }
+
+  &.is-sale {
+    color: #b8005a;
+  }
+}

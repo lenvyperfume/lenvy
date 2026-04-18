@@ -43,6 +43,11 @@ html {
   scroll-behavior: smooth;
   text-rendering: optimizeLegibility;
   -webkit-text-size-adjust: 100%;
+
+  // Always reserve space for the vertical scrollbar so modals that lock
+  // body overflow (search drawer, filter drawer, cart drawer) don't cause
+  // the page to shift sideways when opened.
+  scrollbar-gutter: stable;
 }
 
 // ─── Body ────────────────────────────────────────────────────────────────────
@@ -55,35 +60,33 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-// ─── Headings ────────────────────────────────────────────────────────────────
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 500;
-  line-height: 1.2;
-  color: v.$color-black;
-}
-
-// ─── Body copy ────────────────────────────────────────────────────────────────
-
-p {
-  line-height: 1.75;
-}
-
-// ─── Links & Media ───────────────────────────────────────────────────────────
-// Wrapped in @layer base so Tailwind utility classes (text-*, h-*, max-h-*)
-// can override these defaults — styles outside layers beat those inside layers
-// in the CSS cascade, which would prevent utility overrides.
+// ─── Element defaults (inside @layer base so utilities win) ──────────────────
+// Tailwind utility classes (text-*, color-*, h-*, max-h-*) must be able to
+// override these defaults. Rules outside any cascade layer beat in-layer rules,
+// so we put the element defaults inside `@layer base` — regardless of where
+// they appear in the file, utility classes win.
 
 @layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: 500;
+    line-height: 1.2;
+    color: v.$color-black;
+  }
+
+  p {
+    line-height: 1.75;
+  }
+
   a {
     color: inherit;
     text-decoration: none;
   }
+
   img {
     height: auto;
     max-width: 100%;

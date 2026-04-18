@@ -236,6 +236,13 @@
   overflow: hidden;
 }
 
+// ─── Hero slider dots ────────────────────────────────────────────────────────
+// Tiny companion to hero-slider.js — the active dot is solid white.
+
+.lenvy-hero-dot.is-active {
+  background: #ffffff;
+}
+
 // ─── Brand logo scroller (CSS marquee) ───────────────────────────────────────
 // Pure CSS infinite marquee — no JS required.
 // Logos rendered twice in PHP; translateX(-50%) creates a seamless loop.

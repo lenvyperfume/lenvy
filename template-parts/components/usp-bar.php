@@ -1,74 +1,46 @@
 <?php
 /**
- * USP / trust bar — sitewide strip of trust signals below the header.
+ * Announcement bar — site-wide dark strip at the very top of every page.
  *
- * Reads the ACF repeater `lenvy_usp_items` from the Theme Settings options
- * page. Falls back to hardcoded Dutch defaults when ACF is empty or inactive.
+ * Matches the design's `.usp-top` band: near-black background, small white
+ * text, lavender dot before each item, 40px gap between items.
  *
- * Desktop: static flex row, centred.
- * Mobile (<lg): Embla Carousel — 1 item at a time, autoplay.
+ * Reads the ACF repeater `lenvy_usp_items` (Theme Settings → USP Bar).
+ * Falls back to sensible Dutch defaults when the repeater is empty.
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-// Bail if the bar is explicitly disabled in Theme Settings.
 $enabled = lenvy_field('lenvy_usp_bar_enabled', 'options');
 if ($enabled === false) {
 	return;
 }
 
-// On the homepage the USP bar renders below the hero — skip the sitewide one.
-if (is_front_page()) {
-	return;
-}
-
 $defaults = [
-	['usp_icon' => 'truck',   'usp_text' => __('Gratis verzending vanaf €50', 'lenvy')],
-	['usp_icon' => 'refresh', 'usp_text' => __('30 dagen retour', 'lenvy')],
-	['usp_icon' => 'check',   'usp_text' => __('Veilig betalen', 'lenvy')],
+	['usp_text' => __('Gratis verzending vanaf €50', 'lenvy')],
+	['usp_text' => __('Vandaag besteld, morgen in huis', 'lenvy')],
+	['usp_text' => __('100% originele parfums · gratis samples', 'lenvy')],
 ];
 
 $items = lenvy_field('lenvy_usp_items', 'options') ?: $defaults;
+$items = array_values(array_filter($items, static fn ($it) => ! empty($it['usp_text'] ?? '')));
+
+if (empty($items)) {
+	return;
+}
 ?>
 
-<div class="bg-primary border-primary-hover">
+<div class="bg-neutral-950 text-neutral-300 text-[12px] tracking-[0.04em] py-2.5 text-center">
 	<div class="lenvy-container">
-
-		<!-- Desktop: static row -->
-		<ul class="hidden lg:flex items-center justify-center gap-8 py-2.5">
-			<?php foreach ($items as $item):
-				$icon = $item['usp_icon'] ?? 'check';
-				$text = $item['usp_text'] ?? '';
-				if (empty($text)) {
-					continue;
-				}
-			?>
-				<li class="flex items-center gap-2 shrink-0">
-					<?php lenvy_icon($icon, 'text-neutral-700 shrink-0', 'sm'); ?>
-					<span class="text-xs text-neutral-700 whitespace-nowrap"><?php echo esc_html($text); ?></span>
+		<ul class="flex flex-wrap justify-center items-center gap-x-10 gap-y-1 m-0 p-0 list-none">
+			<?php foreach ($items as $item): ?>
+				<li class="inline-flex items-center opacity-85 whitespace-nowrap">
+					<span class="inline-block w-[3px] h-[3px] rounded-full bg-primary mr-2.5 -translate-y-[2px]" aria-hidden="true"></span>
+					<?php echo esc_html($item['usp_text']); ?>
 				</li>
 			<?php endforeach; ?>
 		</ul>
-
-		<!-- Mobile: Embla slider, 1 item at a time -->
-		<div class="lg:hidden overflow-hidden py-2.5" data-usp-viewport>
-			<ul class="flex">
-				<?php foreach ($items as $item):
-					$icon = $item['usp_icon'] ?? 'check';
-					$text = $item['usp_text'] ?? '';
-					if (empty($text)) {
-						continue;
-					}
-				?>
-					<li class="flex items-center justify-center gap-2 shrink-0 w-full min-w-0" style="flex: 0 0 100%;">
-						<?php lenvy_icon($icon, 'text-neutral-700 shrink-0', 'sm'); ?>
-						<span class="text-xs text-neutral-700 whitespace-nowrap"><?php echo esc_html($text); ?></span>
-					</li>
-				<?php endforeach; ?>
-			</ul>
-		</div>
-
 	</div>
 </div>

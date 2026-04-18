@@ -1,202 +1,203 @@
 <?php
 /**
- * Site footer — primary-color background, editorial layout.
+ * Site footer — HARDCODED match of Homepage.html `footer.site`.
  *
  * Structure:
- *   Grid (3 col)     — brand+contact | shop nav | social
- *   ─────────────────────────────────────────────────────────────────
- *   Bottom bar       — copyright | legal nav
+ *   Top grid (1.4fr · 1fr · 1fr · 1fr, gap 64px, 64px border-bottom)
+ *     Col 1 — logo + blurb + contact + socials
+ *     Col 2 — Shop
+ *     Col 3 — Hulp
+ *     Col 4 — Over Lenvy
+ *   Bottom bar (flex between, 28px top padding)
+ *     Copyright · Legal nav · Payment chips
  *
- * ACF fields consumed (options page):
- *   lenvy_site_logo_light       image (preferred on dark bg; unused here)
- *   lenvy_site_logo             image
- *   lenvy_footer_copyright_text text  ({year} placeholder)
- *   lenvy_footer_social_links   repeater  [platform, url]
- *   lenvy_contact_email         email
- *   lenvy_contact_phone         text
- *   lenvy_contact_address       textarea
+ * Everything is hardcoded per the current design brief. Swap back to
+ * nav_menu / ACF lookups later if editorial control is needed.
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-// ── Gather data ───────────────────────────────────────────────────────────────
-
+$home    = home_url('/');
 $logo_id = lenvy_field('lenvy_site_logo', 'options');
 
-$copyright_raw = lenvy_field('lenvy_footer_copyright_text', 'options');
-$copyright = $copyright_raw
-	? str_replace('{year}', date('Y'), $copyright_raw)
-	: sprintf(
-		/* translators: 1: year, 2: site name */
-		__('&copy; %1$s %2$s. Alle rechten voorbehouden.', 'lenvy'),
-		date('Y'),
-		get_bloginfo('name'),
-	);
+$contact_email = 'hallo@lenvy.nl';
+$contact_phone = '+31 (0)20 000 0000';
+$contact_hours = __('Ma–Vr · 09:00–17:30', 'lenvy');
 
-$social_links = lenvy_field('lenvy_footer_social_links', 'options') ?: [];
-$contact_email = lenvy_field('lenvy_contact_email', 'options');
-$contact_phone = lenvy_field('lenvy_contact_phone', 'options');
-$contact_address = lenvy_field('lenvy_contact_address', 'options');
-$kvk_number = lenvy_field('lenvy_kvk_number', 'options');
-$btw_number = lenvy_field('lenvy_btw_number', 'options');
-
-$social_labels = [
-	'instagram' => __('Instagram', 'lenvy'),
-	'facebook' => __('Facebook', 'lenvy'),
-	'tiktok' => __('TikTok', 'lenvy'),
-	'pinterest' => __('Pinterest', 'lenvy'),
-	'youtube' => __('YouTube', 'lenvy'),
-	'x' => __('X (Twitter)', 'lenvy'),
+$socials = [
+	['name' => 'Instagram', 'url' => 'https://instagram.com/', 'icon' => 'instagram'],
+	['name' => 'TikTok',    'url' => 'https://tiktok.com/',    'icon' => 'tiktok'],
+	['name' => 'Pinterest', 'url' => 'https://pinterest.com/', 'icon' => 'pinterest'],
 ];
+
+$columns = [
+	[
+		'title' => __('Shop', 'lenvy'),
+		'links' => [
+			[ __('Dames',            'lenvy'), $home ],
+			[ __('Heren',            'lenvy'), $home ],
+			[ __('Unisex',           'lenvy'), $home ],
+			[ __('Niche & zeldzaam', 'lenvy'), $home ],
+			[ __('Samples & sets',   'lenvy'), $home ],
+			[ __('Cadeaubonnen',     'lenvy'), $home ],
+		],
+	],
+	[
+		'title' => __('Hulp', 'lenvy'),
+		'links' => [
+			[ __('Contact',               'lenvy'), $home ],
+			[ __('Verzending',            'lenvy'), $home ],
+			[ __('Retourneren',           'lenvy'), $home ],
+			[ __('Echtheidsgarantie',     'lenvy'), $home ],
+			[ __('Veelgestelde vragen',   'lenvy'), $home ],
+			[ __('Track je order',        'lenvy'), $home ],
+		],
+	],
+	[
+		'title' => __('Over Lenvy', 'lenvy'),
+		'links' => [
+			[ __('Ons verhaal',      'lenvy'), $home ],
+			[ __('Partners & merken','lenvy'), $home ],
+			[ __('Duurzaamheid',     'lenvy'), $home ],
+			[ __('Pers',             'lenvy'), $home ],
+			[ __('Vacatures',        'lenvy'), $home ],
+		],
+	],
+];
+
+$legal = [
+	[ __('Privacybeleid',         'lenvy'), $home ],
+	[ __('Algemene voorwaarden',  'lenvy'), $home ],
+	[ __('Cookies',               'lenvy'), $home ],
+];
+
+$payment_methods_src = get_template_directory_uri() . '/assets/icons/payments/payment-methods.svg';
 ?>
 
-<footer class="bg-neutral-50 border-t border-neutral-200 text-neutral-700 overflow-hidden">
+<footer class="bg-neutral-950 text-white/70 pt-20 pb-7">
+	<div class="lenvy-container">
 
-	<!-- ── Main grid ─────────────────────────────────────────────────────── -->
-	<div class="lenvy-container py-16 lg:py-20">
-		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 lg:gap-8">
+		<!-- ── Top grid ────────────────────────────────────────────────── -->
+		<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr] gap-12 lg:gap-16 pb-16 border-b border-white/10">
 
-			<!-- Col 1: Brand + contact info ───────────────────────────── -->
-			<div class="space-y-5">
-
-				<!-- Logo -->
+			<!-- Col 1 — brand -->
+			<div>
 				<a
-					href="<?php echo esc_url(home_url('/')); ?>"
+					href="<?php echo esc_url($home); ?>"
+					class="inline-flex items-center mb-6 text-white"
 					aria-label="<?php echo esc_attr(get_bloginfo('name')); ?>"
-					class="inline-block"
 				>
 					<?php if ($logo_id): ?>
-						<?php echo lenvy_get_image($logo_id, 'medium', 'max-h-9 w-auto object-contain brightness-0 opacity-70'); ?>
+						<?php
+						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						echo lenvy_get_image($logo_id, 'medium', 'block max-h-10 w-auto object-contain brightness-0 invert');
+						?>
 					<?php else: ?>
-						<span class="font-medium text-xl text-neutral-900 tracking-tight">
+						<span class="relative inline-flex items-baseline font-medium text-[40px] tracking-[-0.04em] leading-none pr-4">
 							<?php bloginfo('name'); ?>
+							<span
+								class="absolute right-0 w-2 h-2 rounded-full bg-primary"
+								style="top:-4px;"
+								aria-hidden="true"
+							></span>
 						</span>
 					<?php endif; ?>
 				</a>
 
-				<!-- Contact details under logo -->
-				<div class="space-y-1.5 text-sm text-neutral-600 leading-relaxed">
-					<?php if ($contact_address): ?>
-					<p class="whitespace-pre-line"><?php echo esc_html($contact_address); ?></p>
-					<?php endif; ?>
-					<?php if ($contact_email): ?>
+				<p class="max-w-[320px] text-[14px] leading-[1.6] text-white/60">
+					<?php esc_html_e('Een zorgvuldig samengestelde bestemming voor originele parfums uit gerenommeerde huizen. Verzonden vanuit Amsterdam.', 'lenvy'); ?>
+				</p>
+
+				<div class="mt-8 flex flex-col gap-4 text-[14px]">
 					<a
 						href="mailto:<?php echo esc_attr($contact_email); ?>"
-						class="block hover:text-black transition-colors duration-200 break-all"
+						class="text-white/70 hover:text-white transition-colors duration-200"
 					>
 						<?php echo esc_html($contact_email); ?>
 					</a>
-					<?php endif; ?>
-					<?php if ($contact_phone): ?>
 					<a
 						href="tel:<?php echo esc_attr(preg_replace('/[^\d+]/', '', $contact_phone)); ?>"
-						class="block hover:text-black transition-colors duration-200"
+						class="text-white/70 hover:text-white transition-colors duration-200"
 					>
 						<?php echo esc_html($contact_phone); ?>
 					</a>
-					<?php endif; ?>
-					<?php if ($kvk_number): ?>
-					<p class="text-xs text-neutral-400"><?php echo esc_html('KVK: ' . $kvk_number); ?></p>
-					<?php endif; ?>
-					<?php if ($btw_number): ?>
-					<p class="text-xs text-neutral-400"><?php echo esc_html('BTW: ' . $btw_number); ?></p>
-					<?php endif; ?>
+					<span class="text-[13px] text-white/40">
+						<?php echo esc_html($contact_hours); ?>
+					</span>
 				</div>
 
-			</div>
-
-			<!-- Col 2: Shop nav ───────────────────────────────────────── -->
-			<div class="space-y-5">
-				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
-					<?php esc_html_e('Shop', 'lenvy'); ?>
-				</h3>
-				<?php if (has_nav_menu('footer')): ?>
-				<nav aria-label="<?php esc_attr_e('Winkelnavigatie', 'lenvy'); ?>">
-					<?php wp_nav_menu([
-     	'theme_location' => 'footer',
-     	'container' => false,
-     	'menu_class' => 'space-y-3',
-     	'walker' => new Lenvy_Footer_Nav_Walker(),
-     	'fallback_cb' => false,
-     	'depth' => 1,
-     ]); ?>
-				</nav>
-				<?php endif; ?>
-			</div>
-
-			<!-- Col 3: Social media ───────────────────────────────────── -->
-			<div class="space-y-5">
-				<h3 class="text-[11px] font-semibold uppercase tracking-widest text-neutral-400">
-					<?php esc_html_e('Volg ons', 'lenvy'); ?>
-				</h3>
-				<?php if (!empty($social_links)): ?>
-				<div class="flex flex-wrap gap-5">
-					<?php foreach ($social_links as $social):
-
-     	$platform = $social['platform'] ?? '';
-     	$url = $social['url'] ?? '';
-     	if (!$platform || !$url) {
-     		continue;
-     	}
-     	?>
-					<a
-						href="<?php echo esc_url($url); ?>"
-						target="_blank"
-						rel="noopener noreferrer"
-						aria-label="<?php echo esc_attr($social_labels[$platform] ?? ucfirst($platform)); ?>"
-						class="text-neutral-600 hover:text-black transition-colors duration-200"
-					>
-						<?php lenvy_icon($platform, '', 'sm'); ?>
-					</a>
-					<?php
-     endforeach; ?>
+				<div class="mt-6 flex gap-3.5">
+					<?php foreach ($socials as $social): ?>
+						<a
+							href="<?php echo esc_url($social['url']); ?>"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="<?php echo esc_attr($social['name']); ?>"
+							class="inline-flex items-center justify-center w-9 h-9 rounded-full border border-white/15 text-white/80 hover:bg-white/10 hover:text-white transition-colors duration-200"
+						>
+							<?php lenvy_icon($social['icon'], '', 'sm'); ?>
+						</a>
+					<?php endforeach; ?>
 				</div>
-				<?php else: ?>
-				<p class="text-sm text-neutral-500 italic">
-					<?php esc_html_e('Binnenkort beschikbaar.', 'lenvy'); ?>
-				</p>
-				<?php endif; ?>
 			</div>
+
+			<!-- Cols 2-4 — link lists -->
+			<?php foreach ($columns as $col): ?>
+				<div>
+					<h4 class="text-white text-[12px] font-medium tracking-[0.18em] uppercase m-0 mb-5">
+						<?php echo esc_html($col['title']); ?>
+					</h4>
+					<ul class="flex flex-col gap-3 m-0 p-0 list-none">
+						<?php foreach ($col['links'] as $link): ?>
+							<li>
+								<a
+									href="<?php echo esc_url($link[1]); ?>"
+									class="text-[14px] text-white/70 hover:text-white transition-colors duration-200"
+								>
+									<?php echo esc_html($link[0]); ?>
+								</a>
+							</li>
+						<?php endforeach; ?>
+					</ul>
+				</div>
+			<?php endforeach; ?>
 
 		</div>
-	</div>
 
-	<!-- ── Bottom bar ────────────────────────────────────────────────────── -->
-	<div class="lenvy-container border-t border-neutral-200 py-8">
-		<div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+		<!-- ── Bottom bar ──────────────────────────────────────────────── -->
+		<div class="pt-7 flex flex-wrap items-center justify-between gap-5 text-[12px] text-white/50">
 
-			<p class="text-xs text-neutral-400">
-				<?php echo wp_kses_post($copyright); ?>
-			</p>
+			<span>
+				<?php echo esc_html(sprintf(
+					/* translators: %s: current year */
+					__('© %s Lenvy B.V. · KVK 81234567 · BTW NL 8623.45.678.B01', 'lenvy'),
+					date('Y'),
+				)); ?>
+			</span>
 
-			<!-- Payment methods -->
-			<img src="<?php echo esc_url(get_template_directory_uri() . '/assets/icons/payments/payment-methods.svg'); ?>" alt="<?php esc_attr_e('iDEAL, Maestro, Mastercard, Visa', 'lenvy'); ?>" width="168" height="26" loading="lazy">
-
-			<!-- Legal quick-links -->
-			<nav
-				class="flex items-center flex-wrap gap-x-5 gap-y-1"
-				aria-label="<?php esc_attr_e('Juridisch', 'lenvy'); ?>"
-			>
-				<?php
-    $legal = [
-    	__('Privacybeleid', 'lenvy') => home_url('/privacy-policy/'),
-    	__('Algemene voorwaarden', 'lenvy') => home_url('/terms-conditions/'),
-    	__('Cookiebeleid', 'lenvy') => home_url('/cookie-policy/'),
-    ];
-    foreach ($legal as $label => $href): ?>
-				<a
-					href="<?php echo esc_url($href); ?>"
-					class="text-xs text-neutral-400 hover:text-black transition-colors duration-200"
-				>
-					<?php echo esc_html($label); ?>
-				</a>
-				<?php endforeach;
-    ?>
+			<nav aria-label="<?php esc_attr_e('Juridisch', 'lenvy'); ?>" class="flex flex-wrap gap-6">
+				<?php foreach ($legal as $link): ?>
+					<a
+						href="<?php echo esc_url($link[1]); ?>"
+						class="text-[12px] text-white/50 hover:text-white transition-colors duration-200"
+					>
+						<?php echo esc_html($link[0]); ?>
+					</a>
+				<?php endforeach; ?>
 			</nav>
 
-		</div>
-	</div>
+			<img
+				src="<?php echo esc_url($payment_methods_src); ?>"
+				alt="<?php esc_attr_e('iDEAL, Maestro, Mastercard, Visa', 'lenvy'); ?>"
+				width="168"
+				height="26"
+				loading="lazy"
+				class="max-h-[26px] w-auto"
+			/>
 
+		</div>
+
+	</div>
 </footer>

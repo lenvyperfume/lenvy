@@ -113,11 +113,18 @@ add_action('wp_enqueue_scripts', 'lenvy_enqueue_assets');
 add_action(
 	'wp_head',
 	static function (): void {
+		$logo_id  = function_exists('get_field') ? (int) ( get_field('lenvy_site_logo', 'options')['ID'] ?? 0 ) : 0;
+		$logo_url = $logo_id ? (string) wp_get_attachment_image_url($logo_id, 'medium') : '';
+
 		printf(
 			'<script>window.lenvyAjax=%s;</script>' . "\n",
 			wp_json_encode([
 				'url'    => admin_url('admin-ajax.php'),
 				'nonce'  => wp_create_nonce('lenvy_ajax'),
+				'logo'   => [
+					'url' => $logo_url,
+					'alt' => get_bloginfo('name'),
+				],
 				'strings' => [
 					/* translators: 1: first result number, 2: last result number, 3: total count */
 					'results_showing' => __('%1$s–%2$s van %3$s producten', 'lenvy'),

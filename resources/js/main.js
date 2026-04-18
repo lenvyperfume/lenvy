@@ -7,7 +7,8 @@ import '../scss/main.scss';
 
 import { initHeader } from './modules/header.js';
 import { initDrawer } from './modules/drawer.js';
-import { initSearch } from './modules/search.js';
+import { initSearchDrawer } from './modules/search-drawer.js';
+import { initHeroSlider } from './modules/hero-slider.js';
 import { initAccordion } from './modules/accordion.js';
 import { initFilterDrawer } from './modules/filter-drawer.js';
 import { initPriceSlider } from './modules/price-slider.js';
@@ -27,7 +28,8 @@ document.documentElement.style.opacity = '1';
 document.addEventListener('DOMContentLoaded', () => {
   initHeader();
   const { drawer, closeDrawer } = initDrawer();
-  const { overlay, closeSearch } = initSearch();
+  initSearchDrawer({ triggers: '[data-search-trigger]' });
+  initHeroSlider();
   const { filterDrawer, closeFilterDrawer } = initFilterDrawer();
   initAccordion();
   initPriceSlider();
@@ -77,9 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ESC closes whichever panel is currently open.
+  // The search drawer handles its own Esc; the other drawers don't.
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    if (overlay && !overlay.classList.contains('opacity-0')) closeSearch();
     if (drawer && !drawer.classList.contains('-translate-x-full')) closeDrawer();
     if (filterDrawer && !filterDrawer.classList.contains('-translate-x-full')) closeFilterDrawer();
     // Close any open sort dropdowns.

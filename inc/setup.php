@@ -27,9 +27,12 @@ function lenvy_setup(): void {
 	load_theme_textdomain('lenvy', get_template_directory() . '/languages');
 
 	register_nav_menus([
-		'primary' => __('Primary Navigation', 'lenvy'),
-		'mobile' => __('Mobile Navigation', 'lenvy'),
-		'footer' => __('Footer Navigation', 'lenvy'),
+		'primary'      => __('Primary Navigation', 'lenvy'),
+		'mobile'       => __('Mobile Navigation', 'lenvy'),
+		'footer_shop'  => __('Footer — Shop column', 'lenvy'),
+		'footer_help'  => __('Footer — Help column', 'lenvy'),
+		'footer_about' => __('Footer — About column', 'lenvy'),
+		'footer_legal' => __('Footer — Legal (bottom bar)', 'lenvy'),
 	]);
 }
 add_action('after_setup_theme', 'lenvy_setup');
