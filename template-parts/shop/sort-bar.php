@@ -1,124 +1,91 @@
 <?php
 /**
- * Shop sort bar — filter toggle + results count + sort dropdown.
+ * Shop toolbar — HARDCODED sticky bar with results count + sort dropdown.
  *
- * The filter button opens the filter drawer at all breakpoints
- * (no permanent sidebar).
+ * No-op buttons: the sort dropdown and filter toggle render the design but
+ * don't mutate state. Re-wire to WC / URL params once real products exist.
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-global $wp_query;
+$shop_data = $args['shop_data'] ?? null;
+if (!$shop_data) {
+	$shop_data = require get_theme_file_path('template-parts/shop/placeholder-data.php');
+}
 
-$total   = (int) $wp_query->found_posts;
-$current = max(1, (int) get_query_var('paged'));
-$per     = (int) get_option('posts_per_page');
-$from    = ($current - 1) * $per + 1;
-$to      = min($current * $per, $total);
+$total = (int) ($shop_data['totals']['results'] ?? 0);
 
 $orderby_options = [
-	'menu_order'  => __('Standaard', 'lenvy'),
-	'popularity'  => __('Populariteit', 'lenvy'),
-	'date'        => __('Nieuwste', 'lenvy'),
-	'price'       => __('Prijs: laag → hoog', 'lenvy'),
-	'price-desc'  => __('Prijs: hoog → laag', 'lenvy'),
+	'popular'    => __('Populair', 'lenvy'),
+	'new'        => __('Nieuw', 'lenvy'),
+	'price-asc'  => __('Prijs: laag → hoog', 'lenvy'),
+	'price-desc' => __('Prijs: hoog → laag', 'lenvy'),
+	'sale'       => __('Afgeprijsd eerst', 'lenvy'),
 ];
-
-$current_orderby = (string) (isset($_GET['orderby'])
-	? sanitize_key($_GET['orderby'])
-	: get_option('woocommerce_default_catalog_orderby', 'menu_order'));
-
-// phpcs:ignore WordPress.Security.NonceVerification
-$filter_count = count(lenvy_get_active_filters());
+$current_orderby = 'popular';
 ?>
 
-<div class="flex items-center gap-4 py-4 border-b border-neutral-100" data-sort-bar>
+<div class="lenvy-toolbar" data-sort-bar>
+	<div class="lenvy-container lenvy-toolbar__inner">
 
-	<!-- Filter toggle (all breakpoints) -->
-	<button
-		type="button"
-		data-filter-drawer-toggle
-		class="inline-flex items-center gap-2 text-sm font-medium text-neutral-700 hover:text-black transition-colors duration-200 lg:hidden"
-		aria-expanded="false"
-		aria-controls="lenvy-filter-drawer"
-	>
-		<?php lenvy_icon('filter', '', 'sm'); ?>
-		<span><?php esc_html_e('Filter', 'lenvy'); ?></span>
-		<?php if ($filter_count > 0): ?>
-			<span class="flex items-center justify-center w-5 h-5 bg-black text-white text-[10px] font-semibold rounded-full leading-none" aria-hidden="true">
-				<?php echo esc_html($filter_count); ?>
-			</span>
-		<?php endif; ?>
-	</button>
-
-	<!-- Results count -->
-	<p class="text-[13px] text-neutral-400 hidden sm:block" data-results-count>
-		<?php if ($total > 0): ?>
-			<?php echo esc_html(
-				sprintf(
-					/* translators: %d: total product count */
-					_n('%d product', '%d producten', $total, 'lenvy'),
-					$total,
-				),
-			); ?>
-		<?php else: ?>
-			<?php esc_html_e('Geen producten gevonden', 'lenvy'); ?>
-		<?php endif; ?>
-	</p>
-
-	<!-- Sort dropdown (custom) -->
-	<div class="ml-auto relative" data-sort-dropdown>
-		<button
-			type="button"
-			data-sort-trigger
-			class="inline-flex items-center gap-2 text-[13px] text-neutral-500 hover:text-black transition-colors duration-200"
-			aria-expanded="false"
-			aria-haspopup="listbox"
-		>
-			<span data-sort-label><?php echo esc_html($orderby_options[$current_orderby] ?? __('Sorteer', 'lenvy')); ?></span>
-			<?php lenvy_icon('chevron-down', 'transition-transform duration-200', 'xs'); ?>
-		</button>
-		<div
-			data-sort-options
-			class="absolute right-0 top-full mt-2 min-w-[220px] bg-white border border-neutral-200 shadow-lg py-1.5 z-30 opacity-0 invisible translate-y-1 transition-all duration-200"
-			role="listbox"
-			aria-label="<?php esc_attr_e('Sorteer op', 'lenvy'); ?>"
-		>
-			<?php foreach ($orderby_options as $value => $label):
-				$is_active = $current_orderby === $value;
-			?>
+		<div class="lenvy-toolbar__left">
 			<button
 				type="button"
-				data-sort-value="<?php echo esc_attr($value); ?>"
-				class="flex items-center w-full text-left px-4 py-2.5 text-[13px] hover:bg-neutral-50 transition-colors duration-200 <?php echo $is_active
-					? 'text-black font-medium'
-					: 'text-neutral-600 hover:text-black'; ?>"
-				role="option"
-				<?php if ($is_active): ?>aria-selected="true"<?php endif; ?>
+				data-filter-drawer-toggle
+				class="lenvy-toolbar__filter-btn lg:hidden"
+				aria-expanded="false"
+				aria-controls="lenvy-filter-drawer"
 			>
-				<?php echo esc_html($label); ?>
+				<?php lenvy_icon('filter', '', 'sm'); ?>
+				<span><?php esc_html_e('Filter', 'lenvy'); ?></span>
 			</button>
-			<?php endforeach; ?>
+
+			<p class="lenvy-toolbar__count" data-results-count>
+				<b><?php echo esc_html(number_format_i18n($total)); ?></b>
+				<?php esc_html_e('resultaten', 'lenvy'); ?>
+			</p>
 		</div>
+
+		<div class="lenvy-toolbar__right">
+			<div class="lenvy-sort" data-sort-dropdown data-sort-no-reload>
+				<button
+					type="button"
+					data-sort-trigger
+					class="lenvy-sort__trigger"
+					aria-expanded="false"
+					aria-haspopup="listbox"
+				>
+					<span>
+						<?php esc_html_e('Sorteer:', 'lenvy'); ?>
+						<b data-sort-label><?php echo esc_html($orderby_options[$current_orderby]); ?></b>
+					</span>
+					<svg width="10" height="6" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l4 4 4-4"/></svg>
+				</button>
+				<div
+					data-sort-options
+					class="lenvy-sort__menu"
+					role="listbox"
+					aria-label="<?php esc_attr_e('Sorteer op', 'lenvy'); ?>"
+				>
+					<?php foreach ($orderby_options as $value => $label):
+						$is_active = $current_orderby === $value;
+					?>
+					<button
+						type="button"
+						data-sort-value="<?php echo esc_attr($value); ?>"
+						class="lenvy-sort__option<?php echo $is_active ? ' is-active' : ''; ?>"
+						role="option"
+						<?php if ($is_active): ?>aria-selected="true"<?php endif; ?>
+					>
+						<span><?php echo esc_html($label); ?></span>
+						<?php if ($is_active): ?><span aria-hidden="true">✓</span><?php endif; ?>
+					</button>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		</div>
+
 	</div>
-
-	<!-- Fallback select for no-JS -->
-	<noscript>
-		<div class="ml-auto">
-			<select
-				name="orderby"
-				class="text-[13px] border border-neutral-200 bg-white text-neutral-600 pl-3 pr-8 py-2 appearance-none"
-				onchange="window.location.href=this.options[this.selectedIndex].dataset.url"
-			>
-				<?php foreach ($orderby_options as $value => $label): ?>
-					<option value="<?php echo esc_attr($value); ?>" <?php selected($current_orderby, $value); ?>>
-						<?php echo esc_html($label); ?>
-					</option>
-				<?php endforeach; ?>
-			</select>
-		</div>
-	</noscript>
-
 </div>

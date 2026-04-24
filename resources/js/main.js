@@ -51,22 +51,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const open = () => {
       trigger.setAttribute('aria-expanded', 'true');
-      panel.classList.remove('opacity-0', 'invisible', 'translate-y-1');
+      panel.classList.add('is-open');
       trigger.querySelector('svg')?.classList.add('rotate-180');
     };
 
     const close = () => {
       trigger.setAttribute('aria-expanded', 'false');
-      panel.classList.add('opacity-0', 'invisible', 'translate-y-1');
+      panel.classList.remove('is-open');
       trigger.querySelector('svg')?.classList.remove('rotate-180');
     };
 
-    trigger.addEventListener('click', () => {
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
       trigger.getAttribute('aria-expanded') === 'true' ? close() : open();
     });
 
+    const noReload = dropdown.hasAttribute('data-sort-no-reload');
+    const label = dropdown.querySelector('[data-sort-label]');
+
     dropdown.querySelectorAll('[data-sort-value]').forEach((btn) => {
       btn.addEventListener('click', () => {
+        if (noReload) {
+          // Placeholder mode — update UI only, no navigation.
+          if (label) label.textContent = btn.querySelector('span')?.textContent?.trim() ?? btn.textContent.trim();
+          dropdown.querySelectorAll('[data-sort-value]').forEach((o) => {
+            const active = o === btn;
+            o.classList.toggle('is-active', active);
+            if (active) o.setAttribute('aria-selected', 'true');
+            else o.removeAttribute('aria-selected');
+          });
+          close();
+          return;
+        }
         const url = new URL(window.location.href);
         url.searchParams.set('orderby', btn.dataset.sortValue);
         window.location.href = url.toString();
@@ -76,6 +92,29 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('click', (e) => {
       if (!dropdown.contains(e.target)) close();
     });
+  });
+
+  // In-group filter search (brand list).
+  document.querySelectorAll('[data-filter-search]').forEach((input) => {
+    const group = input.closest('[data-filter-accordion]');
+    const opts = group?.querySelectorAll('[data-filter-opts] [data-label]');
+    if (!opts) return;
+
+    input.addEventListener('input', () => {
+      const q = input.value.toLowerCase().trim();
+      opts.forEach((li) => {
+        li.style.display = !q || li.dataset.label.includes(q) ? '' : 'none';
+      });
+    });
+  });
+
+  // Product card wishlist toggle (visual only — persistence TBD).
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-wishlist-toggle]');
+    if (!btn) return;
+    e.preventDefault();
+    e.stopPropagation();
+    btn.classList.toggle('is-active');
   });
 
   // ESC closes whichever panel is currently open.

@@ -1,0 +1,908 @@
+@use 'variables' as v;
+
+// ─── Shop page — typographic hero + sticky toolbar + sidebar + grid ──────────
+// Mirrors the handoff design in /docs/design/Shop.html. Cards, filters and the
+// toolbar share a neutral palette and lavender brand accent (bg-primary).
+
+.lenvy-shop {
+  --shop-top: 96px; // header row1 (72px) + nav (24px visual) — used for sticky top
+
+  @media (min-width: 1024px) {
+    --shop-top: 116px; // lg header row1 (72px) + nav (44px)
+  }
+}
+
+// ─── Page hero ───────────────────────────────────────────────────────────────
+
+.lenvy-page-hero {
+  padding: 2.5rem 0 2rem;
+  border-bottom: 1px solid v.$neutral-100;
+
+  @media (min-width: 1024px) {
+    padding: 3.5rem 0 2.75rem;
+  }
+}
+
+.lenvy-page-hero__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  align-items: end;
+  margin-top: 1.75rem;
+
+  @media (min-width: 1024px) {
+    grid-template-columns: 1.1fr 1fr;
+    gap: 5rem;
+  }
+}
+
+.lenvy-page-hero__title {
+  font-family: v.$font-sans;
+  font-weight: 500;
+  font-size: clamp(2.25rem, 4.6vw, 4.5rem);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0;
+  color: v.$color-black;
+
+  em {
+    display: block;
+    font-style: normal;
+    font-weight: 400;
+    color: v.$neutral-500;
+  }
+}
+
+.lenvy-page-hero__aside {
+  max-width: 28.75rem;
+}
+
+.lenvy-page-hero__lede {
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: v.$neutral-500;
+  margin: 0 0 1.125rem;
+}
+
+.lenvy-page-hero__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.75rem;
+  font-size: 0.75rem;
+  color: v.$neutral-500;
+
+  b {
+    color: v.$color-black;
+    font-weight: 500;
+  }
+}
+
+// ─── Toolbar (sticky) ────────────────────────────────────────────────────────
+
+.lenvy-toolbar {
+  position: sticky;
+  top: var(--header-height, 116px);
+  z-index: 30;
+  background: #fff;
+  border-bottom: 1px solid v.$neutral-100;
+  padding: 0.875rem 0;
+}
+
+.lenvy-toolbar__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+}
+
+.lenvy-toolbar__left,
+.lenvy-toolbar__right {
+  display: flex;
+  align-items: center;
+  gap: 1.125rem;
+}
+
+.lenvy-toolbar__count {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: v.$neutral-500;
+  margin: 0;
+
+  b {
+    color: v.$color-black;
+    font-weight: 500;
+  }
+}
+
+.lenvy-toolbar__filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid v.$neutral-200;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: v.$neutral-700;
+  background: #fff;
+  transition: border-color v.$transition-base, color v.$transition-base;
+
+  &:hover {
+    border-color: v.$color-black;
+    color: v.$color-black;
+  }
+}
+
+.lenvy-toolbar__filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.125rem;
+  height: 1.125rem;
+  padding: 0 0.25rem;
+  border-radius: 999px;
+  background: v.$color-black;
+  color: #fff;
+  font-size: 0.625rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+// ─── Sort dropdown ───────────────────────────────────────────────────────────
+
+.lenvy-sort {
+  position: relative;
+}
+
+.lenvy-sort__trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid v.$neutral-200;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  letter-spacing: 0.02em;
+  color: v.$neutral-700;
+  background: #fff;
+  transition: border-color v.$transition-base, color v.$transition-base;
+
+  b {
+    color: v.$color-black;
+    font-weight: 500;
+  }
+
+  svg {
+    transition: transform v.$transition-base;
+  }
+
+  &:hover {
+    border-color: v.$color-black;
+    color: v.$color-black;
+  }
+}
+
+.lenvy-sort__menu {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 0.5rem);
+  min-width: 13.75rem;
+  padding: 0.5rem;
+  background: #fff;
+  border: 1px solid v.$neutral-200;
+  box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.15);
+  display: none;
+  z-index: 40;
+
+  &.is-open {
+    display: block;
+  }
+}
+
+.lenvy-sort__option {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.625rem 0.75rem;
+  font-size: 0.8125rem;
+  text-align: left;
+  color: v.$neutral-700;
+  background: transparent;
+  border: 0;
+  transition: background v.$transition-base, color v.$transition-base;
+
+  &:hover {
+    background: v.$neutral-50;
+    color: v.$color-black;
+  }
+
+  &.is-active {
+    background: v.$neutral-50;
+    color: v.$color-black;
+    font-weight: 500;
+  }
+}
+
+// ─── Chips (active filters) ──────────────────────────────────────────────────
+
+.lenvy-chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 0 0;
+}
+
+.lenvy-chips__label {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: v.$neutral-500;
+  margin-right: 0.375rem;
+}
+
+.lenvy-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.875rem;
+  background: v.$neutral-900;
+  color: #fff;
+  font-size: 0.75rem;
+  border-radius: 999px;
+  transition: background v.$transition-base;
+
+  &:hover {
+    background: v.$neutral-700;
+    color: #fff;
+  }
+
+  svg {
+    width: 0.625rem;
+    height: 0.625rem;
+  }
+}
+
+.lenvy-chip-clear {
+  font-size: 0.75rem;
+  color: v.$neutral-500;
+  padding: 0.4375rem 0;
+  margin-left: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+
+  &:hover {
+    color: v.$color-black;
+  }
+}
+
+// ─── Layout: sidebar + grid ──────────────────────────────────────────────────
+
+.lenvy-shop__layout {
+  padding: 2rem 0 5rem;
+
+  @media (min-width: 1024px) {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    gap: 3.5rem;
+  }
+}
+
+.lenvy-shop__main {
+  min-width: 0;
+}
+
+.lenvy-filters {
+  position: relative;
+}
+
+.lenvy-filters__inner {
+  position: sticky;
+  top: calc(var(--header-height, 116px) + 74px);
+  max-height: calc(100vh - var(--header-height, 116px) - 94px);
+  overflow-y: auto;
+  padding-right: 0.5rem;
+  scrollbar-width: thin;
+}
+
+// ─── Filter group (accordion) ────────────────────────────────────────────────
+
+.lenvy-filter-group {
+  padding: 1.125rem 0;
+  border-bottom: 1px solid v.$neutral-100;
+
+  &:first-child {
+    padding-top: 0;
+  }
+}
+
+.lenvy-filter-group__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.375rem 0;
+  text-align: left;
+  background: transparent;
+  border: 0;
+}
+
+.lenvy-filter-group__title {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: v.$color-black;
+}
+
+.lenvy-filter-group__chev {
+  width: 0.875rem;
+  height: 0.875rem;
+  color: v.$color-black;
+  transition: transform 240ms cubic-bezier(0.22, 1, 0.36, 1);
+  transform: rotate(0deg);
+}
+
+// Rotate the chevron -90° when the group is collapsed. Uses an attribute
+// selector to reliably beat the .rotate-180 utility that accordion.js toggles.
+.lenvy-filter-group__header[aria-expanded='false'] .lenvy-filter-group__chev {
+  transform: rotate(-90deg);
+}
+
+.lenvy-filter-group__body {
+  // accordion.js manages height/opacity via inline styles; no extra CSS needed.
+}
+
+.lenvy-filter-group__pad {
+  padding-top: 0.875rem;
+}
+
+// ─── Filter option list (checkboxes) ─────────────────────────────────────────
+
+.lenvy-filter-opts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &--scroll {
+    max-height: 14.375rem;
+    overflow-y: auto;
+    padding-right: 0.25rem;
+  }
+}
+
+.lenvy-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.375rem 0.125rem;
+  font-size: 0.8125rem;
+  color: v.$neutral-700;
+  transition: color v.$transition-base;
+
+  &:hover {
+    color: v.$color-black;
+  }
+}
+
+.lenvy-opt__label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  flex: 1;
+  cursor: pointer;
+}
+
+.lenvy-opt__input {
+  position: absolute;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.lenvy-opt__check {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 0.9375rem;
+  height: 0.9375rem;
+  border: 1px solid v.$neutral-400;
+  border-radius: 2px;
+  background: transparent;
+  flex-shrink: 0;
+  transition:
+    background v.$transition-base,
+    border-color v.$transition-base;
+
+  &::after {
+    content: '';
+    width: 0.5rem;
+    height: 0.3125rem;
+    border-left: 1.5px solid #fff;
+    border-bottom: 1.5px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+    transition: opacity v.$transition-base;
+  }
+}
+
+.lenvy-opt__input:checked + .lenvy-opt__check {
+  background: v.$neutral-900;
+  border-color: v.$neutral-900;
+
+  &::after {
+    opacity: 1;
+  }
+}
+
+.lenvy-opt__input:focus-visible + .lenvy-opt__check {
+  outline: 2px solid v.$neutral-900;
+  outline-offset: 2px;
+}
+
+.lenvy-opt__name {
+  color: v.$color-black;
+}
+
+.lenvy-opt__count {
+  font-size: 0.6875rem;
+  letter-spacing: 0.02em;
+  color: v.$neutral-500;
+}
+
+// ─── Filter search (brand) ───────────────────────────────────────────────────
+
+.lenvy-filter-search {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border: 1px solid v.$neutral-200;
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.75rem;
+
+  svg {
+    color: v.$neutral-500;
+    flex-shrink: 0;
+  }
+
+  input {
+    flex: 1;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    font-family: inherit;
+    font-size: 0.75rem;
+    color: v.$color-black;
+  }
+}
+
+// ─── Filter price slider ─────────────────────────────────────────────────────
+
+.lenvy-price {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.25rem 0.125rem 0.125rem;
+}
+
+.lenvy-price__track {
+  position: relative;
+  height: 4px;
+  background: v.$neutral-200;
+  border-radius: 2px;
+  margin: 1.125rem 0.5rem 0.5rem;
+}
+
+.lenvy-price__fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  background: v.$neutral-900;
+  border-radius: 2px;
+}
+
+.lenvy-price__thumb {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border: 1.5px solid v.$neutral-900;
+  border-radius: 50%;
+  padding: 0;
+  cursor: grab;
+
+  &:active {
+    cursor: grabbing;
+  }
+
+  &:focus-visible {
+    outline: 2px solid v.$neutral-900;
+    outline-offset: 2px;
+  }
+}
+
+.lenvy-price__inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+
+.lenvy-price__field {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.4375rem 0.625rem;
+  border: 1px solid v.$neutral-200;
+  font-size: 0.75rem;
+  color: v.$color-black;
+
+  // Normalise WC's wc_price() markup so it lays out inline.
+  .woocommerce-Price-amount {
+    font-size: 0.75rem;
+  }
+}
+
+.lenvy-price__dash {
+  color: v.$neutral-500;
+}
+
+// ─── Product grid ────────────────────────────────────────────────────────────
+
+.lenvy-grid {
+  column-gap: 1.25rem;
+  row-gap: 2.5rem;
+
+  @media (min-width: 768px) {
+    column-gap: 1.25rem;
+    row-gap: 2.75rem;
+  }
+}
+
+// ─── Product card ────────────────────────────────────────────────────────────
+
+.lenvy-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.lenvy-card__img {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  background: v.$neutral-100;
+  overflow: hidden;
+  margin-bottom: 0.875rem;
+  transition: background 300ms ease;
+}
+
+.lenvy-card__img-el {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 2rem;
+  transition: transform 300ms ease;
+}
+
+.lenvy-card:hover .lenvy-card__img-el {
+  transform: scale(1.03);
+}
+
+// ─── Placeholder cap + bottle (mocked product imagery) ───────────────────────
+
+.lenvy-card__bottle {
+  position: absolute;
+  left: 50%;
+  bottom: 10%;
+  width: 42%;
+  height: 62%;
+  transform: translateX(-50%);
+  border-radius: 8px 8px 16px 16px;
+  box-shadow:
+    inset 0 0 30px rgba(255, 255, 255, 0.3),
+    inset 0 -20px 40px rgba(0, 0, 0, 0.08),
+    0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.lenvy-card__cap {
+  position: absolute;
+  left: 50%;
+  bottom: calc(10% + 62%);
+  width: 18%;
+  height: 6%;
+  transform: translateX(-50%);
+  background: v.$neutral-900;
+  border-radius: 2px;
+}
+
+.lenvy-card__price-was {
+  color: #b8005a;
+}
+
+.lenvy-card__tags {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.375rem;
+  z-index: 2;
+}
+
+.lenvy-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3125rem 0.5625rem;
+  font-size: 0.625rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-weight: 500;
+  background: #fff;
+  color: v.$color-black;
+
+  &--sale {
+    background: v.$neutral-950;
+    color: #fff;
+  }
+
+  &--new {
+    background: v.$color-primary;
+    color: v.$color-black;
+  }
+
+  &--oos {
+    background: v.$neutral-200;
+    color: v.$neutral-700;
+  }
+}
+
+.lenvy-card__wish {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #fff;
+  color: v.$color-black;
+  border: 0;
+  border-radius: 50%;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: opacity 180ms ease, transform 180ms ease, color 160ms ease;
+}
+
+.lenvy-card:hover .lenvy-card__wish,
+.lenvy-card__wish.is-active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lenvy-card__wish.is-active {
+  color: #b8005a;
+}
+
+.lenvy-card__quick-add {
+  position: absolute;
+  left: 0.75rem;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  padding: 0.6875rem 0.875rem;
+  background: v.$color-primary;
+  color: v.$color-black;
+  border: 0;
+  font-family: inherit;
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  text-align: center;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 180ms ease,
+    transform 200ms cubic-bezier(0.22, 1, 0.36, 1),
+    background 160ms ease;
+
+  &:hover {
+    background: v.$color-primary-hover;
+  }
+}
+
+.lenvy-card:hover .lenvy-card__quick-add {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.lenvy-card__oos-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 1;
+}
+
+.lenvy-card__brand {
+  font-size: 0.6875rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: v.$neutral-500;
+  margin: 0.25rem 0 0.375rem;
+}
+
+.lenvy-card__name {
+  font-family: v.$font-sans;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  line-height: 1.3;
+  margin: 0;
+
+  a {
+    color: v.$color-black;
+    transition: color v.$transition-base;
+
+    &:hover {
+      color: v.$neutral-500;
+    }
+  }
+}
+
+.lenvy-card__variant {
+  font-size: 0.75rem;
+  color: v.$neutral-500;
+  margin: 0.375rem 0 0.625rem;
+}
+
+.lenvy-card__price {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  color: v.$color-black;
+
+  .woocommerce-Price-amount {
+    font-weight: 500;
+  }
+
+  del {
+    color: v.$neutral-400;
+    font-weight: 400;
+
+    .woocommerce-Price-amount {
+      font-weight: 400;
+    }
+  }
+
+  ins {
+    text-decoration: none;
+    color: #b8005a;
+  }
+}
+
+.lenvy-card__price-prefix {
+  font-size: 0.75rem;
+  color: v.$neutral-500;
+  font-weight: 400;
+  margin-right: 0.25rem;
+}
+
+// ─── Empty state ─────────────────────────────────────────────────────────────
+
+.lenvy-shop__empty {
+  padding: 5rem 1.25rem;
+  text-align: center;
+
+  h3 {
+    font-family: v.$font-sans;
+    font-weight: 500;
+    font-size: 2.25rem;
+    letter-spacing: -0.028em;
+    margin: 0 0 0.75rem;
+    color: v.$color-black;
+  }
+
+  p {
+    color: v.$neutral-500;
+    margin: 0 0 1.5rem;
+  }
+}
+
+.lenvy-shop__empty-btn {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  border: 1px solid v.$color-black;
+  color: v.$color-black;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transition: background v.$transition-base, color v.$transition-base;
+
+  &:hover {
+    background: v.$color-black;
+    color: #fff;
+  }
+}
+
+// ─── Load more (progress bar + button) ───────────────────────────────────────
+
+.lenvy-load-more {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 3.5rem 0 1.25rem;
+}
+
+.lenvy-load-more__count {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: v.$neutral-500;
+  margin: 0;
+
+  b {
+    color: v.$color-black;
+    font-weight: 500;
+  }
+}
+
+.lenvy-load-more__bar {
+  width: 13.75rem;
+  height: 2px;
+  background: v.$neutral-200;
+  position: relative;
+  overflow: hidden;
+}
+
+.lenvy-load-more__fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background: v.$neutral-900;
+  transition: width 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.lenvy-load-more__btn {
+  margin-top: 0.875rem;
+  padding: 0.875rem 2.25rem;
+  border: 1px solid v.$color-black;
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  color: v.$color-black;
+  background: transparent;
+  transition: background v.$transition-base, color v.$transition-base;
+
+  &:hover {
+    background: v.$color-black;
+    color: #fff;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: default;
+
+    &:hover {
+      background: transparent;
+      color: v.$color-black;
+    }
+  }
+}

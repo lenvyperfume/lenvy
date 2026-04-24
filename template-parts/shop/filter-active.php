@@ -1,6 +1,6 @@
 <?php
 /**
- * Active filter chips — shows applied filters with remove links + "Clear all".
+ * Active filter chips — dark pill style, each chip removes its filter.
  *
  * @package Lenvy
  */
@@ -13,30 +13,31 @@ if (empty($active)) {
 	return;
 }
 
-$base_url = strtok((string) $_SERVER['REQUEST_URI'], '?');
-
 // phpcs:ignore WordPress.Security.ValidatedSanitizedInput
+$base_url = strtok((string) $_SERVER['REQUEST_URI'], '?');
 ?>
 
-<div class="flex flex-wrap items-center gap-2 mt-4" data-active-filters>
+<div class="lenvy-chips" data-active-filters>
+
+	<span class="lenvy-chips__label"><?php esc_html_e('Filters', 'lenvy'); ?></span>
 
 	<?php foreach ($active as $filter): ?>
 		<?php $remove_url = add_query_arg($filter['remove_args'], $base_url); ?>
 		<a
 			href="<?php echo esc_url($remove_url); ?>"
-			class="inline-flex items-center gap-1.5 text-[11px] font-medium bg-neutral-100 text-neutral-700 hover:bg-neutral-200 px-3 py-1.5 transition-colors duration-200"
+			class="lenvy-chip"
 			aria-label="<?php echo esc_attr(sprintf(__('Filter verwijderen: %s', 'lenvy'), $filter['label'])); ?>"
 		>
-			<?php echo esc_html($filter['label']); ?>
-			<?php lenvy_icon('close', 'text-neutral-400', 'xs'); ?>
+			<span><?php echo esc_html($filter['label']); ?></span>
+			<svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M1 1l8 8M9 1l-8 8"/></svg>
 		</a>
 	<?php endforeach; ?>
 
 	<a
 		href="<?php echo esc_url($base_url); ?>"
-		class="text-[11px] text-neutral-400 hover:text-neutral-900 underline underline-offset-4 transition-colors duration-200 ml-1"
+		class="lenvy-chip-clear"
 	>
-		<?php esc_html_e('Wis alles', 'lenvy'); ?>
+		<?php esc_html_e('Alles wissen', 'lenvy'); ?>
 	</a>
 
 </div>

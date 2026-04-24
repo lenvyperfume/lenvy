@@ -1,140 +1,80 @@
 <?php
 /**
- * Desktop filter sidebar — sticky left panel (lg+).
+ * Desktop filter sidebar — HARDCODED options from placeholder-data.php.
  *
- * Wraps all filter components in a GET form.
- * Hidden on mobile (filter-drawer.php handles mobile).
+ * No-op form: toggles render but don't mutate state. To be re-wired once
+ * the shop moves off placeholder data.
  *
  * @package Lenvy
  */
 
 defined('ABSPATH') || exit();
 
-// When on a brand archive, suppress the Brand filter (it's redundant).
+$shop_data = $args['shop_data'] ?? null;
+if (!$shop_data) {
+	$shop_data = require get_theme_file_path('template-parts/shop/placeholder-data.php');
+}
+
 $hide_brand_filter = (bool) ($args['hide_brand_filter'] ?? false);
+
+// Convert ml sizes to "30ml" labels.
+$size_options = array_map(static fn($s) => $s . 'ml', $shop_data['sizes']);
 ?>
 
 <aside
-	class="hidden lg:block w-[280px] shrink-0"
+	class="lenvy-filters hidden lg:block"
 	aria-label="<?php esc_attr_e('Productfilters', 'lenvy'); ?>"
 	data-filter-sidebar
 >
-	<div class="sticky overflow-y-auto" style="top: var(--header-height, 68px); max-height: calc(100vh - var(--header-height, 68px) - 2rem);">
-
-		<div class="flex items-center justify-between pb-4 border-b border-neutral-100">
-			<h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-800">
-				<?php esc_html_e('Filters', 'lenvy'); ?>
-			</h2>
-			<?php if (lenvy_is_filtered()): ?>
-				<a
-					href="<?php echo esc_url(strtok((string) $_SERVER['REQUEST_URI'], '?'));
-   	// phpcs:ignore WordPress.Security.ValidatedSanitizedInput
-   	?>"
-					class="text-xs text-neutral-500 hover:text-black underline underline-offset-2 transition-colors duration-200"
-				>
-					<?php esc_html_e('Wis alles', 'lenvy'); ?>
-				</a>
-			<?php endif; ?>
-		</div>
+	<div class="lenvy-filters__inner">
 
 		<form method="GET" action="" data-filter-form id="lenvy-filter-form">
 
-			<?php if (isset($_GET['orderby'])):// phpcs:ignore WordPress.Security.NonceVerification
-   	 ?>
-				<input type="hidden" name="orderby" value="<?php echo esc_attr(sanitize_key($_GET['orderby']));
-   	// phpcs:ignore WordPress.Security.NonceVerification
-   	?>">
-			<?php endif; ?>
-
 			<?php
-   if (!$hide_brand_filter):
-   	get_template_part('template-parts/shop/filter-taxonomy', null, [
-   		'taxonomy' => 'product_brand',
-   		'query_var' => 'filter_brand',
-   		'label' => __('Merk', 'lenvy'),
-   		'open' => true,
-   	]);
-   endif;
+			get_template_part('template-parts/shop/filter-taxonomy', null, [
+				'name'    => 'collection',
+				'label'   => __('Collectie', 'lenvy'),
+				'options' => $shop_data['collections'],
+				'open'    => true,
+			]);
 
-   get_template_part('template-parts/shop/filter-taxonomy', null, [
-   	'taxonomy' => 'product_cat',
-   	'query_var' => 'filter_cat',
-   	'label' => __('Categorie', 'lenvy'),
-   	'open' => true,
-   ]);
+			get_template_part('template-parts/shop/filter-taxonomy', null, [
+				'name'    => 'gender',
+				'label'   => __('Geslacht', 'lenvy'),
+				'options' => $shop_data['genders'],
+				'open'    => true,
+			]);
 
-   get_template_part('template-parts/shop/filter-price', null, [
-   	'label' => __('Prijs', 'lenvy'),
-   	'open' => true,
-   ]);
+			get_template_part('template-parts/shop/filter-taxonomy', null, [
+				'name'    => 'family',
+				'label'   => __('Geurfamilie', 'lenvy'),
+				'options' => $shop_data['families'],
+				'open'    => true,
+			]);
 
-   get_template_part('template-parts/shop/filter-taxonomy', null, [
-   	'taxonomy' => 'pa_gender',
-   	'query_var' => 'filter_gender',
-   	'label' => __('Geslacht', 'lenvy'),
-   	'open' => false,
-   ]);
+			if (!$hide_brand_filter) {
+				get_template_part('template-parts/shop/filter-taxonomy', null, [
+					'name'       => 'brand',
+					'label'      => __('Merk', 'lenvy'),
+					'options'    => $shop_data['brands'],
+					'open'       => true,
+					'searchable' => true,
+				]);
+			}
 
-   get_template_part('template-parts/shop/filter-taxonomy', null, [
-   	'taxonomy' => 'pa_fragrance_family',
-   	'query_var' => 'filter_family',
-   	'label' => __('Geurfamilie', 'lenvy'),
-   	'open' => false,
-   ]);
+			get_template_part('template-parts/shop/filter-price', null, [
+				'label' => __('Prijs', 'lenvy'),
+				'open'  => true,
+				'price' => $shop_data['price'],
+			]);
 
-   get_template_part('template-parts/shop/filter-taxonomy', null, [
-   	'taxonomy' => 'pa_concentration',
-   	'query_var' => 'filter_conc',
-   	'label' => __('Concentratie', 'lenvy'),
-   	'open' => false,
-   ]);
-
-   get_template_part('template-parts/shop/filter-taxonomy', null, [
-   	'taxonomy' => 'pa_volume_ml',
-   	'query_var' => 'filter_volume',
-   	'label' => __('Inhoud (ml)', 'lenvy'),
-   	'open' => false,
-   ]);
-   ?>
-
-			<!-- In stock + On sale toggles -->
-			<div class="border-b border-neutral-100 py-5 space-y-3">
-				<?php
-    // phpcs:ignore WordPress.Security.NonceVerification
-    $available = !empty($_GET['filter_available']);
-    // phpcs:ignore WordPress.Security.NonceVerification
-    $onsale = !empty($_GET['filter_onsale']);
-    ?>
-				<label class="flex items-center justify-between cursor-pointer">
-					<span class="text-sm text-neutral-700"><?php esc_html_e('Alleen op voorraad', 'lenvy'); ?></span>
-					<input
-						type="checkbox"
-						name="filter_available"
-						value="1"
-						class="lenvy-checkbox"
-						data-filter-checkbox
-						<?php checked($available); ?>
-					>
-				</label>
-				<label class="flex items-center justify-between cursor-pointer">
-					<span class="text-sm text-neutral-700"><?php esc_html_e('Sale', 'lenvy'); ?></span>
-					<input
-						type="checkbox"
-						name="filter_onsale"
-						value="1"
-						class="lenvy-checkbox"
-						data-filter-checkbox
-						<?php checked($onsale); ?>
-					>
-				</label>
-			</div>
-
-			<button
-				type="submit"
-				class="mt-5 w-full bg-black text-white text-sm font-medium tracking-wide py-2.5 hover:bg-neutral-800 transition-colors duration-200"
-			>
-				<?php esc_html_e('Toepassen', 'lenvy'); ?>
-			</button>
+			get_template_part('template-parts/shop/filter-taxonomy', null, [
+				'name'    => 'size',
+				'label'   => __('Grootte', 'lenvy'),
+				'options' => $size_options,
+				'open'    => true,
+			]);
+			?>
 
 		</form>
 	</div>

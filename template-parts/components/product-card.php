@@ -1,8 +1,8 @@
 <?php
 /**
- * Product card component — Skins-inspired, clear hierarchy.
+ * Product card — shop grid card with tags, wishlist, quick-add.
  *
- * Visual order: Image → Brand (bold uppercase) → Title → Price
+ * Visual order: Image (with floating tags/wishlist/quick-add) → Brand → Title → Variant → Price
  *
  * Usage:
  *   get_template_part('template-parts/components/product-card', null, [
@@ -32,22 +32,9 @@ $is_sale    = $product->is_on_sale();
 $is_oos     = !$product->is_in_stock();
 $price_html = $product->get_price_html();
 
-// ── Badge — OOS takes priority, then custom ACF, then sale ──────────────────
-$badge_text    = '';
-$badge_variant = 'custom';
-
+// ── Badges ──────────────────────────────────────────────────────────────────
 $custom_badge = lenvy_field('lenvy_product_badge_text', $product_id);
-
-if ($is_oos) {
-	$badge_text    = __('Uitverkocht', 'lenvy');
-	$badge_variant = 'oos';
-} elseif ($custom_badge) {
-	$badge_text    = (string) $custom_badge;
-	$badge_variant = 'new';
-} elseif ($is_sale) {
-	$badge_text    = __('Sale', 'lenvy');
-	$badge_variant = 'sale';
-}
+$is_new = !$is_oos && !empty($custom_badge);
 
 // ── Brand ────────────────────────────────────────────────────────────────────
 $brand_name = '';
@@ -58,12 +45,12 @@ if ($show_brand) {
 	}
 }
 
-// ── Concentration ───────────────────────────────────────────────────────────
+// ── Variant label (concentration + size) ────────────────────────────────────
 $concentration = $product->get_attribute('concentration');
-
-// ── Variable product: "Vanaf" price + cheapest size ─────────────────────────
+$variant_text  = '';
 $cheapest_size = '';
 $is_variable   = $product->is_type('variable');
+
 if ($is_variable) {
 	$prices = $product->get_variation_prices(true);
 	if (!empty($prices['price'])) {
@@ -77,16 +64,21 @@ if ($is_variable) {
 	}
 }
 
+$variant_parts = array_filter([$concentration, $cheapest_size]);
+if ($variant_parts) {
+	$variant_text = implode(' · ', $variant_parts);
+}
+
 // ── Image ────────────────────────────────────────────────────────────────────
 $image_id = (int) $product->get_image_id();
 
 $image_html = $image_id
 	? wp_get_attachment_image($image_id, $image_size, false, [
-		'class'   => 'w-full h-full object-contain p-10 transition-transform duration-300 group-hover:scale-[1.03]',
+		'class'   => 'lenvy-card__img-el',
 		'loading' => 'lazy',
 		'alt'     => esc_attr($title),
 	])
-	: wc_placeholder_img($image_size, ['class' => 'w-full h-full object-contain p-10']);
+	: wc_placeholder_img($image_size, ['class' => 'lenvy-card__img-el']);
 
 // ── Add-to-cart data ─────────────────────────────────────────────────────────
 $is_purchasable = $product->is_purchasable() && $product->is_in_stock();
@@ -95,89 +87,88 @@ $atc_url        = $product->add_to_cart_url();
 ?>
 
 <article
-	class="group relative flex flex-col"
+	class="lenvy-card"
 	data-product-id="<?php echo esc_attr($product_id); ?>"
 >
-	<!-- Image -->
+
 	<a
 		href="<?php echo esc_url($permalink); ?>"
-		class="relative block overflow-hidden aspect-product" style="background:#FAF9F8;"
+		class="lenvy-card__img"
 		tabindex="-1"
 		aria-hidden="true"
 	>
 		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		echo $image_html; ?>
 
-		<?php if ($badge_text): ?>
-		<span class="absolute top-3 left-3 z-10">
-			<?php get_template_part('template-parts/components/badge', null, [
-				'text'    => $badge_text,
-				'variant' => $badge_variant,
-			]); ?>
-		</span>
-		<?php endif; ?>
+		<div class="lenvy-card__tags">
+			<?php if ($is_new): ?>
+				<span class="lenvy-tag lenvy-tag--new"><?php echo esc_html((string) $custom_badge); ?></span>
+			<?php endif; ?>
+			<?php if ($is_sale && !$is_oos): ?>
+				<span class="lenvy-tag lenvy-tag--sale"><?php esc_html_e('Sale', 'lenvy'); ?></span>
+			<?php endif; ?>
+			<?php if ($is_oos): ?>
+				<span class="lenvy-tag lenvy-tag--oos"><?php esc_html_e('Uitverkocht', 'lenvy'); ?></span>
+			<?php endif; ?>
+		</div>
 
-		<?php if ($is_oos): ?>
-		<span class="absolute inset-0 bg-white/50 z-[5]"></span>
-		<?php endif; ?>
-
-		<?php if ($is_simple && $is_purchasable): ?>
+		<?php if (!$is_oos): ?>
 		<button
 			type="button"
-			class="absolute bottom-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white text-neutral-700 rounded-full opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-black hover:text-white"
+			class="lenvy-card__wish"
+			data-wishlist-toggle
+			aria-label="<?php echo esc_attr(sprintf(__('%s aan verlanglijst toevoegen', 'lenvy'), $title)); ?>"
+		>
+			<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+		</button>
+		<?php endif; ?>
+
+		<?php if ($is_purchasable && $is_simple): ?>
+		<button
+			type="button"
+			class="lenvy-card__quick-add"
 			data-quick-add
 			data-product-id="<?php echo esc_attr($product_id); ?>"
 			data-add-to-cart-url="<?php echo esc_url($atc_url); ?>"
-			aria-label="<?php echo esc_attr(sprintf(__('Voeg %s toe aan winkelwagen', 'lenvy'), $title)); ?>"
+			aria-label="<?php echo esc_attr(sprintf(__('%s toevoegen aan winkelwagen', 'lenvy'), $title)); ?>"
 		>
-			<?php lenvy_icon('cart', '', 'sm'); ?>
+			<?php esc_html_e('Snel toevoegen', 'lenvy'); ?>
 		</button>
-		<?php elseif (!$is_simple && $is_purchasable): ?>
+		<?php elseif ($is_purchasable): ?>
 		<a
 			href="<?php echo esc_url($permalink); ?>"
-			class="absolute bottom-3 right-3 z-10 w-9 h-9 flex items-center justify-center bg-white text-neutral-700 rounded-full opacity-0 translate-y-1 max-lg:opacity-100 max-lg:translate-y-0 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200 hover:bg-black hover:text-white"
+			class="lenvy-card__quick-add"
 			aria-label="<?php echo esc_attr(sprintf(__('Bekijk opties voor %s', 'lenvy'), $title)); ?>"
 		>
-			<?php lenvy_icon('arrow-right', '', 'sm'); ?>
+			<?php esc_html_e('Bekijk opties', 'lenvy'); ?>
 		</a>
+		<?php endif; ?>
+
+		<?php if ($is_oos): ?>
+		<span class="lenvy-card__oos-overlay" aria-hidden="true"></span>
 		<?php endif; ?>
 	</a>
 
-	<!-- Details -->
-	<div class="pt-4 flex flex-col gap-1">
+	<?php if ($brand_name): ?>
+	<p class="lenvy-card__brand"><?php echo esc_html($brand_name); ?></p>
+	<?php endif; ?>
 
-		<?php if ($brand_name): ?>
-		<span class="text-xs font-semibold uppercase tracking-[0.08em] text-neutral-900 line-clamp-1">
-			<?php echo esc_html($brand_name); ?>
-		</span>
+	<h3 class="lenvy-card__name">
+		<a href="<?php echo esc_url($permalink); ?>"><?php echo esc_html($title); ?></a>
+	</h3>
+
+	<?php if ($variant_text): ?>
+	<p class="lenvy-card__variant"><?php echo esc_html($variant_text); ?></p>
+	<?php endif; ?>
+
+	<?php if ($price_html): ?>
+	<div class="lenvy-card__price">
+		<?php if ($is_variable): ?>
+			<span class="lenvy-card__price-prefix"><?php esc_html_e('Vanaf', 'lenvy'); ?></span>
 		<?php endif; ?>
-
-		<a
-			href="<?php echo esc_url($permalink); ?>"
-			class="text-sm text-neutral-500 leading-snug line-clamp-2 transition-colors duration-200 hover:text-neutral-900"
-		>
-			<?php echo esc_html($title); ?>
-			<?php if ($concentration): ?>
-				<span class="text-neutral-400"><?php echo esc_html(' — ' . $concentration); ?></span>
-			<?php endif; ?>
-		</a>
-
-		<?php if ($price_html): ?>
-		<div class="mt-1 flex items-baseline gap-2 lenvy-card-price">
-			<span class="text-sm font-semibold text-neutral-900">
-				<?php if ($is_variable): ?>
-					<?php esc_html_e('Vanaf', 'lenvy'); ?>
-				<?php endif; ?>
-				<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-				echo $price_html; ?>
-			</span>
-			<?php if ($cheapest_size): ?>
-			<span class="text-xs text-neutral-400">
-				<?php echo esc_html($cheapest_size); ?>
-			</span>
-			<?php endif; ?>
-		</div>
-		<?php endif; ?>
-
+		<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		echo $price_html; ?>
 	</div>
+	<?php endif; ?>
+
 </article>

@@ -163,10 +163,6 @@ endif; ?>
 
 		<?php get_template_part('template-parts/shop/sort-bar'); ?>
 
-		<?php if (lenvy_is_filtered()): ?>
-			<?php get_template_part('template-parts/shop/filter-active'); ?>
-		<?php endif; ?>
-
 		<?php if (woocommerce_product_loop()): ?>
 
 			<?php do_action('woocommerce_before_shop_loop'); ?>

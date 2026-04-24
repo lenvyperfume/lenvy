@@ -1,13 +1,18 @@
 <?php
 /**
- * Taxonomy / attribute filter — checkbox list.
+ * Filter group — HARDCODED checkbox list with optional inline search.
+ *
+ * Accepts a flat array of option labels ($args['options']). Counts default
+ * to empty (no WC backend yet).
  *
  * Usage:
  *   get_template_part('template-parts/shop/filter-taxonomy', null, [
- *     'taxonomy'  => 'product_brand',   // taxonomy slug
- *     'query_var' => 'filter_brand',    // URL query var name
- *     'label'     => 'Brand',           // accordion heading
- *     'open'      => true,
+ *     'name'       => 'brand',          // unique key for accordion panel ID
+ *     'label'      => 'Merk',
+ *     'options'    => ['Aesop', 'Byredo', ...],
+ *     'counts'     => ['Aesop' => 12, ...], // optional
+ *     'open'       => true,
+ *     'searchable' => true,             // show in-group search field
  *   ]);
  *
  * @package Lenvy
@@ -15,58 +20,57 @@
 
 defined('ABSPATH') || exit();
 
-$taxonomy = $args['taxonomy'] ?? '';
-$query_var = $args['query_var'] ?? '';
-$label = $args['label'] ?? '';
-$open = $args['open'] ?? true;
+$name       = (string) ($args['name']       ?? 'filter');
+$label      = (string) ($args['label']      ?? '');
+$options    = (array)  ($args['options']    ?? []);
+$counts     = (array)  ($args['counts']     ?? []);
+$open       = (bool)   ($args['open']       ?? true);
+$searchable = (bool)   ($args['searchable'] ?? false);
 
-if (!$taxonomy || !$query_var) {
+if (!$label || !$options) {
 	return;
-}
-
-$terms = lenvy_get_filter_terms($taxonomy);
-
-if (empty($terms)) {
-	return;
-}
-
-// Active slugs — handles both array (name="var[]") and comma-separated string.
-$active_slugs = lenvy_parse_filter_slugs($query_var);
-
-// When browsing a taxonomy archive for this taxonomy (e.g. /product-category/men-perfume/),
-// WP applies the term constraint via URL routing, not via $_GET — mark it as active too.
-if (is_tax($taxonomy)) {
-	$queried = get_queried_object();
-	if ($queried instanceof WP_Term && !in_array($queried->slug, $active_slugs, true)) {
-		$active_slugs[] = $queried->slug;
-	}
 }
 
 ob_start();
 ?>
-<ul class="space-y-2.5" role="list">
-	<?php foreach ($terms as $term): ?>
-		<?php
-  $checked = in_array($term->slug, $active_slugs, true);
-  $input_id = 'filter-' . esc_attr($query_var) . '-' . esc_attr($term->slug);
-  ?>
-		<li class="flex items-center gap-2.5">
-			<input
-				type="checkbox"
-				id="<?php echo $input_id; ?>"
-				name="<?php echo esc_attr($query_var); ?>[]"
-				value="<?php echo esc_attr($term->slug); ?>"
-				class="lenvy-checkbox"
-				<?php checked($checked); ?>
-				data-filter-checkbox
-			>
-			<label
-				for="<?php echo $input_id; ?>"
-				class="flex items-center justify-between flex-1 text-sm text-neutral-700 cursor-pointer hover:text-black transition-colors duration-200"
-			>
-				<span><?php echo esc_html($term->name); ?></span>
-				<span class="text-xs text-neutral-400">(<?php echo esc_html($term->count); ?>)</span>
+<?php if ($searchable): ?>
+<div class="lenvy-filter-search">
+	<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" aria-hidden="true">
+		<circle cx="11" cy="11" r="7"/>
+		<path d="m21 21-4.3-4.3"/>
+	</svg>
+	<input
+		type="text"
+		placeholder="<?php echo esc_attr(sprintf(__('Zoek %s…', 'lenvy'), strtolower($label))); ?>"
+		data-filter-search
+		aria-label="<?php echo esc_attr(sprintf(__('Zoek %s', 'lenvy'), strtolower($label))); ?>"
+	>
+</div>
+<?php endif; ?>
+
+<ul class="lenvy-filter-opts<?php echo $searchable ? ' lenvy-filter-opts--scroll' : ''; ?>" role="list" data-filter-opts>
+	<?php foreach ($options as $opt):
+		$label_str = (string) $opt;
+		$slug      = sanitize_title($label_str);
+		$input_id  = 'filter-' . esc_attr($name) . '-' . esc_attr($slug);
+		$count     = $counts[$label_str] ?? null;
+	?>
+		<li class="lenvy-opt" data-label="<?php echo esc_attr(strtolower($label_str)); ?>">
+			<label for="<?php echo esc_attr($input_id); ?>" class="lenvy-opt__label">
+				<input
+					type="checkbox"
+					id="<?php echo esc_attr($input_id); ?>"
+					name="filter_<?php echo esc_attr($name); ?>[]"
+					value="<?php echo esc_attr($slug); ?>"
+					class="lenvy-opt__input"
+					data-filter-checkbox
+				>
+				<span class="lenvy-opt__check" aria-hidden="true"></span>
+				<span class="lenvy-opt__name"><?php echo esc_html($label_str); ?></span>
 			</label>
+			<?php if ($count !== null): ?>
+				<span class="lenvy-opt__count"><?php echo esc_html($count); ?></span>
+			<?php endif; ?>
 		</li>
 	<?php endforeach; ?>
 </ul>
@@ -76,6 +80,5 @@ $content = ob_get_clean();
 get_template_part(
 	'template-parts/shop/filter-accordion',
 	null,
-	compact('label', 'open', 'content') + ['name' => $query_var],
+	compact('label', 'open', 'content', 'name'),
 );
-
