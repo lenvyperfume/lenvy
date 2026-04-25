@@ -19,6 +19,7 @@ import { initAjaxFilters } from './modules/ajax-filters.js';
 import { initBrandScroller } from './modules/brand-scroller.js';
 import { initProductCarousel } from './modules/product-carousel.js';
 import { initBrandsFilter } from './modules/brands-filter.js';
+import { initBrandsPage } from './modules/brands-page.js';
 import { initVariationTiles } from './modules/variation-tiles.js';
 import { initUspSlider } from './modules/usp-slider.js';
 
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initBrandScroller();
   initProductCarousel();
   initBrandsFilter();
+  initBrandsPage();
   initVariationTiles();
   initUspSlider();
 

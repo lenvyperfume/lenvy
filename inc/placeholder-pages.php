@@ -5,6 +5,7 @@
  *
  * Currently:
  *   - /parfum-voorbeeld/  → templates/product-placeholder.php
+ *   - /merken/            → templates/brands-placeholder.php
  *
  * Hooks into `template_redirect` so we don't have to register rewrite rules
  * (and ask the user to flush permalinks). Remove this file once the designs
@@ -16,23 +17,32 @@
 defined('ABSPATH') || exit();
 
 /**
- * Slug for the placeholder product preview page.
+ * Map of placeholder slug → template file (relative to the theme root).
  *
- * @return string
+ * @return array<string,string>
  */
-function lenvy_placeholder_product_slug(): string
+function lenvy_placeholder_routes(): array
 {
-	return 'parfum-voorbeeld';
+	return [
+		'parfum-voorbeeld' => 'templates/product-placeholder.php',
+		'merken'           => 'templates/brands-placeholder.php',
+	];
 }
 
 /**
- * URL of the placeholder product preview page.
- *
- * @return string
+ * URL helper — placeholder product preview page.
  */
 function lenvy_placeholder_product_url(): string
 {
-	return home_url('/' . lenvy_placeholder_product_slug() . '/');
+	return home_url('/parfum-voorbeeld/');
+}
+
+/**
+ * URL helper — placeholder brands index page.
+ */
+function lenvy_placeholder_brands_url(): string
+{
+	return home_url('/merken/');
 }
 
 /**
@@ -41,7 +51,8 @@ function lenvy_placeholder_product_url(): string
 add_action('template_redirect', static function () {
 	$path = trim((string) wp_parse_url((string) ($_SERVER['REQUEST_URI'] ?? ''), PHP_URL_PATH), '/');
 
-	if ($path !== lenvy_placeholder_product_slug()) {
+	$routes = lenvy_placeholder_routes();
+	if (!isset($routes[$path])) {
 		return;
 	}
 
@@ -56,7 +67,7 @@ add_action('template_redirect', static function () {
 	status_header(200);
 	nocache_headers();
 
-	$template = get_theme_file_path('templates/product-placeholder.php');
+	$template = get_theme_file_path($routes[$path]);
 	if (file_exists($template)) {
 		include $template;
 		exit;
