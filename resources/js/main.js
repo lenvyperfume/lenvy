@@ -117,6 +117,57 @@ document.addEventListener('DOMContentLoaded', () => {
     btn.classList.toggle('is-active');
   });
 
+  // ── Product placeholder page (PDP) ────────────────────────────────────────
+
+  // Gallery thumbnails — swap the main shot's gradient.
+  const pdpShot = document.querySelector('[data-pdp-shot]');
+  const pdpThumbs = document.querySelectorAll('[data-pdp-thumb]');
+  if (pdpShot && pdpThumbs.length) {
+    pdpThumbs.forEach((thumb) => {
+      thumb.addEventListener('click', () => {
+        pdpThumbs.forEach((t) => {
+          t.classList.remove('is-active');
+          t.setAttribute('aria-selected', 'false');
+        });
+        thumb.classList.add('is-active');
+        thumb.setAttribute('aria-selected', 'true');
+        const bg = thumb.dataset.bg;
+        if (bg) pdpShot.style.setProperty('--shot-bg', bg);
+      });
+    });
+  }
+
+  // Size tiles — swap active state and update price + per-ml display.
+  const pdpSizes = document.querySelectorAll('[data-pdp-size]');
+  const pdpPrice = document.querySelector('[data-pdp-price]');
+  const pdpPricePer = document.querySelector('[data-pdp-price-per]');
+  if (pdpSizes.length) {
+    const formatEur = (n) => '€ ' + n.toFixed(2).replace('.', ',');
+    pdpSizes.forEach((tile) => {
+      tile.addEventListener('click', () => {
+        pdpSizes.forEach((t) => t.classList.remove('is-active'));
+        tile.classList.add('is-active');
+        const size = parseFloat(tile.dataset.size);
+        const price = parseFloat(tile.dataset.price);
+        if (pdpPrice && Number.isFinite(price)) pdpPrice.textContent = formatEur(price);
+        if (pdpPricePer && Number.isFinite(price) && Number.isFinite(size) && size > 0) {
+          pdpPricePer.textContent = formatEur(price / size) + ' / ml';
+        }
+      });
+    });
+  }
+
+  // FAQ accordion — toggle .is-open on the parent item.
+  document.querySelectorAll('[data-pdp-faq-toggle]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const item = btn.closest('[data-pdp-faq]');
+      if (!item) return;
+      const next = !item.classList.contains('is-open');
+      item.classList.toggle('is-open', next);
+      btn.setAttribute('aria-expanded', String(next));
+    });
+  });
+
   // ESC closes whichever panel is currently open.
   // The search drawer handles its own Esc; the other drawers don't.
   document.addEventListener('keydown', (e) => {

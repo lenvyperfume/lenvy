@@ -30,8 +30,10 @@ $font-sans: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
 // ── Layout ────────────────────────────────────────────────────────────────────
 $container-max: 1440px;
 $container-px: 1rem;
-$header-height: 56px;           // mobile: logo bar only
-$header-height-desktop: 104px;  // desktop: logo bar (60px) + nav bar (44px)
+// Actual rendered heights (measured): row1 60px (mobile) / 72px (desktop)
+// + nav bar with padding-block 16px on a 13px line-height: 1.55 link ≈ 52px.
+$header-height: 60px;           // mobile: logo bar only
+$header-height-desktop: 124px;  // desktop: logo bar (72px) + nav bar (~52px)
 
 // ── Transitions ───────────────────────────────────────────────────────────────
 $transition-base: 200ms ease;

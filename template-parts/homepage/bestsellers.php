@@ -66,91 +66,18 @@ $bestsellers = [
 		</div>
 
 		<!-- Product grid -->
-		<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-10 lg:gap-x-8">
-			<?php foreach ($bestsellers as $p):
-				$v = $variants[$p['v']] ?? $variants['v1'];
-			?>
-				<article class="group relative flex flex-col">
-
-					<!-- Image tile -->
-					<div
-						class="relative overflow-hidden aspect-[3/4] mb-4 transition-[background] duration-300"
-						style="background: <?php echo esc_attr($v['bg']); ?>;"
-					>
-						<!-- Bottle cap (decorative) -->
-						<span
-							class="absolute left-1/2 -translate-x-1/2 w-[18%] h-[6%] bg-[#1a1918] rounded-[2px]"
-							style="bottom: calc(10% + 62%);"
-							aria-hidden="true"
-						></span>
-						<!-- Bottle (decorative) -->
-						<span
-							class="absolute left-1/2 bottom-[10%] -translate-x-1/2 w-[42%] h-[62%] rounded-t-[8px] rounded-b-[16px]"
-							style="background: <?php echo esc_attr($v['bottle']); ?>; box-shadow: inset 0 0 30px rgba(255,255,255,0.3), inset 0 -20px 40px rgba(0,0,0,0.08), 0 20px 40px rgba(0,0,0,0.10);"
-							aria-hidden="true"
-						></span>
-
-						<!-- Tag(s) top-left -->
-						<?php if ($p['tag']):
-							$tag_classes = $p['tag'] === 'sale'
-								? 'bg-neutral-950 text-white'
-								: ($p['tag'] === 'new' ? 'bg-primary text-black' : 'bg-white text-black');
-							$tag_label = $p['tag'] === 'sale'
-								? __('Sale', 'lenvy')
-								: ($p['tag'] === 'new' ? __('Nieuw', 'lenvy') : '');
-						?>
-							<div class="absolute top-3 left-3 flex flex-col gap-1.5">
-								<span class="inline-flex items-center px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.1em] <?php echo esc_attr($tag_classes); ?>">
-									<?php echo esc_html($tag_label); ?>
-								</span>
-							</div>
-						<?php endif; ?>
-
-						<!-- Wishlist hover button -->
-						<button
-							type="button"
-							class="absolute top-3 right-3 w-[34px] h-[34px] rounded-full bg-white/90 text-black inline-flex items-center justify-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200"
-							aria-label="<?php esc_attr_e('Aan verlanglijst toevoegen', 'lenvy'); ?>"
-						>
-							<svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-						</button>
-
-						<!-- Quick-add (hover) -->
-						<button
-							type="button"
-							class="absolute left-3 right-3 bottom-3 px-3.5 py-3 bg-primary hover:bg-primary-hover text-black text-[12px] font-medium tracking-[0.02em] text-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-200"
-						>
-							<?php esc_html_e('Snel toevoegen', 'lenvy'); ?>
-						</button>
-					</div>
-
-					<!-- Details -->
-					<p class="text-[11px] font-medium uppercase tracking-[0.16em] text-neutral-500 mb-1.5">
-						<?php echo esc_html($p['brand']); ?>
-					</p>
-					<h3 class="text-[15px] font-medium leading-[1.3] text-neutral-950 mb-1.5">
-						<?php echo esc_html($p['name']); ?>
-					</h3>
-					<p class="text-[12px] text-neutral-500 mb-2.5">
-						<?php echo esc_html($p['variant']); ?>
-					</p>
-
-					<div class="flex items-baseline gap-2">
-						<?php if ($p['was']): ?>
-							<span class="text-[14px] font-medium text-[#b8005a]">
-								<?php echo esc_html($p['price']); ?>
-							</span>
-							<s class="text-[14px] font-normal text-neutral-400">
-								<?php echo esc_html($p['was']); ?>
-							</s>
-						<?php else: ?>
-							<span class="text-[14px] font-medium text-neutral-950">
-								<?php echo esc_html($p['price']); ?>
-							</span>
-						<?php endif; ?>
-					</div>
-
-				</article>
+		<div class="lenvy-grid grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+			<?php foreach ($bestsellers as $p): ?>
+				<?php get_template_part('template-parts/components/product-card-placeholder', null, [
+					'brand'             => $p['brand'],
+					'name'              => $p['name'],
+					'variant'           => $p['variant'],
+					'price'             => $p['price'],
+					'was'               => $p['was'],
+					'tag'               => $p['tag'],
+					'v'                 => $p['v'],
+					'variant_gradients' => $variants,
+				]); ?>
 			<?php endforeach; ?>
 		</div>
 

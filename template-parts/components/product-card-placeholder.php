@@ -43,11 +43,16 @@ $tag_labels = [
 	'niche' => __('Niche', 'lenvy'),
 ];
 $tag_modifier = in_array($tag, ['new', 'sale'], true) ? $tag : 'new';
+
+// All placeholder cards point at the shared placeholder PDP for now.
+$href = function_exists('lenvy_placeholder_product_url')
+	? lenvy_placeholder_product_url()
+	: '#';
 ?>
 
 <article class="lenvy-card">
 
-	<a href="#" class="lenvy-card__img" tabindex="-1" aria-hidden="true" style="background: <?php echo esc_attr($v['bg']); ?>;">
+	<a href="<?php echo esc_url($href); ?>" class="lenvy-card__img" tabindex="-1" aria-hidden="true" style="background: <?php echo esc_attr($v['bg']); ?>;">
 
 		<span class="lenvy-card__cap" aria-hidden="true"></span>
 		<span
@@ -82,7 +87,7 @@ $tag_modifier = in_array($tag, ['new', 'sale'], true) ? $tag : 'new';
 	<p class="lenvy-card__brand"><?php echo esc_html($brand); ?></p>
 	<?php endif; ?>
 
-	<h3 class="lenvy-card__name"><a href="#"><?php echo esc_html($name); ?></a></h3>
+	<h3 class="lenvy-card__name"><a href="<?php echo esc_url($href); ?>"><?php echo esc_html($name); ?></a></h3>
 
 	<?php if ($variant): ?>
 	<p class="lenvy-card__variant"><?php echo esc_html($variant); ?></p>

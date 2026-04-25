@@ -20,6 +20,7 @@ foreach (
 		'/inc/shop.php',
 		'/inc/ajax.php',
 		'/inc/admin.php',
+		'/inc/placeholder-pages.php',
 	]
 	as $file
 ) {
