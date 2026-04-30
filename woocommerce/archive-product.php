@@ -34,15 +34,20 @@ $gradient_keys = ['v1', 'v2', 'v3', 'v4', 'v5', 'v6', 'v7', 'v8'];
 
 			<div class="lenvy-shop__main">
 
-				<div class="lenvy-grid grid grid-cols-2 md:grid-cols-3" data-product-grid>
+				<div class="lenvy-grid grid grid-cols-2 md:grid-cols-3" data-product-grid data-placeholder-shop>
 					<?php foreach ($shop_data['products'] as $i => $p): ?>
 						<?php get_template_part('template-parts/components/product-card-placeholder', null, [
 							'brand'             => $p['brand'],
 							'name'              => $p['name'],
 							'variant'           => $p['variant'],
 							'price'             => $p['price'],
+							'priceValue'        => $p['priceValue'] ?? 0,
 							'was'               => $p['was'],
 							'tag'               => $p['tag'],
+							'family'            => $p['family']     ?? '',
+							'gender'            => $p['gender']     ?? '',
+							'collection'        => $p['collection'] ?? '',
+							'sizeMl'            => $p['sizeMl']     ?? 0,
 							'v'                 => $gradient_keys[$i % count($gradient_keys)],
 							'variant_gradients' => $shop_data['variants'],
 						]); ?>

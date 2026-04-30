@@ -26,6 +26,7 @@ function lenvy_placeholder_routes(): array
 	return [
 		'parfum-voorbeeld' => 'templates/product-placeholder.php',
 		'merken'           => 'templates/brands-placeholder.php',
+		'winkelwagen'      => 'templates/cart-placeholder.php',
 	];
 }
 
@@ -44,6 +45,20 @@ function lenvy_placeholder_brands_url(): string
 {
 	return home_url('/merken/');
 }
+
+/**
+ * URL helper — placeholder cart page.
+ */
+function lenvy_placeholder_cart_url(): string
+{
+	return home_url('/winkelwagen/');
+}
+
+/**
+ * Repoint WooCommerce's cart URL to the placeholder cart while we don't
+ * have real WC pages set up. Removed once /cart/ is wired up properly.
+ */
+add_filter('woocommerce_get_cart_url', static fn() => lenvy_placeholder_cart_url(), 5);
 
 /**
  * Intercept the matching request and load our template.

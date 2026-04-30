@@ -88,4 +88,9 @@ $current_orderby = 'popular';
 		</div>
 
 	</div>
+
+	<!-- Active filter chips — populated by placeholder-filters.js -->
+	<div class="lenvy-container">
+		<div class="lenvy-chips" data-active-filters hidden></div>
+	</div>
 </div>

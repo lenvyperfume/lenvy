@@ -214,3 +214,38 @@ class Lenvy_Mobile_Nav_Walker extends Walker_Nav_Menu {
 		$output .= '</li>';
 	}
 }
+
+// ─── Auto-link menu items by title ────────────────────────────────────────────
+// Rewrites the URL of menu items whose (lowercased) title matches a known key.
+// Saves the user from hand-editing every menu item URL when the labels are
+// already meaningful — and keeps links pointing at the right shape today even
+// while we are still on placeholder data.
+
+add_filter('wp_nav_menu_objects', static function ($items) {
+	$shop_url = function_exists('wc_get_page_permalink')
+		? wc_get_page_permalink('shop')
+		: home_url('/shop/');
+
+	$brands_url = function_exists('lenvy_placeholder_brands_url')
+		? lenvy_placeholder_brands_url()
+		: home_url('/merken/');
+
+	$map = [
+		// Gender-filtered shop links — placeholder filters hydrate from URL.
+		'herenparfum'   => add_query_arg('filter_gender', 'heren',  $shop_url),
+		'damesparfum'   => add_query_arg('filter_gender', 'dames',  $shop_url),
+		'unisex parfum' => add_query_arg('filter_gender', 'unisex', $shop_url),
+		// Top-level destinations.
+		'parfum'        => $shop_url,
+		'merken'        => $brands_url,
+	];
+
+	foreach ($items as $item) {
+		$key = strtolower(trim((string) wp_strip_all_tags((string) $item->title)));
+		if (isset($map[$key])) {
+			$item->url = $map[$key];
+		}
+	}
+
+	return $items;
+});

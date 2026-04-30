@@ -117,6 +117,14 @@ function initSingle(root) {
       document.removeEventListener('mouseup', stop);
       document.removeEventListener('touchmove', move);
       document.removeEventListener('touchend', stop);
+      // Notify listeners (placeholder filters, AJAX filters, etc.) that the
+      // user finished interacting with the slider.
+      root.dispatchEvent(
+        new CustomEvent('lenvy:price-change', {
+          bubbles: true,
+          detail: { min: currentMin, max: currentMax },
+        }),
+      );
     };
 
     thumb.addEventListener('mousedown', start);
@@ -125,20 +133,28 @@ function initSingle(root) {
     // Keyboard support.
     thumb.addEventListener('keydown', (e) => {
       const currentRange = span >= 1000 ? 10 : span >= 100 ? 5 : 1;
+      let changed = false;
       if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') {
         e.preventDefault();
         if (isMin) currentMin = Math.max(globalMin, currentMin - currentRange);
         else currentMax = Math.max(currentMin + currentRange, currentMax - currentRange);
-        render();
-        updateLabels();
-        syncInputDisabled();
+        changed = true;
       } else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') {
         e.preventDefault();
         if (isMin) currentMin = Math.min(currentMax - currentRange, currentMin + currentRange);
         else currentMax = Math.min(globalMax, currentMax + currentRange);
+        changed = true;
+      }
+      if (changed) {
         render();
         updateLabels();
         syncInputDisabled();
+        root.dispatchEvent(
+          new CustomEvent('lenvy:price-change', {
+            bubbles: true,
+            detail: { min: currentMin, max: currentMax },
+          }),
+        );
       }
     });
   }

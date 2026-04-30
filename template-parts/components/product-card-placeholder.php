@@ -32,6 +32,14 @@ $tag      = $args['tag']   ?? null;
 $v_key    = (string) ($args['v']       ?? 'v1');
 $variants = $args['variant_gradients'] ?? [];
 
+// Filter facets — used by client-side placeholder filter JS via data-* attrs.
+$family      = (string) ($args['family']      ?? '');
+$gender      = (string) ($args['gender']      ?? '');
+$collection  = (string) ($args['collection']  ?? '');
+$size_ml     = (int)    ($args['sizeMl']      ?? 0);
+$price_value = (float)  ($args['priceValue']  ?? 0);
+$on_sale     = !empty($was);
+
 $v = $variants[$v_key] ?? null;
 if (!$v) {
 	$v = ['bg' => 'linear-gradient(160deg,#eee,#ddd)', 'bottle' => 'linear-gradient(180deg,#fff,#ccc)'];
@@ -50,7 +58,17 @@ $href = function_exists('lenvy_placeholder_product_url')
 	: '#';
 ?>
 
-<article class="lenvy-card">
+<article
+	class="lenvy-card"
+	data-product-card
+	data-brand="<?php echo esc_attr(sanitize_title($brand)); ?>"
+	data-family="<?php echo esc_attr(sanitize_title($family)); ?>"
+	data-gender="<?php echo esc_attr(sanitize_title($gender)); ?>"
+	data-collection="<?php echo esc_attr(sanitize_title($collection)); ?>"
+	data-size="<?php echo esc_attr($size_ml); ?>"
+	data-price="<?php echo esc_attr($price_value); ?>"
+	data-onsale="<?php echo $on_sale ? '1' : '0'; ?>"
+	data-name="<?php echo esc_attr(strtolower($name)); ?>">
 
 	<a href="<?php echo esc_url($href); ?>" class="lenvy-card__img" tabindex="-1" aria-hidden="true" style="background: <?php echo esc_attr($v['bg']); ?>;">
 

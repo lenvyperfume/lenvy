@@ -16,6 +16,9 @@ export function initAjaxFilters() {
   const grid = document.querySelector('[data-product-grid]');
   if (!grid) return; // Not a shop/archive page — bail.
 
+  // Placeholder shop is fully client-side; placeholder-filters.js owns it.
+  if (grid.hasAttribute('data-placeholder-shop')) return;
+
   // Attach submit listeners to all filter forms (sidebar + drawer).
   document.querySelectorAll('[data-filter-form]').forEach((form) => {
     form.addEventListener('submit', handleSubmit);

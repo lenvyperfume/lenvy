@@ -574,6 +574,11 @@
   position: relative;
   display: flex;
   flex-direction: column;
+
+  // Toggled by client-side filter JS in placeholder mode.
+  &.is-hidden {
+    display: none;
+  }
 }
 
 .lenvy-card__img {
