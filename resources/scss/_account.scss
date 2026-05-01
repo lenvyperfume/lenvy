@@ -120,21 +120,46 @@
 
 // ─── Form ────────────────────────────────────────────────────────────────────
 
+// Single source of vertical rhythm: every direct child of the form sits
+// 1rem apart, period. Flex `gap` is the ONLY spacing source between
+// blocks — explicit `margin: 0` on every direct child kills any inherited
+// browser default or third-party rule that would otherwise stack on top
+// of the gap. Hidden inputs are skipped (UA `display: none`).
 .lenvy-account__form {
   margin: 0;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
+
+  > * { margin: 0; }
+
+  // WC injects `<wc-order-attribution-inputs>` (and friends) as wrappers
+  // around hidden inputs for order-source tracking. The custom element
+  // itself takes 0 height but still counts as a flex item, so the parent
+  // `gap: 1rem` adds phantom space above whatever follows it. `display:
+  // contents` removes the wrapper from layout entirely; the hidden inputs
+  // inside still submit normally.
+  > wc-order-attribution-inputs { display: contents; }
 }
 
-// Spacing between top-level form blocks. Scoped to direct children so
-// it doesn't bleed into the 2-column field row (where siblings sit
-// side-by-side, not stacked).
-.lenvy-account__form {
-  > .lenvy-account__fld + .lenvy-account__fld,
-  > .lenvy-account__fld + .lenvy-account__fld-row,
-  > .lenvy-account__fld-row + .lenvy-account__fld,
-  > .lenvy-account__fld-row + .lenvy-account__fld-row {
-    margin-top: 1rem;
+// WC's privacy policy disclaimer (rendered by `woocommerce_register_form`)
+// — apply our muted small-print treatment + zero inner `<p>` margins so
+// the wrapper takes only its text height, no extra padding.
+.lenvy-account__form .woocommerce-privacy-policy-text {
+  font-size: 0.78125rem;
+  color: var(--la-muted);
+  line-height: 1.55;
+
+  p { margin: 0; }
+
+  a {
+    color: var(--la-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--la-n-300);
+    transition: text-decoration-color 160ms ease;
+
+    &:hover { text-decoration-color: var(--la-fg); }
   }
 }
 
@@ -205,33 +230,15 @@
   &:hover { color: var(--la-fg); }
 }
 
-// ─── Privacy text (register) ─────────────────────────────────────────────────
-
-.lenvy-account__privacy {
-  font-size: 0.78125rem;
-  color: var(--la-muted);
-  line-height: 1.55;
-  margin: 1rem 0 0;
-
-  a {
-    border-bottom: 1px solid var(--la-n-300);
-    padding-bottom: 1px;
-    color: var(--la-fg);
-    text-decoration: none;
-    transition: border-color 160ms ease;
-
-    &:hover { border-color: var(--la-fg); }
-  }
-}
-
 // ─── Actions row (submit + remember-me checkbox) ─────────────────────────────
 
 .lenvy-account__actions {
   display: flex;
   align-items: center;
   gap: 1.5rem;
-  margin-top: 1.5rem;
   flex-wrap: wrap;
+  // No `margin-top` — the parent `.lenvy-account__form` flex `gap`
+  // handles spacing to whatever sits above (last field or privacy text).
 }
 
 .lenvy-account__submit {
@@ -1137,3 +1144,85 @@ a.lenvy-account-orders__num {
     }
   }
 }
+
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Checkout login interstitial — /afrekenen/inloggen/
+// Compact two-up head: title + lede on the left, guest CTA on the right.
+// Keeps all three options (login / register / guest) above the fold so
+// the user sees the full choice without scrolling — guest stays equally
+// weighted as a peer of the forms, not a buried fallback.
+// ─────────────────────────────────────────────────────────────────────────────
+
+.lenvy-checkout-login__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 2rem;
+  align-items: end;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--la-hair);
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    align-items: start;
+  }
+}
+
+.lenvy-checkout-login__head-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+// Smaller than the full checkout title — the choice page is a sub-step,
+// not a hero. Tighter h1 + less padding keeps the page above the fold
+// at standard laptop heights (~900px).
+.lenvy-checkout-login__title {
+  font-family: v.$font-sans;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0.25rem 0 0;
+  color: var(--la-fg);
+}
+
+.lenvy-checkout-login__lede {
+  font-size: 0.875rem;
+  color: var(--la-muted);
+  margin: 0;
+  max-width: 56ch;
+  line-height: 1.55;
+}
+
+// Guest CTA inline with the head — equally weighted so guests don't feel
+// pushed into the forms.
+.lenvy-checkout-login__guest-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--la-fg);
+  border-bottom: 1px solid var(--la-fg);
+  padding: 0 0 0.25rem;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: color 160ms ease, border-color 160ms ease;
+
+  svg { transition: transform 160ms ease; }
+
+  &:hover {
+    color: v.$color-primary-hover;
+    border-bottom-color: v.$color-primary-hover;
+
+    svg { transform: translateX(3px); }
+  }
+}
+
+.lenvy-checkout-login__grid {
+  padding: 2rem 0 4rem;
+}
+

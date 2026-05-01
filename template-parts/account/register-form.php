@@ -106,21 +106,12 @@ $form_attrs = $wc_mode
 		</div>
 
 		<?php if ($wc_mode) {
+			// WC privacy disclaimer (editable via WP admin → Privacy + WC
+			// settings). Renders `<div class="woocommerce-privacy-policy-text">`
+			// as a flex child — gets the same 1rem gap above and below as
+			// every other block in the form.
 			do_action('woocommerce_register_form');
 		} ?>
-
-		<p class="lenvy-account__privacy">
-			<?php
-			printf(
-				wp_kses(
-					/* translators: %s: link to privacy policy */
-					__('Je persoonsgegevens worden gebruikt om je bestelling te verwerken, je ervaring op deze website te ondersteunen en voor andere doeleinden zoals beschreven in ons %s.', 'lenvy'),
-					['a' => ['href' => true]]
-				),
-				'<a href="' . esc_url(get_privacy_policy_url() ?: '#') . '">' . esc_html__('privacybeleid', 'lenvy') . '</a>'
-			);
-			?>
-		</p>
 
 		<?php if ($wc_mode) {
 			wp_nonce_field('woocommerce-register', 'woocommerce-register-nonce');

@@ -91,11 +91,16 @@ $trust_icons = [
 		</div>
 
 		<?php
-		$checkout_url = function_exists('lenvy_placeholder_checkout_url')
-			? lenvy_placeholder_checkout_url()
-			: (function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : '#');
+		// Logged-in users go straight to checkout; guests land on the
+		// /afrekenen/inloggen/ choice page first (login / register /
+		// continue as guest) and proceed from there.
+		if (is_user_logged_in()) {
+			$cta_url = function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : home_url('/afrekenen/');
+		} else {
+			$cta_url = function_exists('lenvy_checkout_login_url') ? lenvy_checkout_login_url() : home_url('/afrekenen/inloggen/');
+		}
 		?>
-		<a href="<?php echo esc_url($checkout_url); ?>" class="lenvy-cart-summary__cta">
+		<a href="<?php echo esc_url($cta_url); ?>" class="lenvy-cart-summary__cta">
 			<?php esc_html_e('Naar betalen', 'lenvy'); ?>
 		</a>
 

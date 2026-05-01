@@ -27,9 +27,10 @@ function lenvy_placeholder_routes(): array
 		'parfum-voorbeeld' => 'templates/product-placeholder.php',
 		'merken'           => 'templates/brands-placeholder.php',
 		'winkelwagen'      => 'templates/cart-placeholder.php',
-		'afrekenen'        => 'templates/checkout-placeholder.php',
-		'bedankt'          => 'templates/thankyou-placeholder.php',
-		'mijn-account'     => 'templates/account-placeholder.php',
+		'afrekenen'          => 'templates/checkout-placeholder.php',
+		'afrekenen/inloggen' => 'templates/checkout-login-placeholder.php',
+		'bedankt'            => 'templates/thankyou-placeholder.php',
+		'mijn-account'       => 'templates/account-placeholder.php',
 	];
 }
 
@@ -63,6 +64,18 @@ function lenvy_placeholder_cart_url(): string
 function lenvy_placeholder_checkout_url(): string
 {
 	return home_url('/afrekenen/');
+}
+
+/**
+ * URL helper — checkout-login interstitial.
+ *
+ * Sub-URL of the checkout funnel (`/afrekenen/inloggen/`). Guest users
+ * proceeding from cart land here first to choose login / register /
+ * continue as guest.
+ */
+function lenvy_checkout_login_url(): string
+{
+	return home_url('/afrekenen/inloggen/');
 }
 
 /**
