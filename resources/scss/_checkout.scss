@@ -1,0 +1,1121 @@
+@use 'variables' as v;
+@use 'fields' as f;
+
+// ─── Checkout page ───────────────────────────────────────────────────────────
+// Self-contained chrome (minimal logo header + minimal legal footer) — the
+// design intentionally drops the regular site header to remove navigation
+// distractions during checkout.
+
+// Scoped tokens — applied on any page using the minimal checkout chrome
+// (body.lenvy-checkout-page is set by header-checkout.php for both the
+// cart placeholder and the checkout placeholder). Mirrors the design's
+// :root block.
+.lenvy-checkout-page {
+  --lc-bg: #ffffff;
+  --lc-fg: #14130f;
+  --lc-muted: #7a7469;
+  --lc-hair: #e8e5dd;
+  --lc-surface: #f7f7f5;
+  --lc-n-100: #f0f0ee;
+  --lc-n-300: #d2d1ce;
+  --lc-n-400: #a1a09c;
+  --lc-n-950: #14130f;
+  --lc-field-bg: #f0f0ee;
+  --lc-field-bg-hover: #e4e3e0;
+  --lc-ok: #1f6f3a;
+  --lc-err: #b8005a;
+  --lc-pay: #2e7d4f;
+  --lc-pay-hover: #266a42;
+
+  background: var(--lc-bg);
+  color: var(--lc-fg);
+  font-family: v.$font-sans;
+  -webkit-font-smoothing: antialiased;
+
+  // Stack header → main → footer so the minimal footer hugs the bottom.
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+// Main wrapper sits between the minimal header and the minimal footer.
+// Body handles the column flex so the footer hugs the viewport bottom.
+.lenvy-checkout-page > main {
+  flex: 1 0 auto;
+}
+
+// ─── Minimal header ──────────────────────────────────────────────────────────
+
+.lenvy-checkout__header {
+  background: var(--lc-bg);
+  border-bottom: 1px solid var(--lc-hair);
+}
+
+.lenvy-checkout__header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 80px;
+}
+
+.lenvy-checkout__logo {
+  display: inline-flex;
+  align-items: center;
+  color: var(--lc-fg);
+  text-decoration: none;
+  line-height: 1;
+}
+
+// ACF site-logo image — same sizing as the regular site header.
+.lenvy-checkout__logo-img {
+  display: block;
+  max-height: 40px;
+  width: auto;
+  object-fit: contain;
+}
+
+// Wordmark fallback when no ACF logo is uploaded.
+.lenvy-checkout__logo-mark {
+  position: relative;
+  display: inline-flex;
+  align-items: baseline;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  padding-right: 12px;
+}
+
+.lenvy-checkout__logo-dot {
+  display: inline-block;
+  background: v.$color-primary;
+  width: 7px;
+  height: 7px;
+  margin-left: 5px;
+  transform: translateY(-9px);
+}
+
+.lenvy-checkout__secure {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.05em;
+  color: var(--lc-muted);
+
+  svg { color: var(--lc-ok); }
+}
+
+// ─── Step indicator ──────────────────────────────────────────────────────────
+
+.lenvy-checkout__steps {
+  border-bottom: 1px solid var(--lc-hair);
+  padding: 24px 0;
+}
+
+.lenvy-checkout__steps-inner {
+  display: flex;
+  gap: 56px;
+  font-size: 13px;
+}
+
+.lenvy-checkout__step {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--lc-muted);
+  position: relative;
+  text-decoration: none;
+  transition: color 160ms ease;
+
+  &:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    right: -32px;
+    top: 13px;
+    width: 16px;
+    height: 1px;
+    background: var(--lc-hair);
+  }
+
+  // Anchor variants get hover + focus affordances. Spans (active / pending
+  // without a destination) stay non-interactive.
+  &[href] {
+    cursor: pointer;
+
+    &:hover { color: var(--lc-fg); }
+
+    &:focus-visible {
+      outline: 2px solid var(--lc-fg);
+      outline-offset: 4px;
+    }
+  }
+
+  &--done {
+    .lenvy-checkout__step-num {
+      background: var(--lc-ok);
+      color: #fff;
+      border-color: var(--lc-ok);
+    }
+  }
+
+  &--active {
+    color: var(--lc-fg);
+    font-weight: 500;
+
+    .lenvy-checkout__step-num {
+      background: var(--lc-fg);
+      color: var(--lc-bg);
+      border-color: var(--lc-fg);
+    }
+  }
+
+  // Used on the thank-you page where the active step is also finished —
+  // active text styling, but the green "done" bubble.
+  &--complete {
+    color: var(--lc-fg);
+    font-weight: 500;
+
+    .lenvy-checkout__step-num {
+      background: var(--lc-ok);
+      color: #fff;
+      border-color: var(--lc-ok);
+    }
+  }
+}
+
+.lenvy-checkout__step-num {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--lc-hair);
+  font-size: 11px;
+  font-weight: 500;
+  transition: all 200ms ease;
+  flex-shrink: 0;
+}
+
+// ─── Crumbs / page head ──────────────────────────────────────────────────────
+
+.lenvy-checkout__crumbs {
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--lc-muted);
+  padding: 24px 0 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { color: var(--lc-fg); }
+  }
+
+  .sep {
+    margin: 0 10px;
+    opacity: 0.5;
+  }
+}
+
+.lenvy-checkout__page-head {
+  padding: 32px 0 0;
+}
+
+.lenvy-checkout__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lc-muted);
+  font-weight: 500;
+}
+
+.lenvy-checkout__title {
+  font-family: v.$font-sans;
+  font-size: clamp(2.25rem, 4vw, 3.5rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
+  margin: 8px 0 0;
+  color: var(--lc-fg);
+}
+
+.lenvy-checkout__lede {
+  font-size: 14.5px;
+  color: var(--lc-muted);
+  margin: 14px 0 0;
+  max-width: 56ch;
+}
+
+// ─── Layout grid ─────────────────────────────────────────────────────────────
+
+.lenvy-checkout__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 56px 80px;
+  padding: 56px 0 120px;
+  align-items: start;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 40px 0 80px;
+  }
+}
+
+.lenvy-checkout__form-col {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  min-width: 0;
+}
+
+// ─── Form sections ───────────────────────────────────────────────────────────
+
+.lenvy-checkout__section-title {
+  font-family: v.$font-sans;
+  font-size: 20px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: var(--lc-fg);
+  margin: 0 0 6px;
+  line-height: 1.2;
+}
+
+.lenvy-checkout__section-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--lc-hair);
+  margin-bottom: 28px;
+  gap: 16px;
+}
+
+.lenvy-checkout__section-aside {
+  font-size: 13px;
+  color: var(--lc-muted);
+
+  a {
+    color: var(--lc-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--lc-n-300);
+  }
+}
+
+// ─── Field grid ──────────────────────────────────────────────────────────────
+
+.lenvy-checkout__fld-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lenvy-checkout__fld {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+
+  &--full { grid-column: 1 / -1; }
+
+  // Field treatment shared with the rest of the site via the mixins in
+  // `_fields.scss`. Don't restate the rules here — change them once, in
+  // that file, applies everywhere.
+  label { @include f.field-label; }
+
+  input,
+  select,
+  textarea { @include f.field-input; }
+
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+    line-height: 1.5;
+  }
+
+  &.has-value input,
+  &.has-value select { @include f.field-has-value; }
+
+  &.is-error input { @include f.field-error; }
+}
+
+// Select chevron
+.lenvy-checkout__fld--select {
+  position: relative;
+
+  &::after {
+    content: '';
+    position: absolute;
+    right: 18px;
+    top: calc(50% + 6px);
+    width: 8px;
+    height: 8px;
+    border-right: 1.5px solid var(--lc-muted);
+    border-bottom: 1.5px solid var(--lc-muted);
+    transform: rotate(45deg) translateY(-3px);
+    pointer-events: none;
+  }
+
+  select {
+    padding-right: 36px;
+    cursor: pointer;
+  }
+}
+
+// Validated check on filled fields
+.lenvy-checkout__fld.has-value:not(.lenvy-checkout__fld--select) {
+  &::after {
+    content: '';
+    position: absolute;
+    right: 16px;
+    top: 50%;
+    width: 14px;
+    height: 14px;
+    background: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231f6f3a' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'><polyline points='20 6 9 17 4 12'/></svg>") center/contain no-repeat;
+    transform: translateY(8px);
+    pointer-events: none;
+  }
+}
+
+// ─── Checkbox row ────────────────────────────────────────────────────────────
+
+.lenvy-checkout__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 0 0;
+  cursor: pointer;
+  user-select: none;
+
+  input { display: none; }
+
+  &-box {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--lc-n-400);
+    background: var(--lc-bg);
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 140ms ease;
+
+    svg {
+      opacity: 0;
+      transform: scale(0.6);
+      transition: all 140ms ease;
+    }
+  }
+
+  input:checked + .lenvy-checkout__checkbox-box {
+    background: var(--lc-fg);
+    border-color: var(--lc-fg);
+
+    svg {
+      opacity: 1;
+      transform: scale(1);
+      color: var(--lc-bg);
+    }
+  }
+
+  &-lbl {
+    font-size: 14px;
+    color: var(--lc-fg);
+    font-weight: 400;
+    margin-bottom: 0;
+
+    small {
+      display: block;
+      color: var(--lc-muted);
+      font-size: 12.5px;
+      margin-top: 2px;
+    }
+  }
+}
+
+// ─── Billing collapsible ─────────────────────────────────────────────────────
+
+.lenvy-checkout__billing {
+  margin-top: 0;
+  overflow: hidden;
+  transition: max-height 320ms ease, opacity 220ms ease, margin-top 220ms ease,
+    padding-top 220ms ease, border-top-color 220ms ease;
+  max-height: 0;
+  opacity: 0;
+  border-top: 1px solid transparent;
+
+  &.is-open {
+    max-height: 800px;
+    opacity: 1;
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top-color: var(--lc-hair);
+  }
+}
+
+.lenvy-checkout__billing-title {
+  font-family: v.$font-sans;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lc-muted);
+  margin: 0 0 18px;
+  font-weight: 500;
+}
+
+// ─── Payment methods ─────────────────────────────────────────────────────────
+
+.lenvy-checkout__pay-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.lenvy-checkout__pay-method {
+  display: block;
+  border: 1px solid var(--lc-hair);
+  background: var(--lc-bg);
+  transition: border-color 160ms ease, background 160ms ease;
+  cursor: pointer;
+
+  &:hover { border-color: var(--lc-n-400); }
+
+  &.is-active {
+    border-color: var(--lc-fg);
+    background: var(--lc-surface);
+
+    .lenvy-checkout__pay-radio {
+      border-color: var(--lc-fg);
+
+      &::after {
+        content: '';
+        position: absolute;
+        inset: 3px;
+        background: var(--lc-fg);
+        border-radius: 50%;
+      }
+    }
+
+    .lenvy-checkout__pay-body {
+      max-height: 600px;
+      opacity: 1;
+    }
+  }
+
+  input[type='radio'] { display: none; }
+}
+
+.lenvy-checkout__pay-head {
+  display: grid;
+  grid-template-columns: 28px 1fr auto;
+  gap: 16px;
+  padding: 18px 22px;
+  align-items: center;
+}
+
+.lenvy-checkout__pay-radio {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--lc-n-400);
+  border-radius: 50%;
+  position: relative;
+  flex-shrink: 0;
+  transition: all 160ms ease;
+}
+
+.lenvy-checkout__pay-name {
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--lc-fg);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  small {
+    font-weight: 400;
+    font-size: 12.5px;
+    color: var(--lc-muted);
+    letter-spacing: 0;
+  }
+}
+
+.lenvy-checkout__pay-logo {
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.lenvy-checkout__pay-body {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: max-height 280ms ease, opacity 220ms ease;
+}
+
+.lenvy-checkout__pay-body-inner {
+  padding: 22px 22px 24px 66px;
+  border-top: 1px solid var(--lc-hair);
+  margin-top: 6px;
+}
+
+.lenvy-checkout__pay-hint {
+  font-size: 12.5px;
+  color: var(--lc-muted);
+  margin: 0 0 14px;
+}
+
+// iDEAL bank picker
+.lenvy-checkout__banks {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+
+  button {
+    padding: 12px 14px;
+    border: 1px solid var(--lc-hair);
+    background: var(--lc-bg);
+    text-align: left;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: border-color 140ms ease;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+
+    &:hover { border-color: var(--lc-n-400); }
+    &.is-on { border-color: var(--lc-fg); }
+  }
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lenvy-checkout__bank-mark {
+  width: 32px;
+  height: 18px;
+  flex-shrink: 0;
+  background: var(--lc-surface);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  border: 1px solid var(--lc-hair);
+}
+
+// Card form
+.lenvy-checkout__card-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .lenvy-checkout__fld input {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+.lenvy-checkout__card-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+// Payment-method logos
+.lenvy-checkout__pm-logo {
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 4px 8px;
+  border: 1px solid var(--lc-hair);
+  color: var(--lc-muted);
+  background: var(--lc-bg);
+  text-transform: uppercase;
+
+  &--ideal {
+    background: linear-gradient(180deg, #cc0066, #b00057);
+    color: #fff;
+    border-color: #b00057;
+  }
+
+  &--visa {
+    background: #1a1f71;
+    color: #fff;
+    border-color: #1a1f71;
+    font-style: italic;
+  }
+
+  &--mc {
+    width: 30px;
+    height: 18px;
+    padding: 0;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+
+    &::before,
+    &::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+    }
+
+    &::before {
+      left: 3px;
+      background: #eb001b;
+    }
+
+    &::after {
+      right: 3px;
+      background: #f79e1b;
+      mix-blend-mode: multiply;
+    }
+  }
+}
+
+.lenvy-checkout__pay-notice {
+  margin-top: 24px;
+  padding: 14px 18px;
+  background: var(--lc-surface);
+  border: 1px solid var(--lc-hair);
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  color: var(--lc-muted);
+  line-height: 1.5;
+
+  svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  a {
+    color: var(--lc-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+}
+
+// ─── Submit row ──────────────────────────────────────────────────────────────
+
+.lenvy-checkout__submit-row {
+  margin-top: 0;
+  padding-top: 0;
+}
+
+.lenvy-checkout__place-order {
+  display: inline-flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px;
+  background: var(--lc-pay);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-align: center;
+  transition: background 180ms ease, transform 120ms ease, box-shadow 180ms ease;
+  border: none;
+  cursor: pointer;
+  border-radius: 2px;
+  font-family: inherit;
+  box-shadow:
+    0 1px 0 rgba(0, 0, 0, 0.04),
+    0 8px 20px -8px rgba(46, 125, 79, 0.45);
+
+  &:hover {
+    background: var(--lc-pay-hover);
+    box-shadow:
+      0 1px 0 rgba(0, 0, 0, 0.04),
+      0 12px 28px -8px rgba(46, 125, 79, 0.55);
+  }
+
+  &:active { transform: translateY(1px); }
+
+  svg { opacity: 0.8; }
+}
+
+.lenvy-checkout__submit-meta {
+  text-align: center;
+  font-size: 12px;
+  color: var(--lc-muted);
+  margin-top: 16px;
+  line-height: 1.55;
+
+  a {
+    color: var(--lc-fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--lc-n-300);
+  }
+}
+
+// ─── Order summary ───────────────────────────────────────────────────────────
+
+.lenvy-checkout__summary-col {
+  position: sticky;
+  top: 24px;
+
+  @media (max-width: 1023px) {
+    position: static;
+  }
+}
+
+.lenvy-checkout__summary {
+  background: var(--lc-surface);
+  border: 1px solid var(--lc-hair);
+  padding: 0;
+}
+
+.lenvy-checkout__summary-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 24px 28px 18px;
+  border-bottom: 1px solid var(--lc-hair);
+
+  h3 {
+    font-family: v.$font-sans;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lc-muted);
+    margin: 0;
+  }
+
+  a {
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lc-fg);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--lc-n-300);
+
+    &:hover { text-decoration-color: var(--lc-fg); }
+  }
+}
+
+.lenvy-checkout__summary-items {
+  padding: 8px 28px;
+}
+
+.lenvy-checkout__sum-item {
+  display: grid;
+  grid-template-columns: 64px 1fr auto;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--lc-hair);
+  align-items: flex-start;
+
+  &:last-child { border-bottom: none; }
+}
+
+.lenvy-checkout__sum-img {
+  position: relative;
+  aspect-ratio: 3 / 4;
+  // No overflow:hidden — the qty bubble pokes outside the top-right corner
+  // by design. The cap + bottle are already constrained via percentages.
+
+  &--v1 {
+    background: linear-gradient(135deg, #c89b6e, #8b5e3a);
+    .lenvy-checkout__sum-bottle {
+      background: linear-gradient(180deg, rgba(255, 210, 170, 0.6), rgba(180, 120, 70, 0.7));
+    }
+  }
+  &--v2 {
+    background: linear-gradient(135deg, #d4c5aa, #8c7a5e);
+    .lenvy-checkout__sum-bottle {
+      background: linear-gradient(180deg, rgba(245, 235, 210, 0.7), rgba(160, 140, 100, 0.7));
+    }
+  }
+  &--v8 {
+    background: linear-gradient(135deg, #b3a890, #6e6855);
+    .lenvy-checkout__sum-bottle {
+      background: linear-gradient(180deg, rgba(240, 235, 220, 0.65), rgba(110, 100, 80, 0.75));
+    }
+  }
+}
+
+.lenvy-checkout__sum-qty {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  background: var(--lc-fg);
+  color: var(--lc-bg);
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 500;
+  border-radius: 50%;
+  z-index: 3;
+}
+
+.lenvy-checkout__sum-cap {
+  position: absolute;
+  left: 50%;
+  top: 8%;
+  transform: translateX(-50%);
+  width: 26%;
+  height: 9%;
+  background: rgba(20, 19, 15, 0.5);
+  border-radius: 2px;
+  z-index: 2;
+}
+
+.lenvy-checkout__sum-bottle {
+  position: absolute;
+  left: 24%;
+  bottom: 14%;
+  width: 52%;
+  height: 64%;
+  border-radius: 6% 6% 4% 4% / 8% 8% 4% 4%;
+  box-shadow:
+    inset -8px 0 14px rgba(0, 0, 0, 0.18),
+    inset 8px 0 14px rgba(255, 255, 255, 0.18);
+}
+
+.lenvy-checkout__sum-body {
+  min-width: 0;
+}
+
+.lenvy-checkout__sum-brand {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lc-muted);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 3px;
+}
+
+.lenvy-checkout__sum-name {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  display: block;
+  margin-bottom: 2px;
+  line-height: 1.3;
+  color: var(--lc-fg);
+}
+
+.lenvy-checkout__sum-variant {
+  font-size: 12px;
+  color: var(--lc-muted);
+  display: block;
+}
+
+.lenvy-checkout__sum-price {
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  text-align: right;
+  white-space: nowrap;
+  color: var(--lc-fg);
+}
+
+// ─── Promo ───────────────────────────────────────────────────────────────────
+
+.lenvy-checkout__promo {
+  padding: 18px 28px;
+  border-top: 1px solid var(--lc-hair);
+}
+
+.lenvy-checkout__promo-row {
+  display: flex;
+  border: 1px solid var(--lc-hair);
+  background: var(--lc-bg);
+
+  input {
+    flex: 1;
+    border: none;
+    background: transparent;
+    padding: 11px 14px;
+    font-size: 13px;
+    outline: none;
+    color: var(--lc-fg);
+    font-family: inherit;
+
+    &::placeholder { color: var(--lc-muted); }
+  }
+
+  button {
+    padding: 0 16px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 500;
+    border-left: 1px solid var(--lc-hair);
+    cursor: pointer;
+    background: transparent;
+    color: inherit;
+    font-family: inherit;
+    border: none;
+    border-left: 1px solid var(--lc-hair);
+
+    &:hover { background: var(--lc-n-100); }
+  }
+
+  &.is-applied {
+    border-color: var(--lc-ok);
+    background: rgba(31, 111, 58, 0.04);
+
+    input,
+    button { color: var(--lc-ok); }
+
+    input { font-weight: 500; }
+  }
+}
+
+// ─── Totals ──────────────────────────────────────────────────────────────────
+
+.lenvy-checkout__totals {
+  padding: 18px 28px;
+  border-top: 1px solid var(--lc-hair);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 13.5px;
+}
+
+.lenvy-checkout__totals-line {
+  display: flex;
+  justify-content: space-between;
+  color: var(--lc-muted);
+
+  .v { color: var(--lc-fg); }
+
+  &.is-discount {
+    color: var(--lc-ok);
+
+    span:last-child { font-weight: 500; }
+  }
+}
+
+.lenvy-checkout__totals-free {
+  color: var(--lc-ok) !important;
+}
+
+.lenvy-checkout__grand {
+  padding: 18px 28px 24px;
+  border-top: 1px solid var(--lc-hair);
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+
+  &-lbl {
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--lc-muted);
+    font-weight: 500;
+  }
+
+  &-v {
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    color: var(--lc-fg);
+    text-align: right;
+
+    small {
+      font-size: 11px;
+      color: var(--lc-muted);
+      font-weight: 400;
+      letter-spacing: 0;
+      margin-left: 4px;
+      display: block;
+      text-align: right;
+      margin-top: 2px;
+    }
+  }
+}
+
+// ─── Trust block ─────────────────────────────────────────────────────────────
+
+.lenvy-checkout__trust {
+  margin-top: 20px;
+  padding: 22px 24px;
+  border: 1px solid var(--lc-hair);
+  display: grid;
+  gap: 14px;
+}
+
+.lenvy-checkout__trust-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  font-size: 12.5px;
+  line-height: 1.45;
+
+  svg {
+    flex-shrink: 0;
+    color: var(--lc-muted);
+    margin-top: 1px;
+  }
+
+  .t1 {
+    font-weight: 500;
+    color: var(--lc-fg);
+    display: block;
+    font-size: 12.5px;
+    margin-bottom: 1px;
+  }
+
+  .t2 {
+    color: var(--lc-muted);
+    font-size: 12px;
+    display: block;
+  }
+}
+
+// ─── Footer ──────────────────────────────────────────────────────────────────
+
+.lenvy-checkout__footer {
+  border-top: 1px solid var(--lc-hair);
+  padding: 32px 0;
+  font-size: 12px;
+  color: var(--lc-muted);
+  margin-top: auto;
+}
+
+.lenvy-checkout__footer-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.lenvy-checkout__footer-nav {
+  display: flex;
+  gap: 24px;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { color: var(--lc-fg); }
+  }
+}

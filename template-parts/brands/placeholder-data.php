@@ -1,6 +1,6 @@
 <?php
 /**
- * Brands index placeholder data — mirrors /docs/design/brands.js.
+ * Brands index placeholder data
  *
  * Used by templates/brands-placeholder.php while there are no real
  * `product_brand` terms to read from. Replace with `get_terms()` once

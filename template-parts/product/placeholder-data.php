@@ -1,6 +1,6 @@
 <?php
 /**
- * Product (PDP) placeholder data — mirrors /docs/design/Product.html.
+ * Product (PDP) placeholder data
  *
  * Used by templates/product-placeholder.php while the product detail page is
  * still mocked up. Replace with WC / ACF reads once real products exist.

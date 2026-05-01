@@ -204,62 +204,13 @@ add_filter( 'woocommerce_enable_reviews', '__return_false' );
 add_filter( 'comments_open', '__return_false', 20, 2 );
 add_filter( 'pings_open', '__return_false', 20, 2 );
 
-// ─── Checkout access control ──────────────────────────────────────────────────
-// Non-logged-in users who arrive at checkout without ?guest=1 are redirected to
-// the login/register page (/winkelwagen/inloggen/) so they must explicitly pick
-// Login / Register / Guest.
+// ─── Checkout — guest-friendly ───────────────────────────────────────────────
+// Allow guest checkout; account creation lives on /mijn-account/ (the
+// "Heb je een account? Inloggen" link in the checkout contact section is
+// the only nudge guests get). The "create account" checkbox at checkout
+// is hidden for the same reason — keep the form short.
 
-add_action(
-	'template_redirect',
-	function (): void {
-		// Only act on the checkout page — never on order-received.
-		if ( ! is_checkout() || is_order_received_page() ) {
-			return;
-		}
-
-		// Logged-in users pass through unchecked.
-		if ( is_user_logged_in() ) {
-			return;
-		}
-
-		// Guest users who explicitly chose guest checkout pass through.
-		// phpcs:ignore WordPress.Security.NonceVerification
-		if ( ! empty( $_GET['guest'] ) ) {
-			return;
-		}
-
-		// Never redirect admin or AJAX requests.
-		if ( is_admin() || wp_doing_ajax() ) {
-			return;
-		}
-
-		// Don't intercept WooCommerce's own checkout form submission (POST).
-		// phpcs:ignore WordPress.Security.NonceVerification
-		if ( isset( $_POST['woocommerce-process-checkout-nonce'] ) ) {
-			return;
-		}
-
-		wp_safe_redirect( lenvy_get_account_choice_url() );
-		exit();
-	},
-);
-
-// ─── Guest checkout ───────────────────────────────────────────────────────────
-// When ?guest=1 is present, registration is not required at checkout.
-
-add_filter(
-	'woocommerce_checkout_registration_required',
-	function ( bool $required ): bool {
-		// phpcs:ignore WordPress.Security.NonceVerification
-		if ( ! empty( $_GET['guest'] ) ) {
-			return false;
-		}
-		return true;
-	},
-);
-
-// Hide the "create account" checkbox at checkout — account creation is handled
-// on the login/register page before checkout.
+add_filter( 'woocommerce_checkout_registration_required', '__return_false' );
 add_filter( 'woocommerce_checkout_registration_enabled', '__return_false' );
 
 // ─── Force classic shortcodes for cart & checkout ────────────────────────────
@@ -343,6 +294,34 @@ add_action('woocommerce_register_form', function () {
 }, 20);
 
 // ─── Registration: validate and save first/last name ────────────────────────
+
+// Drop "Downloads" from the My Account sidebar — we don't sell digital
+// products and the empty endpoint clutters the nav.
+add_filter('woocommerce_account_menu_items', static function (array $items): array {
+	unset($items['downloads']);
+	return $items;
+});
+
+/**
+ * Re-balance address-field layout for the My Account edit-address form.
+ *
+ * WC defaults nearly every field to `form-row-wide` (full width). That
+ * makes the form look unbalanced — only first/last name pair up, the
+ * rest are stacked. Pair postcode + city so the form reads two-up.
+ *
+ * @since 0.1.0
+ * @param array $fields WC default address fields.
+ * @return array
+ */
+add_filter('woocommerce_default_address_fields', static function (array $fields): array {
+	if (isset($fields['postcode'])) {
+		$fields['postcode']['class'] = ['form-row-first', 'address-field'];
+	}
+	if (isset($fields['city'])) {
+		$fields['city']['class'] = ['form-row-last', 'address-field'];
+	}
+	return $fields;
+});
 
 add_action('woocommerce_register_post', function (string $username, string $email, $errors) {
 	if ( empty( $_POST['billing_first_name'] ) ) {

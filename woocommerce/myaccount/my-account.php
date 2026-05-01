@@ -2,33 +2,37 @@
 /**
  * My Account — page wrapper.
  *
- * Two-column layout: sticky sidebar navigation (left) + content area (right).
- * Replaces the default bare nav + content div with a structured layout.
+ * Sticky sidebar (left) + content (right). Crumbs at the top, no big
+ * page heading — the dashboard's own greeting carries the page voice.
+ * Matches the rest of the account / checkout flow design system.
  *
  * @see     https://woocommerce.com/document/template-structure/
  * @package Lenvy
- * @version 3.5.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit();
 ?>
 
-<div class="lenvy-container py-12 lg:py-16">
-	<div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+<main class="lenvy-account lenvy-account--dashboard">
+	<div class="lenvy-container">
+		<nav class="lenvy-account__crumbs" aria-label="<?php esc_attr_e('Kruimelpad', 'lenvy'); ?>">
+			<a href="<?php echo esc_url(home_url('/')); ?>"><?php esc_html_e('Home', 'lenvy'); ?></a>
+			<span class="sep" aria-hidden="true">/</span>
+			<span aria-current="page"><?php esc_html_e('Mijn account', 'lenvy'); ?></span>
+		</nav>
 
-		<!-- ── Sidebar navigation ─────────────────────────────────────────── -->
-		<div class="w-full lg:w-48 shrink-0 pb-6 border-b border-neutral-100 lg:pb-0 lg:border-b-0">
-			<div class="lg:sticky lg:top-[calc(var(--header-height,68px)+2rem)]">
-				<?php do_action( 'woocommerce_account_navigation' ); ?>
+		<div class="lenvy-account__layout">
+
+			<aside class="lenvy-account__sidebar">
+				<div class="lenvy-account__sidebar-inner">
+					<?php do_action('woocommerce_account_navigation'); ?>
+				</div>
+			</aside>
+
+			<div class="lenvy-account__content">
+				<?php do_action('woocommerce_account_content'); ?>
 			</div>
-		</div>
 
-		<!-- ── Content ────────────────────────────────────────────────────── -->
-		<div class="flex-1 min-w-0">
-			<div class="woocommerce-MyAccount-content">
-				<?php do_action( 'woocommerce_account_content' ); ?>
-			</div>
 		</div>
-
 	</div>
-</div>
+</main>

@@ -1,6 +1,6 @@
 <?php
 /**
- * Cart page placeholder data — mirrors /docs/design/cart-page.js.
+ * Cart page placeholder data
  *
  * Used by templates/cart-placeholder.php while there is no real WC cart
  * to read from. Replace with `WC()->cart->get_cart()` once products exist.

@@ -26,9 +26,7 @@ defined('ABSPATH') || exit();
 $logo_id     = lenvy_field('lenvy_site_logo', 'options');
 $cart_count  = function_exists('WC') && WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
 $cart_url    = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
-$account_url = is_user_logged_in()
-	? ( function_exists('wc_get_account_endpoint_url') ? wc_get_account_endpoint_url('dashboard') : home_url('/my-account/') )
-	: ( function_exists('lenvy_get_account_choice_url') ? lenvy_get_account_choice_url() : home_url('/my-account/') );
+$account_url = function_exists('lenvy_account_url') ? lenvy_account_url() : home_url('/mijn-account/');
 $wishlist_url = home_url('/verlanglijst/');
 ?>
 

@@ -2,7 +2,7 @@
 /**
  * Shop archive — HARDCODED PLACEHOLDER version.
  *
- * Mirrors /docs/design/Shop.html using static data from
+ * Static placeholder data sourced from
  * template-parts/shop/placeholder-data.php. Bypasses the WooCommerce loop
  * entirely; to be re-wired to WC once real products exist.
  *

@@ -1,86 +1,67 @@
 <?php
 /**
- * My Account — Addresses.
+ * My Account — Addresses listing.
  *
- * Billing and shipping cards in a responsive 2-column grid.
- * Replaces WC's float-based col2-set layout with clean Tailwind markup.
+ * Two-column shipping + billing cards matching the dashboard's address
+ * preview. Each card deep-links to its `edit-address/{type}` endpoint.
  *
  * @see     https://woocommerce.com/document/template-structure/
  * @package Lenvy
- * @version 9.3.0
  */
 
-defined( 'ABSPATH' ) || exit;
+defined('ABSPATH') || exit();
 
 $customer_id = get_current_user_id();
 
-if ( ! wc_ship_to_billing_address_only() && wc_shipping_enabled() ) {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing'  => __( 'Billing address', 'woocommerce' ),
-			'shipping' => __( 'Shipping address', 'woocommerce' ),
-		),
-		$customer_id
-	);
-} else {
-	$get_addresses = apply_filters(
-		'woocommerce_my_account_get_addresses',
-		array(
-			'billing' => __( 'Billing address', 'woocommerce' ),
-		),
-		$customer_id
-	);
-}
+$get_addresses = (!wc_ship_to_billing_address_only() && wc_shipping_enabled())
+	? apply_filters('woocommerce_my_account_get_addresses', [
+		'shipping' => __('Bezorgadres', 'lenvy'),
+		'billing'  => __('Factuuradres', 'lenvy'),
+	], $customer_id)
+	: apply_filters('woocommerce_my_account_get_addresses', [
+		'billing' => __('Factuuradres', 'lenvy'),
+	], $customer_id);
 ?>
 
-<p class="text-sm text-neutral-600 mb-8">
-	<?php
-	echo apply_filters( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		'woocommerce_my_account_my_address_description',
-		esc_html__( 'The following addresses will be used on the checkout page by default.', 'woocommerce' )
-	);
-	?>
-</p>
+<div class="lenvy-account-edit">
 
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+	<header class="lenvy-account-edit__head">
+		<h1 class="lenvy-account-edit__title"><?php esc_html_e('Adressen', 'lenvy'); ?></h1>
+		<p class="lenvy-account-edit__lede">
+			<?php
+			echo esc_html(apply_filters(
+				'woocommerce_my_account_my_address_description',
+				__('Deze adressen worden standaard gebruikt bij het afrekenen.', 'lenvy')
+			));
+			?>
+		</p>
+	</header>
 
-	<?php foreach ( $get_addresses as $name => $address_title ) : ?>
-		<?php $address = wc_get_account_formatted_address( $name ); ?>
-
-		<div class="woocommerce-Address border border-neutral-200 p-6">
-
-			<header class="woocommerce-Address-title title flex items-center justify-between gap-3 mb-4 pb-4 border-b border-neutral-100">
-				<h2 class="text-xs font-semibold uppercase tracking-widest text-neutral-800 m-0">
-					<?php echo esc_html( $address_title ); ?>
-				</h2>
-				<a
-					href="<?php echo esc_url( wc_get_endpoint_url( 'edit-address', $name ) ); ?>"
-					class="text-xs text-neutral-500 underline underline-offset-2 hover:text-neutral-900 transition-colors whitespace-nowrap shrink-0"
-				>
-					<?php
-					printf(
-						/* translators: %s: Address title */
-						$address ? esc_html__( 'Edit %s', 'woocommerce' ) : esc_html__( 'Add %s', 'woocommerce' ),
-						esc_html( $address_title )
-					);
-					?>
-				</a>
-			</header>
-
-			<address class="not-italic text-sm text-neutral-700 leading-relaxed">
-				<?php
-				if ( $address ) {
-					echo wp_kses_post( $address );
-				} else {
-					esc_html_e( 'You have not set up this type of address yet.', 'woocommerce' );
-				}
-				do_action( 'woocommerce_my_account_after_my_address', $name );
-				?>
-			</address>
-
-		</div>
-
-	<?php endforeach; ?>
+	<div class="lenvy-account-dash__addr-grid">
+		<?php foreach ($get_addresses as $name => $address_title):
+			$address = wc_get_account_formatted_address($name);
+		?>
+			<section class="lenvy-account-card" aria-labelledby="lenvy-addr-<?php echo esc_attr($name); ?>">
+				<header class="lenvy-account-card__head">
+					<h2 id="lenvy-addr-<?php echo esc_attr($name); ?>" class="lenvy-account-card__title">
+						<?php echo esc_html($address_title); ?>
+					</h2>
+					<a class="lenvy-account-card__head-link" href="<?php echo esc_url(wc_get_endpoint_url('edit-address', $name)); ?>">
+						<?php echo $address ? esc_html__('Wijzig', 'lenvy') : esc_html__('Toevoegen', 'lenvy'); ?>
+					</a>
+				</header>
+				<?php if ($address): ?>
+					<address class="lenvy-account-address">
+						<?php echo wp_kses_post($address); ?>
+					</address>
+				<?php else: ?>
+					<p class="lenvy-account-card__empty">
+						<?php esc_html_e('Nog geen adres ingesteld.', 'lenvy'); ?>
+					</p>
+				<?php endif; ?>
+				<?php do_action('woocommerce_my_account_after_my_address', $name); ?>
+			</section>
+		<?php endforeach; ?>
+	</div>
 
 </div>

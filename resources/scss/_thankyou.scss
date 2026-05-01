@@ -1,0 +1,470 @@
+@use 'variables' as v;
+
+// ─── Thank-you page ──────────────────────────────────────────────────────────
+// Reuses the checkout chrome (.lenvy-checkout-page body class via
+// header-checkout.php) and shares the summary, sum-item and pm-logo styles
+// with the checkout page.
+
+// Soft green for the success-state surfaces (check ring, "now" timeline dot).
+.lenvy-checkout-page {
+  --lc-ok-soft: #e8f1ec;
+}
+
+// ─── Hero confirmation ───────────────────────────────────────────────────────
+
+.lenvy-thankyou__hero {
+  padding: 96px 0 72px;
+  text-align: center;
+  border-bottom: 1px solid var(--lc-hair);
+
+  @media (max-width: 767px) {
+    padding: 64px 0 48px;
+  }
+}
+
+.lenvy-thankyou__check {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 28px;
+  border-radius: 50%;
+  background: var(--lc-ok-soft);
+  color: var(--lc-ok);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  animation: lenvy-thankyou-pop 600ms cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -8px;
+    border-radius: 50%;
+    border: 1px solid var(--lc-ok);
+    opacity: 0.2;
+    animation: lenvy-thankyou-ring 1.6s ease-out infinite;
+  }
+
+  svg path {
+    stroke-dasharray: 30;
+    stroke-dashoffset: 30;
+    animation: lenvy-thankyou-draw 600ms 200ms ease forwards;
+  }
+}
+
+@keyframes lenvy-thankyou-pop {
+  0% { transform: scale(0); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+@keyframes lenvy-thankyou-ring {
+  0% { transform: scale(0.9); opacity: 0.4; }
+  100% { transform: scale(1.4); opacity: 0; }
+}
+
+@keyframes lenvy-thankyou-draw {
+  to { stroke-dashoffset: 0; }
+}
+
+.lenvy-thankyou__eyebrow {
+  display: block;
+  margin-bottom: 18px;
+}
+
+.lenvy-thankyou__title {
+  font-family: v.$font-sans;
+  font-size: clamp(2.5rem, 5vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin: 0 0 24px;
+  text-wrap: balance;
+  color: var(--lc-fg);
+
+  em {
+    font-style: normal;
+    font-weight: 400;
+    color: var(--lc-muted);
+  }
+}
+
+.lenvy-thankyou__lede {
+  font-size: 17px;
+  color: var(--lc-muted);
+  margin: 0 auto;
+  max-width: 56ch;
+  line-height: 1.55;
+
+  strong {
+    color: var(--lc-fg);
+    font-weight: 500;
+  }
+
+  @media (max-width: 767px) {
+    font-size: 15px;
+  }
+}
+
+.lenvy-thankyou__order-num {
+  margin-top: 32px;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 18px;
+  background: var(--lc-surface);
+  border: 1px solid var(--lc-hair);
+  font-size: 13px;
+  border-radius: 2px;
+  white-space: nowrap;
+
+  span:first-of-type { color: var(--lc-muted); }
+  [data-order-num] {
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: 0.04em;
+    color: var(--lc-fg);
+  }
+
+  button {
+    margin-left: 4px;
+    padding: 4px 6px;
+    color: var(--lc-muted);
+    transition: color 160ms ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    font-family: inherit;
+
+    &:hover { color: var(--lc-fg); }
+
+    &.is-copied { color: var(--lc-ok); }
+  }
+}
+
+// ─── Main grid ───────────────────────────────────────────────────────────────
+
+.lenvy-thankyou__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 440px;
+  gap: 56px 80px;
+  padding: 72px 0 96px;
+  align-items: start;
+
+  @media (max-width: 1023px) {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 48px 0 72px;
+  }
+}
+
+.lenvy-thankyou__main {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 0;
+}
+
+// ─── Cards ───────────────────────────────────────────────────────────────────
+
+.lenvy-thankyou__card {
+  border: 1px solid var(--lc-hair);
+  background: var(--lc-bg);
+  padding: 32px;
+
+  @media (max-width: 540px) {
+    padding: 24px;
+  }
+}
+
+.lenvy-thankyou__card-title {
+  font-family: v.$font-sans;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 0 0 4px;
+  color: var(--lc-fg);
+}
+
+.lenvy-thankyou__card-sub {
+  font-size: 13.5px;
+  color: var(--lc-muted);
+  margin: 0 0 24px;
+}
+
+// ─── Timeline ────────────────────────────────────────────────────────────────
+
+.lenvy-thankyou__timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 11px;
+    top: 24px;
+    bottom: 24px;
+    width: 1px;
+    background: var(--lc-hair);
+  }
+}
+
+.lenvy-thankyou__tl-step {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 18px;
+  padding: 14px 0;
+  align-items: flex-start;
+  position: relative;
+
+  &--done .lenvy-thankyou__tl-dot,
+  &--now .lenvy-thankyou__tl-dot {
+    background: var(--lc-ok);
+    border-color: var(--lc-ok);
+    color: #fff;
+  }
+
+  &--now .lenvy-thankyou__tl-dot {
+    box-shadow: 0 0 0 5px var(--lc-ok-soft);
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: -8px;
+      border-radius: 50%;
+      border: 1.5px solid var(--lc-ok);
+      opacity: 0.4;
+      animation: lenvy-thankyou-ring 1.8s ease-out infinite;
+    }
+  }
+
+  &:not(.lenvy-thankyou__tl-step--done):not(.lenvy-thankyou__tl-step--now) .lenvy-thankyou__tl-title {
+    color: var(--lc-muted);
+    font-weight: 400;
+  }
+
+  &--now .lenvy-thankyou__tl-when {
+    color: var(--lc-ok);
+    font-weight: 500;
+  }
+
+  &--now .lenvy-thankyou__tl-desc {
+    color: var(--lc-fg);
+  }
+}
+
+.lenvy-thankyou__tl-dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--lc-bg);
+  border: 1.5px solid var(--lc-n-300);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 2;
+  margin-top: 1px;
+}
+
+.lenvy-thankyou__tl-body {
+  padding-top: 1px;
+  min-width: 0;
+}
+
+.lenvy-thankyou__tl-title {
+  font-size: 14.5px;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--lc-fg);
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.lenvy-thankyou__tl-when {
+  font-size: 12.5px;
+  color: var(--lc-muted);
+  font-weight: 400;
+  white-space: nowrap;
+}
+
+.lenvy-thankyou__tl-desc {
+  font-size: 13px;
+  color: var(--lc-muted);
+  margin: 3px 0 0;
+}
+
+// ─── Address + payment ───────────────────────────────────────────────────────
+
+.lenvy-thankyou__addr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+}
+
+.lenvy-thankyou__addr-col {
+  h3 {
+    font-family: v.$font-sans;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--lc-muted);
+    font-weight: 500;
+    margin: 0 0 14px;
+  }
+}
+
+.lenvy-thankyou__address {
+  font-style: normal;
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--lc-fg);
+}
+
+.lenvy-thankyou__addr-name {
+  font-weight: 500;
+}
+
+.lenvy-thankyou__pay-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--lc-fg);
+}
+
+.lenvy-thankyou__pay-meta {
+  margin-top: 8px;
+  color: var(--lc-muted);
+  font-size: 13px;
+}
+
+// ─── What's next ─────────────────────────────────────────────────────────────
+
+.lenvy-thankyou__next-heading {
+  font-family: v.$font-sans;
+  font-size: 18px;
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  margin: 24px 0 0;
+  color: var(--lc-fg);
+}
+
+.lenvy-thankyou__next-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 16px;
+
+  // If we ever render two cards again, they sit side-by-side on wide
+  // viewports — this keeps the layout future-proof.
+  @media (min-width: 768px) {
+    &:has(.lenvy-thankyou__next-card + .lenvy-thankyou__next-card) {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+}
+
+.lenvy-thankyou__next-card {
+  padding: 24px;
+  border: 1px solid var(--lc-hair);
+  background: var(--lc-surface);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: border-color 200ms ease;
+  text-decoration: none;
+  color: inherit;
+
+  &:hover { border-color: var(--lc-fg); }
+
+  h4 {
+    font-family: v.$font-sans;
+    font-size: 14.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    margin: 0;
+    color: var(--lc-fg);
+  }
+
+  p {
+    font-size: 13px;
+    color: var(--lc-muted);
+    margin: 0;
+    line-height: 1.5;
+  }
+}
+
+.lenvy-thankyou__next-ico {
+  width: 36px;
+  height: 36px;
+  background: var(--lc-bg);
+  border: 1px solid var(--lc-hair);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--lc-fg);
+  margin-bottom: 6px;
+}
+
+.lenvy-thankyou__next-arr {
+  margin-top: 4px;
+  font-size: 12.5px;
+  color: var(--lc-fg);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 500;
+
+  svg { transition: transform 200ms ease; }
+}
+
+.lenvy-thankyou__next-card:hover .lenvy-thankyou__next-arr svg {
+  transform: translateX(3px);
+}
+
+// ─── Continue shopping CTA ───────────────────────────────────────────────────
+
+.lenvy-thankyou__continue {
+  text-align: center;
+  padding: 40px 0 24px;
+
+  a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    color: var(--lc-muted);
+    border-bottom: 1px solid var(--lc-hair);
+    padding-bottom: 4px;
+    text-decoration: none;
+    transition: color 160ms ease, border-color 160ms ease;
+
+    &:hover {
+      color: var(--lc-fg);
+      border-color: var(--lc-fg);
+    }
+  }
+}
+
+// ─── Summary head count ──────────────────────────────────────────────────────
+// Replaces the checkout's "Wijzig" link with a plain item count.
+
+.lenvy-thankyou__summary-count {
+  font-size: 12px;
+  color: var(--lc-muted);
+}

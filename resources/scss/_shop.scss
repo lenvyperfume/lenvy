@@ -1,8 +1,8 @@
 @use 'variables' as v;
 
 // ─── Shop page — typographic hero + sticky toolbar + sidebar + grid ──────────
-// Mirrors the handoff design in /docs/design/Shop.html. Cards, filters and the
-// toolbar share a neutral palette and lavender brand accent (bg-primary).
+// Cards, filters and the toolbar share a neutral palette and lavender brand
+// accent (bg-primary).
 
 .lenvy-shop {
   --shop-top: 96px; // header row1 (72px) + nav (24px visual) — used for sticky top

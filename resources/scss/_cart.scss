@@ -1,11 +1,11 @@
 @use 'variables' as v;
 
 // ─── Cart page ───────────────────────────────────────────────────────────────
-// Mirrors /docs/design/Cart.html. Two-column layout: items + sticky summary,
-// with a recommendations rail spanning the full width below.
+// Two-column layout: items + sticky summary, with a recommendations rail
+// spanning the full width below.
 
 .lenvy-cart {
-  background: #faf8f3;
+  background: #ffffff;
   color: #14130f;
 }
 
@@ -526,7 +526,7 @@
   display: flex;
   border: 1px solid v.$neutral-200;
   margin-bottom: 1.5rem;
-  background: #faf8f3;
+  background: #ffffff;
 
   &.is-applied {
     border-color: #1f6f3a;

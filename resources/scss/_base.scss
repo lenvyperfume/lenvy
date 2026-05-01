@@ -15,6 +15,19 @@
   --z-drawer: 50;
   --z-notice: 60;
 
+  // ── Form field tokens — single source of truth ────────────────────────────
+  // Used by every form across the site (cart promo, checkout, account
+  // login/register, dashboard edit pages, WC default form-row markup).
+  // Don't redefine these in scoped contexts — change once, applies everywhere.
+  --field-bg: #f0f0ee;
+  --field-bg-hover: #e4e3e0;
+  --field-fg: #14130f;
+  --field-muted: #7a7469;
+  --field-placeholder: #a1a09c;
+  --field-hairline: #e8e5dd;
+  --field-focus-ring: rgba(225, 196, 255, 0.25);
+  --field-error: #b8005a;
+
   @media (min-width: 1024px) {
     --header-height: #{v.$header-height-desktop};
     --usp-bar-height: 57px;

@@ -6,12 +6,6 @@
  */
 
 defined('ABSPATH') || exit();
-
-$steps = [
-	['n' => 1, 'label' => __('Winkelwagen', 'lenvy'), 'active' => true],
-	['n' => 2, 'label' => __('Bezorging', 'lenvy'),   'active' => false],
-	['n' => 3, 'label' => __('Betalen', 'lenvy'),     'active' => false],
-];
 ?>
 
 <div class="lenvy-container">
@@ -29,13 +23,5 @@ $steps = [
 				<?php esc_html_e('Even checken voor we naar de kassa gaan. Verzending en btw worden in de volgende stap berekend.', 'lenvy'); ?>
 			</p>
 		</div>
-		<ol class="lenvy-cart__steps" aria-label="<?php esc_attr_e('Voortgang afrekenen', 'lenvy'); ?>">
-			<?php foreach ($steps as $s): ?>
-				<li class="lenvy-cart__step<?php echo $s['active'] ? ' is-active' : ''; ?>">
-					<span class="lenvy-cart__step-num"><?php echo esc_html($s['n']); ?></span>
-					<span><?php echo esc_html($s['label']); ?></span>
-				</li>
-			<?php endforeach; ?>
-		</ol>
 	</header>
 </div>

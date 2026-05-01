@@ -1,0 +1,1139 @@
+@use 'variables' as v;
+@use 'fields' as f;
+
+// ─── Account pages (login / register / dashboard) ────────────────────────────
+// All form fields extend the shared `%lenvy-field-*` placeholders defined
+// in `_fields.scss` — single source of truth for input styling across the
+// site. Don't redefine field rules locally; reach for the placeholders.
+
+.lenvy-account {
+  // Local aliases that map to the shared field tokens defined in :root.
+  // Kept so existing rules don't have to be rewritten en-masse, but the
+  // values come from the shared --field-* set — change once, applies
+  // everywhere.
+  --la-bg: #ffffff;
+  --la-fg: #{v.$neutral-900};
+  --la-muted: var(--field-muted);
+  --la-hair: var(--field-hairline);
+  --la-n-300: #{v.$neutral-300};
+  --la-n-400: var(--field-placeholder);
+  --la-n-950: #{v.$neutral-950};
+
+  font-family: v.$font-sans;
+  color: var(--la-fg);
+  padding-bottom: 6rem;
+}
+
+// ─── Crumbs / page head ──────────────────────────────────────────────────────
+
+.lenvy-account__crumbs {
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+  color: var(--la-muted);
+  padding: 1.5rem 0 0;
+
+  a {
+    color: inherit;
+    text-decoration: none;
+
+    &:hover { color: var(--la-fg); }
+  }
+
+  .sep {
+    margin: 0 0.625rem;
+    opacity: 0.5;
+  }
+}
+
+// WC notice queue — surfaces failed login / register attempts above the grid.
+.lenvy-account__notices {
+  padding: 1.5rem 0 0;
+
+  .woocommerce-notices-wrapper,
+  .woocommerce-error,
+  .woocommerce-message,
+  .woocommerce-info {
+    margin: 0 0 1rem;
+    padding: 0.875rem 1rem;
+    font-size: 0.875rem;
+    border: 1px solid var(--la-hair);
+    background: var(--la-bg);
+    list-style: none;
+
+    li { list-style: none; }
+  }
+
+  .woocommerce-error {
+    border-color: #b8005a;
+    color: #b8005a;
+  }
+
+  .woocommerce-message {
+    border-color: #1f6f3a;
+    color: #1f6f3a;
+  }
+}
+
+// ─── Two-column grid ─────────────────────────────────────────────────────────
+// Each panel fills its grid column so the divider lands balanced between
+// them — capping the panel at a fixed max-width caused the login panel
+// to leave a large empty gap before the divider while the register panel
+// hugged it.
+
+.lenvy-account__grid {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 4rem;
+  align-items: start;
+  padding: 3rem 0 0;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 3.5rem;
+  }
+}
+
+.lenvy-account__divider {
+  align-self: stretch;
+  background: var(--la-hair);
+
+  @media (max-width: 960px) {
+    display: none;
+  }
+}
+
+.lenvy-account__panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.lenvy-account__panel-title {
+  font-family: v.$font-sans;
+  font-size: 1.375rem;
+  font-weight: 500;
+  letter-spacing: -0.018em;
+  margin: 0;
+  color: var(--la-fg);
+}
+
+// ─── Form ────────────────────────────────────────────────────────────────────
+
+.lenvy-account__form {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+// Spacing between top-level form blocks. Scoped to direct children so
+// it doesn't bleed into the 2-column field row (where siblings sit
+// side-by-side, not stacked).
+.lenvy-account__form {
+  > .lenvy-account__fld + .lenvy-account__fld,
+  > .lenvy-account__fld + .lenvy-account__fld-row,
+  > .lenvy-account__fld-row + .lenvy-account__fld,
+  > .lenvy-account__fld-row + .lenvy-account__fld-row {
+    margin-top: 1rem;
+  }
+}
+
+// 2-column row of fields (first name + last name on the register form).
+.lenvy-account__fld-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 540px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lenvy-account__fld {
+  @include f.field-wrapper;
+
+  label { @include f.field-label; }
+
+  // Forgot-password link tucked into the password label needs flex layout.
+  label:has(.lenvy-account__forgot) {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 0.75rem;
+  }
+
+  input { @include f.field-input; }
+
+  &.has-value input { @include f.field-has-value; }
+}
+
+// Forgot-password link tucked into the password label.
+.lenvy-account__forgot {
+  color: var(--la-fg);
+  font-size: 0.78125rem;
+  font-style: normal;
+  border-bottom: 1px solid var(--la-n-300);
+  padding-bottom: 1px;
+  text-decoration: none;
+  transition: border-color 160ms ease;
+
+  &:hover { border-color: var(--la-fg); }
+}
+
+// ─── Password reveal ─────────────────────────────────────────────────────────
+
+.lenvy-account__fld--pw {
+  input { padding-right: 3.125rem; }
+}
+
+.lenvy-account__reveal {
+  position: absolute;
+  right: 0.75rem;
+  bottom: 0.5rem;
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--la-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 160ms ease;
+  font-family: inherit;
+
+  &:hover { color: var(--la-fg); }
+}
+
+// ─── Privacy text (register) ─────────────────────────────────────────────────
+
+.lenvy-account__privacy {
+  font-size: 0.78125rem;
+  color: var(--la-muted);
+  line-height: 1.55;
+  margin: 1rem 0 0;
+
+  a {
+    border-bottom: 1px solid var(--la-n-300);
+    padding-bottom: 1px;
+    color: var(--la-fg);
+    text-decoration: none;
+    transition: border-color 160ms ease;
+
+    &:hover { border-color: var(--la-fg); }
+  }
+}
+
+// ─── Actions row (submit + remember-me checkbox) ─────────────────────────────
+
+.lenvy-account__actions {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.lenvy-account__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 1rem 1.75rem;
+  background: var(--la-n-950);
+  color: #ffffff;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: none;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 160ms ease;
+  font-family: inherit;
+
+  &:hover { background: #{v.$neutral-800}; }
+
+  svg { width: 0.875rem; height: 0.625rem; }
+}
+
+// ─── Remember-me checkbox ────────────────────────────────────────────────────
+
+.lenvy-account__checkbox {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  cursor: pointer;
+  user-select: none;
+
+  input { display: none; }
+}
+
+.lenvy-account__checkbox-box {
+  width: 1.125rem;
+  height: 1.125rem;
+  border: 1px solid var(--la-n-400);
+  background: var(--la-bg);
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 140ms ease;
+  border-radius: 2px;
+
+  svg {
+    opacity: 0;
+    transform: scale(0.6);
+    transition: all 140ms ease;
+  }
+}
+
+.lenvy-account__checkbox input:checked + .lenvy-account__checkbox-box {
+  background: var(--la-fg);
+  border-color: var(--la-fg);
+
+  svg {
+    opacity: 1;
+    transform: scale(1);
+    color: var(--la-bg);
+  }
+}
+
+.lenvy-account__checkbox-lbl {
+  font-size: 0.84375rem;
+  color: var(--la-fg);
+  line-height: 1.5;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Dashboard / logged-in My Account
+// ─────────────────────────────────────────────────────────────────────────────
+
+// Sidebar + content layout
+.lenvy-account__layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 4rem;
+  align-items: start;
+  padding: 2rem 0 0;
+
+  @media (max-width: 960px) {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+.lenvy-account__sidebar {
+  position: relative;
+  align-self: stretch;
+}
+
+.lenvy-account__sidebar-inner {
+  position: sticky;
+  top: calc(var(--header-height, 4.25rem) + 1.5rem);
+
+  @media (max-width: 960px) {
+    position: static;
+    border-bottom: 1px solid var(--la-hair);
+    padding-bottom: 1rem;
+  }
+}
+
+.lenvy-account__content {
+  min-width: 0;
+}
+
+// ── Sidebar navigation ───────────────────────────────────────────────────────
+
+.lenvy-account-nav {
+  font-size: 0.875rem;
+}
+
+.lenvy-account-nav__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.lenvy-account-nav__item {
+  position: relative;
+
+  // Visual divider above the logout item.
+  &.is-logout {
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--la-hair);
+  }
+}
+
+.lenvy-account-nav__link {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.625rem 0;
+  color: var(--la-muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+
+  &:hover { color: var(--la-fg); }
+}
+
+.lenvy-account-nav__marker {
+  width: 2px;
+  height: 0.875rem;
+  flex-shrink: 0;
+  background: transparent;
+  transition: background 160ms ease;
+}
+
+.lenvy-account-nav__item.is-active .lenvy-account-nav__link {
+  color: var(--la-fg);
+  font-weight: 500;
+}
+
+.lenvy-account-nav__item.is-active .lenvy-account-nav__marker {
+  background: v.$color-primary;
+}
+
+.lenvy-account-nav__item.is-logout .lenvy-account-nav__link {
+  color: var(--la-muted);
+
+  &:hover { color: #b8005a; }
+}
+
+// ── Dashboard ────────────────────────────────────────────────────────────────
+
+.lenvy-account-dash {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.lenvy-account-dash__greeting {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.lenvy-account-dash__eyebrow {
+  font-size: 0.6875rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--la-muted);
+  font-weight: 500;
+}
+
+.lenvy-account-dash__name {
+  font-family: v.$font-sans;
+  font-size: clamp(1.75rem, 3vw, 2.5rem);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 1.04;
+  margin: 0.25rem 0 0;
+  color: var(--la-fg);
+}
+
+.lenvy-account-dash__lede {
+  font-size: 0.875rem;
+  color: var(--la-muted);
+  margin: 0.625rem 0 0;
+}
+
+// ── Cards ────────────────────────────────────────────────────────────────────
+
+.lenvy-account-card {
+  border: 1px solid var(--la-hair);
+  background: var(--la-bg);
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 1.25rem 1.5rem;
+    border-bottom: 1px solid var(--la-hair);
+    gap: 1rem;
+  }
+
+  &__title {
+    font-family: v.$font-sans;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--la-muted);
+    margin: 0;
+  }
+
+  &__head-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--la-fg);
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--la-n-300);
+    transition: text-decoration-color 160ms ease;
+
+    &:hover { text-decoration-color: var(--la-fg); }
+
+    svg { transition: transform 160ms ease; }
+    &:hover svg { transform: translateX(2px); }
+  }
+
+  &__empty {
+    margin: 0;
+    padding: 1.5rem;
+    font-size: 0.875rem;
+    color: var(--la-muted);
+
+    a {
+      color: var(--la-fg);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-color: var(--la-n-300);
+
+      &:hover { text-decoration-color: var(--la-fg); }
+    }
+  }
+}
+
+// ── Recent orders list ───────────────────────────────────────────────────────
+
+.lenvy-account-orders {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lenvy-account-orders__row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--la-hair);
+
+  &:last-child { border-bottom: none; }
+
+  @media (max-width: 540px) {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      'main badge'
+      'total view';
+    gap: 0.5rem 0.75rem;
+  }
+}
+
+.lenvy-account-orders__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+
+  @media (max-width: 540px) { grid-area: main; }
+}
+
+.lenvy-account-orders__num {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--la-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.lenvy-account-orders__meta {
+  font-size: 0.75rem;
+  color: var(--la-muted);
+}
+
+.lenvy-account-orders__total {
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--la-fg);
+
+  @media (max-width: 540px) { grid-area: total; }
+}
+
+.lenvy-account-orders__view {
+  width: 2rem;
+  height: 2rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--la-muted);
+  border: 1px solid var(--la-hair);
+  transition: border-color 160ms ease, color 160ms ease;
+
+  &:hover {
+    border-color: var(--la-fg);
+    color: var(--la-fg);
+  }
+
+  @media (max-width: 540px) {
+    grid-area: view;
+    justify-self: end;
+  }
+}
+
+// ── Status badge ─────────────────────────────────────────────────────────────
+
+.lenvy-account-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border: 1px solid var(--la-hair);
+  background: var(--la-bg);
+  color: var(--la-muted);
+  white-space: nowrap;
+
+  &--ok {
+    color: #1f6f3a;
+    border-color: rgba(31, 111, 58, 0.3);
+    background: rgba(31, 111, 58, 0.06);
+  }
+
+  &--err {
+    color: #b8005a;
+    border-color: rgba(184, 0, 90, 0.3);
+    background: rgba(184, 0, 90, 0.06);
+  }
+
+  @media (max-width: 540px) { grid-area: badge; justify-self: end; }
+}
+
+// ── Address grid ─────────────────────────────────────────────────────────────
+
+.lenvy-account-dash__addr-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lenvy-account-address {
+  font-style: normal;
+  padding: 1.25rem 1.5rem;
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--la-fg);
+}
+
+// ── Quick links ──────────────────────────────────────────────────────────────
+
+.lenvy-account-dash__quick {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+
+  @media (max-width: 720px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.lenvy-account-dash__quick-link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid var(--la-hair);
+  background: var(--la-bg);
+  text-decoration: none;
+  transition: border-color 160ms ease;
+
+  &:hover { border-color: var(--la-fg); }
+
+  &.is-logout:hover { border-color: #b8005a; }
+  &.is-logout:hover .lenvy-account-dash__quick-label { color: #b8005a; }
+}
+
+.lenvy-account-dash__quick-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.005em;
+  color: var(--la-fg);
+  transition: color 160ms ease;
+}
+
+.lenvy-account-dash__quick-sub {
+  font-size: 0.75rem;
+  color: var(--la-muted);
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Edit pages — Account details + Edit address
+// ─────────────────────────────────────────────────────────────────────────────
+
+.lenvy-account-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  // No max-width — fills the content column the same as the dashboard so
+  // every account page reads with the same content width.
+}
+
+.lenvy-account-edit__head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lenvy-account-edit__title {
+  font-family: v.$font-sans;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--la-fg);
+}
+
+.lenvy-account-edit__lede {
+  font-size: 0.875rem;
+  color: var(--la-muted);
+  margin: 0;
+  max-width: 50ch;
+}
+
+.lenvy-account-edit__section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--la-hair);
+
+  &:first-of-type {
+    padding-top: 0;
+    border-top: 0;
+  }
+}
+
+.lenvy-account-edit__section-title {
+  font-family: v.$font-sans;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--la-muted);
+  margin: 0 0 0.25rem;
+}
+
+.lenvy-account-edit__section-sub {
+  font-size: 0.8125rem;
+  color: var(--la-muted);
+  margin: 0 0 0.75rem;
+}
+
+// Wider form variant — used by edit-account / edit-address (single-column,
+// not constrained to the panel width of the login form).
+.lenvy-account__form--wide {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+// ─── WC default form-field markup → our design system ────────────────────────
+// The edit-address form keeps `woocommerce_form_field()` calls so plugin
+// hooks and country-specific field overrides keep working. We restyle the
+// default markup here so the inputs match our `.lenvy-account__fld` look.
+
+.lenvy-account__form--wc-fields {
+  // Make WC's `.form-row` markup look identical to our `.lenvy-account__fld`
+  // by including the same mixins. Single source in `_fields.scss` — change
+  // the input treatment there, applies everywhere.
+  .form-row {
+    @include f.field-wrapper;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    float: none;
+
+    label { @include f.field-label; }
+
+    .woocommerce-input-wrapper {
+      display: block;
+      width: 100%;
+      position: relative;
+    }
+
+    input.input-text,
+    input[type='text'],
+    input[type='email'],
+    input[type='tel'],
+    input[type='number'],
+    input[type='password'],
+    select,
+    textarea {
+      @include f.field-input;
+    }
+
+    &.has-value input.input-text,
+    &.has-value input[type='text'],
+    &.has-value input[type='email'],
+    &.has-value input[type='tel'],
+    &.has-value input[type='number'],
+    &.has-value select {
+      @include f.field-has-value;
+    }
+
+    .description {
+      font-size: 0.75rem;
+      color: var(--field-muted);
+      margin-top: 0.375rem;
+    }
+
+    // Select2 — country / state pickers. Same field treatment.
+    .select2-container { width: 100% !important; }
+
+    .select2-container--default .select2-selection--single {
+      @include f.field-input;
+      height: auto;
+      min-height: auto;
+
+      .select2-selection__rendered {
+        padding: 0;
+        line-height: 1.3;
+        font-size: 0.90625rem;
+        color: var(--field-fg);
+      }
+
+      .select2-selection__arrow {
+        right: 1rem;
+        height: 100%;
+        top: 0;
+        width: 1rem;
+
+        b {
+          border-color: var(--field-muted) transparent transparent transparent;
+          margin-top: 0;
+          left: 0;
+        }
+      }
+    }
+
+    &.has-value .select2-container--default .select2-selection--single {
+      @include f.field-has-value;
+    }
+
+    .select2-container--open .select2-selection--single,
+    .select2-container--focus .select2-selection--single {
+      background: #ffffff;
+      border-color: var(--field-fg);
+      box-shadow: 0 0 0 4px var(--field-focus-ring);
+    }
+
+    &.woocommerce-invalid input.input-text,
+    &.woocommerce-invalid select {
+      @include f.field-error;
+    }
+  }
+
+  // Symmetric 2-column grid for address-field groups. WC's `form-row-first`
+  // and `form-row-last` map to the two grid cells; `form-row-wide` spans
+  // both. This replaces WC's float-based 50/50 layout.
+  .woocommerce-address-fields__field-wrapper,
+  .woocommerce-additional-fields__field-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 540px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .form-row-wide,
+  .form-row-1,
+  .form-row-2,
+  .form-row-3 {
+    grid-column: 1 / -1;
+  }
+
+  .form-row-first,
+  .form-row-last {
+    grid-column: auto;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Orders list — pagination + clickable rows
+// ─────────────────────────────────────────────────────────────────────────────
+
+a.lenvy-account-orders__num {
+  color: var(--la-fg);
+  text-decoration: none;
+  transition: color 160ms ease;
+
+  &:hover { color: v.$color-primary-hover; }
+}
+
+.lenvy-account-orders__pager {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.5rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--la-muted);
+
+  > a:first-of-type { justify-self: start; }
+  > a:last-of-type  { justify-self: end; }
+}
+
+.lenvy-account-orders__pager-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1rem;
+  border: 1px solid var(--la-hair);
+  color: var(--la-fg);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.8125rem;
+  transition: border-color 160ms ease;
+
+  &:hover { border-color: var(--la-fg); }
+}
+
+.lenvy-account-orders__pager-page {
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// View order page
+// ─────────────────────────────────────────────────────────────────────────────
+
+.lenvy-account-order {
+  // Wider than the edit pages — this view fits a full items table.
+  max-width: none;
+}
+
+.lenvy-account-order__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: var(--la-muted);
+  text-decoration: none;
+  transition: color 160ms ease;
+  align-self: flex-start;
+
+  &:hover { color: var(--la-fg); }
+}
+
+.lenvy-account-order__head {
+  display: flex !important; // overrides .lenvy-account-card defaults that aren't applicable here
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  padding: 1.5rem 1.5rem;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.lenvy-account-order__head-main {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  min-width: 0;
+}
+
+.lenvy-account-order__num {
+  font-family: v.$font-sans;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  color: var(--la-fg);
+  font-variant-numeric: tabular-nums;
+}
+
+.lenvy-account-order__placed {
+  font-size: 0.8125rem;
+  color: var(--la-muted);
+}
+
+// Customer notes
+.lenvy-account-order__notes-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lenvy-account-order__note {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--la-hair);
+
+  &:last-child { border-bottom: none; }
+}
+
+.lenvy-account-order__note-date {
+  display: block;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--la-muted);
+  margin-bottom: 0.375rem;
+}
+
+.lenvy-account-order__note-body {
+  font-size: 0.875rem;
+  color: var(--la-fg);
+
+  p {
+    margin: 0;
+    line-height: 1.55;
+  }
+}
+
+// ── Style WC's order-details template inside our wrapper ─────────────────────
+// `do_action('woocommerce_view_order', $order_id)` calls
+// `woocommerce_order_details_table()` which renders order/order-details.php.
+// We don't override that template; instead we restyle its default markup so
+// it reads as part of our design system.
+
+.lenvy-account-order__details {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+
+  // Hide WC's default "Order #X was placed on…" sentence — we have the
+  // structured header card above it.
+  > p:first-child { display: none; }
+
+  h2 {
+    font-family: v.$font-sans;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--la-muted);
+    margin: 0 0 1rem;
+  }
+
+  // Items table → clean two-column rows.
+  .woocommerce-table--order-details,
+  .woocommerce-table.shop_table.order_details {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid var(--la-hair);
+    background: var(--la-bg);
+    font-size: 0.875rem;
+
+    th, td {
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid var(--la-hair);
+      text-align: left;
+      vertical-align: top;
+      font-weight: 400;
+    }
+
+    thead th {
+      font-size: 0.6875rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--la-muted);
+      font-weight: 500;
+      background: var(--la-bg);
+    }
+
+    tfoot th,
+    tfoot td {
+      border-top: 1px solid var(--la-hair);
+      font-weight: 400;
+      color: var(--la-muted);
+
+      &:last-child { color: var(--la-fg); }
+    }
+
+    tfoot tr:last-child th,
+    tfoot tr:last-child td {
+      font-weight: 500;
+      color: var(--la-fg);
+      font-size: 0.9375rem;
+    }
+
+    tr:last-child th,
+    tr:last-child td { border-bottom: none; }
+
+    .product-name a {
+      color: var(--la-fg);
+      text-decoration: none;
+      font-weight: 500;
+
+      &:hover { text-decoration: underline; text-underline-offset: 3px; }
+    }
+
+    .product-quantity {
+      color: var(--la-muted);
+      margin-left: 0.25rem;
+    }
+
+    .wc-item-meta {
+      list-style: none;
+      margin: 0.25rem 0 0;
+      padding: 0;
+      font-size: 0.75rem;
+      color: var(--la-muted);
+
+      li { padding: 0; }
+      strong { font-weight: 500; }
+    }
+  }
+
+  // "Cash on delivery" payment method line — small below the totals table.
+  .woocommerce-customer-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+
+    @media (max-width: 720px) {
+      grid-template-columns: 1fr;
+    }
+
+    .woocommerce-column--billing-address,
+    .woocommerce-column--shipping-address {
+      border: 1px solid var(--la-hair);
+      background: var(--la-bg);
+
+      h2 {
+        margin: 0;
+        padding: 1rem 1.5rem;
+        border-bottom: 1px solid var(--la-hair);
+      }
+
+      address {
+        font-style: normal;
+        padding: 1rem 1.5rem;
+        margin: 0;
+        font-size: 0.875rem;
+        line-height: 1.65;
+        color: var(--la-fg);
+      }
+
+      .woocommerce-customer-details--phone,
+      .woocommerce-customer-details--email {
+        padding: 0 1.5rem 1rem;
+        margin: 0;
+        font-size: 0.8125rem;
+        color: var(--la-muted);
+      }
+    }
+  }
+}

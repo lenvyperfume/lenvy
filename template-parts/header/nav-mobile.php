@@ -17,7 +17,7 @@ defined('ABSPATH') || exit();
 $logo_id  = lenvy_field('lenvy_site_logo', 'options');
 $cart_url  = function_exists('wc_get_cart_url') ? wc_get_cart_url() : home_url('/cart/');
 $shop_url  = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('shop') : home_url('/shop/');
-$account_url = function_exists('wc_get_page_permalink') ? wc_get_page_permalink('myaccount') : home_url('/my-account/');
+$account_url = function_exists('lenvy_account_url') ? lenvy_account_url() : home_url('/mijn-account/');
 
 // Determine which menu location to render.
 $menu_location = has_nav_menu('mobile') ? 'mobile' : (has_nav_menu('primary') ? 'primary' : '');

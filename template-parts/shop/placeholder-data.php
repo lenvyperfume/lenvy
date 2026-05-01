@@ -1,6 +1,6 @@
 <?php
 /**
- * Shop placeholder data — mirrors /docs/design/search-data.js.
+ * Shop placeholder data
  *
  * Used by archive-product.php (and friends) while the shop is still
  * mocked up. Replace with WooCommerce queries once real data exists.

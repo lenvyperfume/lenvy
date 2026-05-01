@@ -19,8 +19,13 @@ foreach ($items as $i) {
 	$item_count += (int) ($i['qty'] ?? 1);
 }
 
-get_header();
+// Override page title for this placeholder.
+add_filter('pre_get_document_title', static fn() => sprintf(__('Winkelwagen — %s', 'lenvy'), get_bloginfo('name')));
+
+get_header('checkout');
 ?>
+
+<?php get_template_part('template-parts/checkout/steps', null, ['current' => 1]); ?>
 
 <main id="primary" class="lenvy-cart" data-cart-page>
 
@@ -90,4 +95,4 @@ get_header();
 </main>
 
 <?php
-get_footer();
+get_footer('checkout');

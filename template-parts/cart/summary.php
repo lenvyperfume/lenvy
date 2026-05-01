@@ -90,7 +90,12 @@ $trust_icons = [
 			</span>
 		</div>
 
-		<a href="#" class="lenvy-cart-summary__cta">
+		<?php
+		$checkout_url = function_exists('lenvy_placeholder_checkout_url')
+			? lenvy_placeholder_checkout_url()
+			: (function_exists('wc_get_checkout_url') ? wc_get_checkout_url() : '#');
+		?>
+		<a href="<?php echo esc_url($checkout_url); ?>" class="lenvy-cart-summary__cta">
 			<?php esc_html_e('Naar betalen', 'lenvy'); ?>
 		</a>
 
